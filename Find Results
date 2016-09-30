@@ -1,0 +1,10 @@
+Searching 2 files for "wrong details"
+
+/var/www/html/index.php:
+   21  	else
+   22  	{
+   23: 		$error = "Incorrect Username or Password!";
+   24  	}	
+   25  }
+
+1 match in 1 file
