@@ -1,0 +1,132 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{
+	background:#f1f9f9;
+}
+
+#questionBody{
+    border: 1px solid #e5e5e5;
+    width: 400px;
+    color: #999999;
+    box-shadow: rgba(0,0,0,0.1) 0px 0px 8px;
+    }
+
+#questionTitle, questionTitle{
+    border: 1px solid #e5e5e5;
+    width: 400px;
+    color: #999999;
+    box-shadow: rgba(0,0,0,0.1) 0px 0px 8px;
+    
+}
+
+ /* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+#myBtn{
+    background: none;
+    border: none;
+    padding: 0;
+    color: #337ab7;
+    }
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.form-signin {
+    max-width: 500px;
+    padding: 19px 29px 29px;
+    margin: 0 auto;
+	//margin-top:90px;
+    background-color: #fff;
+	
+    border: 1px solid #e5e5e5;
+    -webkit-border-radius: 5px;
+       -moz-border-radius: 5px;
+            border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+       -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+            box-shadow: 0 1px 2px rgba(0,0,0,.05);
+			
+	font-family:Tahoma, Geneva, sans-serif;
+	color:#990000;
+	font-weight:lighter;
+}
+
+.form-signin .form-signin-heading{
+    color:#00A2D1;
+}
+.form-signin input[type="text"],
+.form-signin input[type="password"],
+.form-signin input[type="email"] {
+    font-size: 16px;
+    height: 45px;
+    padding: 7px 9px;
+}
+
+.signin-form, .body-container
+{
+	//border:solid red 1px;
+	margin-top:110px;
+}
+.navbar-brand{
+	font-family:"Lucida Handwriting";
+}
+#btn-submit{
+	height:45px;
+}
+.h5{
+	font-family:Verdana, Geneva, sans-serif;
+}
+h1{
+	font-family:Verdana, Geneva, sans-serif;
+}
+
+#questionTable{
+    font-size: 30px;
+    width: 100%;
+    border: 1px solid navy;
+
+}
+
+td{
+   text-align: center;
+    font-size: 20px;
+    border: 1px solid grey;
+}
+
+th{
+    text-align: center;
+}
