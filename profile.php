@@ -22,6 +22,7 @@
 <link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen"> 
 <script type="text/javascript" src="jquery-1.11.3-jquery.min.js"></script>
 <link rel="stylesheet" href="style.css" type="text/css"  />
+<link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet"> 
 <title>welcome - <?php print($userRow['user_email']); ?></title>
 </head>
 
@@ -37,18 +38,15 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="http://localhost">SlackOverflow</a>
+          <a class="logo" href="http://localhost">SlackOverflow</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="">Link to Something</a></li>
-              <li><a href="http://www.google.com">Some Tab Link</li>
-              <li><a href="http://www.google.com">Some Tab Link</li>
-          </ul>
+                      </ul>
           <ul class="nav navbar-nav navbar-right">
             
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <a href="#" class="dropdown-toggle" id="dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 			  <span class="glyphicon glyphicon-user"></span>&nbsp;Hello <?php echo $userRow['user_email']; ?>&nbsp;<span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="#"><span class="glyphicon glyphicon-user"></span>&nbsp;View Profile</a></li>
@@ -66,12 +64,12 @@
 	
     <div class="container">
     
-    	<label class="h5">Welcome : <?php print($userRow['user_name']); ?></label>
+    	<label class="h5">User: <?php print($userRow['user_name']); ?></label>
         <hr />
         
-        <h1>
-        <a href="home.php"><span class="glyphicon glyphicon-home"></span> home</a> &nbsp; 
-        <a href="profile.php"><span class="glyphicon glyphicon-user"></span> profile</a></h1>
+        <h1 id="secondLevelLinks">
+        <a href="home.php"><span class="glyphicon glyphicon-home"></span> Home</a> &nbsp; 
+        <a href="profile.php"><span class="glyphicon glyphicon-user"></span> Profile</a></h1>
         <hr />
         
         <p class="h4">Another Secure Profile Page</p> 

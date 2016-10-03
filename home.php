@@ -50,6 +50,7 @@ function printCheck()
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+<link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet"> 
 <script type="text/javascript" src="jquery-1.11.3-jquery.min.js"></script>
 <link rel="stylesheet" href="style.css" type="text/css"  />
 <title>welcome - <?php print($userRow['user_email']); ?></title>
@@ -66,17 +67,15 @@ function printCheck()
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="http://localhost">SlackOverflow</a>
+          <a class="logo" href="http://localhost">SlackOverflow</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="http://www.google.com">Some Tab Link</li>
-            <li><a href="http://www.google.com">Some Lower Level Tab Link</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <a href="#" id="dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 			  <span class="glyphicon glyphicon-user"></span>&nbsp;Hello <?php echo $userRow['user_email']; ?>&nbsp;<span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="profile.php"><span class="glyphicon glyphicon-user"></span>&nbsp;View Profile</a></li>
@@ -96,21 +95,15 @@ function printCheck()
 	
     <div class="container">
        	             
-        <h1>
+        <h1 id="secondLevelLinks">
           <a href="home.php"><span class="glyphicon glyphicon-home"></span> Home</a> &nbsp; 
           <a href="profile.php"><span class="glyphicon glyphicon-user"></span> Profile</a>
           <a href="profile.php"><span class="glyphicon glyphicon-eye-open"></span> Browse</a>
-          <button type="button" id="myBtn"><span class="glyphicon glyphicon-pencil"></span></button>
-        </h1>
+          </h1>
                 
        	<hr />
-        
-        <p class="h2">User Home Page</p>
-        
         <!-- Post question form below-->
-        <?php echo "User ID: ".$_SESSION['user_id']; ?>
-        <h2>Enter your question</h2>
-          <form class="form" method="post" action="postQuestion.php">
+                    <form class="form" method="post" action="postQuestion.php">
             <p class="Question Title">
               <input type="text" name="questionTitle" id="questionTitle" placeholder="Your Question's Title" />
             </p>
@@ -148,21 +141,19 @@ function printCheck()
 
 
         echo "<table id=\"questionTable\"> 
-                <th>Question</th>
-                <th>Asker</th>
-                <th>Solved</th>";
-        
-  
-
-        if($result->num_rows > 0)
+                <th class=\"header\">Top Questions</th>
+                <th class=\"header\">Asker</th>
+                <th class=\"header\">Solved</th>";
+    
+          if($result->num_rows > 0)
         {
                   //This puts the resulting row into an array for access
             while($row = $result->fetch_assoc())
             {          
                 $solved = is_null($row["is_solved"]);//Pass this variable into method to determine if x or check will print
 
-                    echo "<tr>
-                    <td>".$row["question"] ."</td>
+                    echo "<tr class=\"questionRows\">
+                    <td><a href=\"answer.php\">".$row["question"]."</a></td>
                     <td>".$row["user_name"] ."</td>";
                     echo "<td>" .Solved($solved). "</td>
                                        

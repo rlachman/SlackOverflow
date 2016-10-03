@@ -31,6 +31,7 @@ if(isset($_POST['btn-login']))
 <title>SlackOverflow | Login</title>
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+<link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet"> 
 <link rel="stylesheet" href="style.css" type="text/css"  />
 </head>
 <body>
