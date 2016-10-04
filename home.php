@@ -13,6 +13,36 @@
 	
 	$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
 
+  $_SESSION['user_id'] = $userRow['user_id'];
+
+function debug_to_console($data) {
+    if(is_array($data) || is_object($data))
+  {
+    echo("<script>console.log('PHP: ".json_encode($data)."');</script>");
+  } else {
+    echo("<script>console.log('PHP: ".$data."');</script>");
+  }
+}
+
+function printCheck()
+    {
+      return "<span class='glyphicon glyphicon-ok'></span>";
+    }
+  function printX()
+    {
+      return "<span class='glyphicon glyphicon-remove'></span>";
+    }
+  function Solved($solved)
+  {
+   
+    if($solved == 1)
+    {
+      return printX();
+    }
+    else{
+      return printCheck();
+    }
+  }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -20,6 +50,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+<link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet"> 
 <script type="text/javascript" src="jquery-1.11.3-jquery.min.js"></script>
 <link rel="stylesheet" href="style.css" type="text/css"  />
 <title>welcome - <?php print($userRow['user_email']); ?></title>
@@ -36,17 +67,15 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="http://localhost">SlackOverflow</a>
+          <a class="logo" href="home.php">SlackOverflow</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="http://www.google.com">Some Tab Link</li>
-            <li><a href="http://www.google.com">Some Lower Level Tab Link</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <a href="#" id="dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 			  <span class="glyphicon glyphicon-user"></span>&nbsp;Hello <?php echo $userRow['user_email']; ?>&nbsp;<span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="profile.php"><span class="glyphicon glyphicon-user"></span>&nbsp;View Profile</a></li>
@@ -65,59 +94,80 @@
 <div class="container-fluid" style="margin-top:80px;">
 	
     <div class="container">
-    
-    	<label class="h5">welcome : <?php print($userRow['user_name']); ?></label>
-        <hr />
-        
-        <h1>
-        <a href="home.php"><span class="glyphicon glyphicon-home"></span> home</a> &nbsp; 
-        <a href="profile.php"><span class="glyphicon glyphicon-user"></span> profile</a></h1>
+       	             
+        <h1 id="secondLevelLinks">
+          <a href="home.php"><span class="glyphicon glyphicon-home"></span> Home</a> &nbsp; 
+          <a href="profile.php"><span class="glyphicon glyphicon-user"></span> Profile</a>
+          <a href="browse.php"><span class="glyphicon glyphicon-eye-open"></span> Browse</a>
+          </h1>
+                
        	<hr />
-        
-        <p class="h4">User Home Page</p>
+        <!-- Post question form below-->
+                    <form class="form" method="post" action="postQuestion.php">
+            <p class="Question Title">
+              <input type="text" name="questionTitle" id="questionTitle" placeholder="Your Question's Title" />
+            </p>
+
+            <p class="Question Body">
+              <textarea  name="questionBody" id="questionBody" placeholder="Enter your question here." rows="4" cols="50"/></textarea>
+            </p>
+
+            <p class="submit">
+                <input type="submit" value="Post Question">
+
+          </form>
+
+              <hr>
+
+              
+
+
 
         <!-- Table that will display questions -->
-        <p>PHP STUFF BELOW</p>
         <?php
+                
         $servername = "localhost";
         $username = "root";
         $password = "odu2017";
         $dbname = "slackoverflow";
+        
+        //Establish connection
         $conn = new mysqli($servername, $username, $password, $dbname);
-        $sql = "SELECT question, question_id, asker_id, answer_id FROM questions";
-                $result = $conn->query($sql);
+        //Store query into a php variable
+        $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_id, user_name, is_solved FROM questions join users on asker_id=user_id";
+        //Store collection of rows in variable called result
+        $result = $conn->query($sql);
 
-        echo "<table id=\"questionTable\"> 
-                <th>Question</th>
-                <th>Question ID</th>
-                <th>Asker ID</th>
-                <th>Answer ID</th>";
-        if($result->num_rows > 0)
+                echo "<table id=\"questionTable\"> 
+                <th class=\"header\">Top Questions</th>
+                <th class=\"header\">Asker</th>
+                <th class=\"header\">Solved</th>";
+    
+          if($result->num_rows > 0)
         {
+                  //This puts the resulting row into an array for access
             while($row = $result->fetch_assoc())
-            {
-                echo "<tr>
-                    <td>".$row["question"] ."</td>
-                    <td>".$row["question_id"] ."</td>
-                    <td>".$row["asker_id"] ."</td>
-                    <td>".$rowUser["user_name"] ."</td>
-                    <td>".$row["answer_id"] ."</td>
+            {          
+                $solved = is_null($row["is_solved"]);//Pass this variable into method to determine if x or check will print
+
+                    echo "<tr class=\"questionRows\">
+                    <td><a href=\"answer.php\">
+                    ".$row["question_title"]."</a></td>
+                    <td>".$row["user_name"] ."</td>";
+                    echo "<td>" .Solved($solved). "</td>
+                                       
                     </tr>";
             }
         }
         echo "</table>";
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
         $conn->close();
-         ?>
-
-
-
-    </div>
-
-</div>
-
+?>
+<hr>
 <script src="bootstrap/js/bootstrap.min.js"></script>
-
 </body>
 </html>

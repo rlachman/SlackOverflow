@@ -15,19 +15,19 @@ if(isset($_POST['btn-signup']))
 	$upass = strip_tags($_POST['txt_upass']);	
 	
 	if($uname=="")	{
-		$error[] = "provide username !";	
+		$error[] = "Please enter a username!";	
 	}
 	else if($umail=="")	{
-		$error[] = "provide email id !";	
+		$error[] = "Please enter an email address!";	
 	}
 	else if(!filter_var($umail, FILTER_VALIDATE_EMAIL))	{
-	    $error[] = 'Please enter a valid email address !';
+	    $error[] = 'Please enter a valid email address!';
 	}
 	else if($upass=="")	{
-		$error[] = "provide password !";
+		$error[] = "Please provide a password!";
 	}
 	else if(strlen($upass) < 6){
-		$error[] = "Password must be atleast 6 characters";	
+		$error[] = "Password must be atleast 6 characters.";	
 	}
 	else
 	{
@@ -36,12 +36,13 @@ if(isset($_POST['btn-signup']))
 			$stmt = $user->runQuery("SELECT user_name, user_email FROM users WHERE user_name=:uname OR user_email=:umail");
 			$stmt->execute(array(':uname'=>$uname, ':umail'=>$umail));
 			$row=$stmt->fetch(PDO::FETCH_ASSOC);
-				
+			
+			//Check to see if username entered has been taken	
 			if($row['user_name']==$uname) {
-				$error[] = "sorry username already taken !";
+				$error[] = "Username has been taken!";
 			}
 			else if($row['user_email']==$umail) {
-				$error[] = "sorry email id already taken !";
+				$error[] = "Email is already in use!";
 			}
 			else
 			{
@@ -66,6 +67,7 @@ if(isset($_POST['btn-signup']))
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
 <link rel="stylesheet" href="style.css" type="text/css"  />
+<link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet"> 
 </head>
 <body>
 
@@ -74,7 +76,7 @@ if(isset($_POST['btn-signup']))
 <div class="container">
     	
         <form method="post" class="form-signin">
-            <h2 class="form-signin-heading">Sign up.</h2><hr />
+            <h2 class="form-signin-heading">StackOverflow | Sign up.</h2><hr />
             <?php
 			if(isset($error))
 			{
@@ -100,7 +102,7 @@ if(isset($_POST['btn-signup']))
             <input type="text" class="form-control" name="txt_uname" placeholder="Enter Username" value="<?php if(isset($error)){echo $uname;}?>" />
             </div>
             <div class="form-group">
-            <input type="text" class="form-control" name="txt_umail" placeholder="Enter E-Mail ID" value="<?php if(isset($error)){echo $umail;}?>" />
+            <input type="text" class="form-control" name="txt_umail" placeholder="Enter E-Mail" value="<?php if(isset($error)){echo $umail;}?>" />
             </div>
             <div class="form-group">
             	<input type="password" class="form-control" name="txt_upass" placeholder="Enter Password" />
@@ -108,16 +110,16 @@ if(isset($_POST['btn-signup']))
             <div class="clearfix"></div><hr />
             <div class="form-group">
             	<button type="submit" class="btn btn-primary" name="btn-signup">
-                	<i class="glyphicon glyphicon-open-file"></i>&nbsp;SIGN UP
+                	<i class="glyphicon glyphicon-open-file"></i>&nbsp;Sign Up
                 </button>
             </div>
             <br />
-            <label>have an account ! <a href="index.php">Sign In</a></label>
+            <label id="signIn">If you have an account please <a id="signIn" href="index.php">Sign In</a></label>
         </form>
        </div>
 </div>
 
 </div>
-
+<div class="footer">CS418 - Harrison Hornsby & Ryan Lachman.</div>
 </body>
 </html>

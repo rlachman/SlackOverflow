@@ -31,6 +31,7 @@ if(isset($_POST['btn-login']))
 <title>SlackOverflow | Login</title>
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+<link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet"> 
 <link rel="stylesheet" href="style.css" type="text/css"  />
 </head>
 <body>
@@ -42,7 +43,7 @@ if(isset($_POST['btn-login']))
         
        <form class="form-signin" method="post" id="login-form">
       
-        <h2 class="form-signin-heading">SlackOverflow | Sign In</h2><hr />
+        <h2 id="form-signin-heading">SlackOverflow | Sign In</h2><hr />
         
         <div id="error">
         <?php
@@ -58,7 +59,7 @@ if(isset($_POST['btn-login']))
         </div>
         
         <div class="form-group">
-        <input type="text" class="form-control" name="txt_uname_email" placeholder="Username or E mail ID" required />
+        <input type="text" class="form-control" name="txt_uname_email" placeholder="Your Username" required />
         <span id="check-e"></span>
         </div>
         
@@ -74,12 +75,13 @@ if(isset($_POST['btn-login']))
             </button>
         </div>  
       	<br />
-            <label>No Account? <a href="sign-up.php">Sign Up</a></label>
+            <label class="sign-in-label">No Account? <a class="sign-in-label" href="sign-up.php">Sign Up</a></label>
       </form>
 
     </div>
     
 </div>
 
+<div class="footer">CS418 - Harrison Hornsby & Ryan Lachman.</div>
 </body>
 </html>
