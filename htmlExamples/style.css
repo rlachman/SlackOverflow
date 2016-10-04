@@ -1,0 +1,11 @@
+body {font-family: Perpetua, Baskerville, "Big Caslon", "Palatino Linotype", Palatino, "URW Palladio L", "Nimbus Roman No9 L", serif; font-size: 16px; max-width:900px; text-align:left; margin-left:auto; margin-right:auto;}
+p {font-family: Corbel, Arial, Helvetica, "Nimbus Sans L", "Liberation Sans", sans-serif; }
+#section1 {color: green; background-color: red;}
+#section2 {color: #fee; text-transform: uppercase; background-color: black;}
+table {width: 100%; border: 1px solid #999;}
+table, tr, th, td {border: 1px solid #999; border-collapse: collapse; vertical-align: top;}
+table tr th {background-color: #eee; text-align: left;}
+table td:nth-child(1) {width: 10%;}
+table td:nth-child(2) {width: 20%;}
+table td:nth-child(3) {width: 50%;}
+table td:nth-child(4) {width: 20%;}

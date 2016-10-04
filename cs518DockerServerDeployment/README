@@ -1,0 +1,26 @@
+
+Running students' deployments
+-----------------------------------
+
+First, I download all student repos using cs418repopuller.py
+
+Note that you need to add your SSH key to your github account, and enter the following (with your personal data) into ~/.ssh/config:
+
+	Host github.com
+	User git
+	Hostname github.com
+	PreferredAuthentications publickey
+	Port 22
+	IdentityFile /location/of/your/rsa/key
+
+To enable easier cloning. Be sure not to point this at your public key. This means you need to enter your password for each repo, but works well enough for now. 
+
+Next, I go into ./demos/CSUSERNAME (e.g., ./demos/jbrunelle/) and deploy the files to a new docker instance running the same image:
+
+	docker run --network nginx-proxy -e VIRTUAL_HOST=jbrunelle.cs518.cs.odu.edu -v /path/to/demos/directory/demos/jbrunelle:/var/www/html jbrunelle/oducs518f16
+
+This creates the student's deployment at jbrunelle.cs518.cs.odu.edu (or whatever the CSUSERNAME.cs518.cs.odu.edu will be).
+
+
+
+UNDER CONSTRUCTION!!!
