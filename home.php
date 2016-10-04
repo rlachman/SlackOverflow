@@ -67,7 +67,7 @@ function printCheck()
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="logo" href="http://localhost">SlackOverflow</a>
+          <a class="logo" href="home.php">SlackOverflow</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -98,7 +98,7 @@ function printCheck()
         <h1 id="secondLevelLinks">
           <a href="home.php"><span class="glyphicon glyphicon-home"></span> Home</a> &nbsp; 
           <a href="profile.php"><span class="glyphicon glyphicon-user"></span> Profile</a>
-          <a href="profile.php"><span class="glyphicon glyphicon-eye-open"></span> Browse</a>
+          <a href="browse.php"><span class="glyphicon glyphicon-eye-open"></span> Browse</a>
           </h1>
                 
        	<hr />
@@ -134,13 +134,11 @@ function printCheck()
         //Establish connection
         $conn = new mysqli($servername, $username, $password, $dbname);
         //Store query into a php variable
-        $sql = "SELECT question, question_id, asker_id, answer_id, user_id, user_name, is_solved FROM questions join users on asker_id=user_id";
+        $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_id, user_name, is_solved FROM questions join users on asker_id=user_id";
         //Store collection of rows in variable called result
         $result = $conn->query($sql);
 
-
-
-        echo "<table id=\"questionTable\"> 
+                echo "<table id=\"questionTable\"> 
                 <th class=\"header\">Top Questions</th>
                 <th class=\"header\">Asker</th>
                 <th class=\"header\">Solved</th>";
@@ -153,7 +151,8 @@ function printCheck()
                 $solved = is_null($row["is_solved"]);//Pass this variable into method to determine if x or check will print
 
                     echo "<tr class=\"questionRows\">
-                    <td><a href=\"answer.php\">".$row["question"]."</a></td>
+                    <td><a href=\"answer.php\">
+                    ".$row["question_title"]."</a></td>
                     <td>".$row["user_name"] ."</td>";
                     echo "<td>" .Solved($solved). "</td>
                                        

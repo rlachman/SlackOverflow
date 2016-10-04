@@ -64,15 +64,17 @@
 	
     <div class="container">
     
-    	<label class="h5">User: <?php print($userRow['user_name']); ?></label>
-        <hr />
-        
         <h1 id="secondLevelLinks">
         <a href="home.php"><span class="glyphicon glyphicon-home"></span> Home</a> &nbsp; 
-        <a href="profile.php"><span class="glyphicon glyphicon-user"></span> Profile</a></h1>
+        <a href="profile.php"><span class="glyphicon glyphicon-user"></span> Profile</a>
+        <a href="browse.php"><span class="glyphicon glyphicon-eye-open"></span> Browse</a>
+        </h1>
+        <hr />
+
+        <label class="h5">User: <?php print($userRow['user_name']); ?></label>
         <hr />
         
-        <p class="h4">Another Secure Profile Page</p> 
+        <p class="h4">Will display statistics here such as questions posted. Some sort of repuation score and more!</p> 
        
         
     </div>

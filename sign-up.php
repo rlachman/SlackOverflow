@@ -67,6 +67,7 @@ if(isset($_POST['btn-signup']))
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
 <link rel="stylesheet" href="style.css" type="text/css"  />
+<link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet"> 
 </head>
 <body>
 
@@ -101,7 +102,7 @@ if(isset($_POST['btn-signup']))
             <input type="text" class="form-control" name="txt_uname" placeholder="Enter Username" value="<?php if(isset($error)){echo $uname;}?>" />
             </div>
             <div class="form-group">
-            <input type="text" class="form-control" name="txt_umail" placeholder="Enter E-Mail ID" value="<?php if(isset($error)){echo $umail;}?>" />
+            <input type="text" class="form-control" name="txt_umail" placeholder="Enter E-Mail" value="<?php if(isset($error)){echo $umail;}?>" />
             </div>
             <div class="form-group">
             	<input type="password" class="form-control" name="txt_upass" placeholder="Enter Password" />
@@ -109,16 +110,16 @@ if(isset($_POST['btn-signup']))
             <div class="clearfix"></div><hr />
             <div class="form-group">
             	<button type="submit" class="btn btn-primary" name="btn-signup">
-                	<i class="glyphicon glyphicon-open-file"></i>&nbsp;SIGN UP
+                	<i class="glyphicon glyphicon-open-file"></i>&nbsp;Sign Up
                 </button>
             </div>
             <br />
-            <label>If you have an account please <a href="index.php">Sign In</a></label>
+            <label id="signIn">If you have an account please <a id="signIn" href="index.php">Sign In</a></label>
         </form>
        </div>
 </div>
 
 </div>
-
+<div class="footer">CS418 - Harrison Hornsby & Ryan Lachman.</div>
 </body>
 </html>
