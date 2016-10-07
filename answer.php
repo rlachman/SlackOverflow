@@ -87,20 +87,49 @@ session_start();
 
 <body>
 	
-	<h1 id="questionAnswerPage"><?php echo $row['question']; ?></h1>
+	<h1 id="questionAnswerPage"><?php echo $row['question_title']; ?></h1>
+	<h3 id="questionAnswerPage"><?php echo $row['question']; ?></h1>
 	<h4>asked by <?php echo $row['user_name']; ?></h3>
 
 	<hr>
-
+<!--PREVIOUS ANSWERS TABLE BELOW-->
 	<table id="questionTable">
 	<th>Response</th>
 	<th>Responder</th>
+	
+	<?php
+
+	$sql = "SELECT answer_id, answer, responder_id, user_name 
+			FROM answers JOIN users WHERE question_id=$q_id and responder_id=user_id";
+
+	        //Store collection of rows in variable called result
+        $result = $conn->query($sql);
+        
+        while($row = $result->fetch_assoc())
+        {
+        	echo "<tr><td>".$row["answer"]."</td><td>".$row["user_name"]."</td></tr>";
+        }
+
+        
+
+        
+
+
+
+
+        if ($conn->query($sql) === FALSE) {
+    	    	echo "Error: " . $insert_query . "<br>" . $conn->error;
+		}
+
+
+	
+    ?>
 	</table>
 
 	<hr>
 
 	<center>
-
+<!--LOGGED IN USERS RESPONSE ENTRY BELOW-->
 	<h3>Your Response:</h3>
 
 	<form class="form" method="post" action="postAnswer.php">
