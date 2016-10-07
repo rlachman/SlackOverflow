@@ -47,8 +47,7 @@ h2,p.h2,.h5,a{
     width: 400px;
     color: #2a3132;
     box-shadow: rgba(0,0,0,0.1) 0px 0px 8px;
-    background: #f1f1f2;
-        
+    background: #f1f1f2;     
 }
 
 #form-signin-heading{
@@ -122,8 +121,10 @@ h2,p.h2,.h5,a{
 .h5{
 	font-family:'Roboto Slab',Verdana, Geneva, sans-serif;
 }
+
 h1{
 	font-family:'Roboto Slab',Verdana, Geneva, sans-serif;
+    color: #68829e;
 }
 
 #questionTable{
