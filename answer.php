@@ -91,12 +91,10 @@ session_start();
 	<h3 id="questionAnswerPage"><?php echo $row['question']; ?></h1>
 	<h4>asked by <?php echo $row['user_name']; ?></h3>
 
-	<hr>
-<!--PREVIOUS ANSWERS TABLE BELOW-->
-	<table id="questionTable">
-	<th>Response</th>
-	<th>Responder</th>
 	
+<!--PREVIOUS ANSWERS TABLE BELOW-->
+	
+		
 	<?php
 
 	$sql = "SELECT answer_id, answer, responder_id, user_name 
@@ -107,7 +105,27 @@ session_start();
         
         while($row = $result->fetch_assoc())
         {
-        	echo "<tr><td>".$row["answer"]."</td><td>".$row["user_name"]."</td></tr>";
+        	echo "<hr><table>";
+        	echo "<tr>
+        		<td id=\"answerTD\"><p id=\"responseBody\">".$row["answer"]."</p></td>
+        		<td id=\"answerTD\"> <span class=\"glyphicon glyphicon-chevron-up\"></span></td>
+        		</tr>";
+        	echo"<tr>
+        			<td><div align=\"right\">".$row["user_name"]."</div>
+        		</tr>
+        	";
+        	echo"</table>";
+        	/*echo "<tr>
+        		<td>".$row["answer"]."</td><tr><td>".$row["user_name"].
+        		"<td><a href=\"#\" class=\"btn btn-info btn-lg\"><span class=\"glyphicon glyphicon-chevron-up\"></span> Vote Up</a></td>
+        		<td>3 Upvotes</td>
+
+        	</tr>";
+
+
+
+
+        	*/
         }
 
         

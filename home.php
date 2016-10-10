@@ -152,13 +152,13 @@ function printCheck()
 
                     echo "<tr class=\"questionRows\">
                     
-                    <td>
+                    <td class=\"questionTable\">
                     <a href=\"answer.php?q_id=".$row["question_id"]. "\">
                     ".$row["question_title"]."
                     </a>
                     </td>
 
-                    <td>"
+                    <td class=\"questionTable\">"
                     .$row["user_name"].
                     "</td>";
                     
