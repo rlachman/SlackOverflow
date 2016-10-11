@@ -1,22 +1,22 @@
 <?php
 
-	require_once("session.php");
-	
-	require_once("class.user.php");
-	$auth_user = new USER();
-	
-	
-	$user_id = $_SESSION['user_session'];
-	
-	$stmt = $auth_user->runQuery("SELECT * FROM users WHERE user_id=:user_id");
-	$stmt->execute(array(":user_id"=>$user_id));
-	
-	$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
+require_once("session.php");
 
-  $_SESSION['user_id'] = $userRow['user_id'];
+require_once("class.user.php");
+$auth_user = new USER();
+
+
+$user_id = $_SESSION['user_session'];
+
+$stmt = $auth_user->runQuery("SELECT * FROM users WHERE user_id=:user_id");
+$stmt->execute(array(":user_id"=>$user_id));
+
+$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
+
+$_SESSION['user_id'] = $userRow['user_id'];
 
 function debug_to_console($data) {
-    if(is_array($data) || is_object($data))
+  if(is_array($data) || is_object($data))
   {
     echo("<script>console.log('PHP: ".json_encode($data)."');</script>");
   } else {
@@ -25,73 +25,74 @@ function debug_to_console($data) {
 }
 
 function printCheck()
-    {
-      return "<span class='glyphicon glyphicon-ok'></span>";
-    }
-  function printX()
-    {
-      return "<span class='glyphicon glyphicon-remove'></span>";
-    }
-  function Solved($solved)
+{
+  return "<span class='glyphicon glyphicon-ok'></span>";
+}
+function printX()
+{
+  return "<span class='glyphicon glyphicon-remove'></span>";
+}
+function Solved($solved)
+{
+
+  if($solved == 1)
   {
-   
-    if($solved == 1)
-    {
-      return printX();
-    }
-    else{
-      return printCheck();
-    }
+    return printX();
   }
+  else{
+    return printCheck();
+  }
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
-<link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet"> 
-<script type="text/javascript" src="jquery-1.11.3-jquery.min.js"></script>
-<link rel="stylesheet" href="style.css" type="text/css"  />
-<title>welcome - <?php print($userRow['user_email']); ?></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+  <script type="text/javascript" src="jquery-1.11.3-jquery.min.js"></script>
+  <link rel="stylesheet" href="style.css" type="text/css"  />
+  <title>welcome - <?php print($userRow['user_email']); ?></title>
 </head>
 
 <body>
 
 <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="logo" href="home.php">SlackOverflow</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="logo" href="home.php">SlackOverflow</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+
+        <li class="dropdown">
+          <a href="#" id="dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-user"></span>&nbsp;Hello <?php echo $userRow['user_email']; ?>&nbsp;<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="profile.php"><span class="glyphicon glyphicon-user"></span>&nbsp;View Profile</a></li>
+            <li><a href="logout.php?logout=true"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Sign Out</a></li>
           </ul>
-          <ul class="nav navbar-nav navbar-right">
-            
-            <li class="dropdown">
-              <a href="#" id="dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-			  <span class="glyphicon glyphicon-user"></span>&nbsp;Hello <?php echo $userRow['user_email']; ?>&nbsp;<span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="profile.php"><span class="glyphicon glyphicon-user"></span>&nbsp;View Profile</a></li>
-                <li><a href="logout.php?logout=true"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Sign Out</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+        </li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>
 
 
-    <div class="clearfix"></div>
-    	
-    
+<div class="clearfix"></div>
+
+
 <div class="container-fluid" style="margin-top:80px;">
+<<<<<<< HEAD
 	
     <div class="container">
        	             
@@ -132,7 +133,7 @@ function printCheck()
                 $solved = is_null($row["is_solved"]);//Pass this variable into method to determine if x or check will print
 
                     echo "<tr>
-                    
+                  
                     <td>
                     <a href=\"answer.php?q_id=".$row["question_id"]. "\">
                     ".$row["question_title"]."
@@ -146,19 +147,19 @@ function printCheck()
                     echo "<td>" 
                     .Solved($solved). 
                     "</td>
-                                       
+                                      
                     </tr>";
-            }
-        }
-        echo "</table>";
+      }
+    }
+    echo "</table>";
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
 
-        $conn->close();
-?>
-<hr>
-<script src="bootstrap/js/bootstrap.min.js"></script>
+    $conn->close();
+    ?>
+    <hr>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
