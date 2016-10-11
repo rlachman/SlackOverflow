@@ -108,7 +108,12 @@ session_start();
         	echo "<hr><table>";
         	echo "<tr>
         		<td id=\"answerTD\"><p id=\"responseBody\">".$row["answer"]."</p></td>
-        		<td id=\"answerTD\"> <span class=\"glyphicon glyphicon-chevron-up\"></span></td>
+        		<td id=\"answerTD\"> 
+        			<table>
+        			<tr> <span class=\"glyphicon glyphicon-check\"></span> </tr>
+        			<tr> <span class=\"glyphicon glyphicon-chevron-up\"></span> </tr>
+        			</table>
+        		</td>
         		</tr>";
         	echo"<tr>
         			<td><div align=\"right\">".$row["user_name"]."</div>

@@ -13,7 +13,7 @@ body{
 
 .logo{
     font-family:'Roboto Slab', serif;
-    font-size: 40px;
+    font-size: 30px;
     color: white;
 }
 
@@ -23,7 +23,7 @@ color: white;
 
 h2,p.h2,.h5,a{
     color: #68829e;
-    font-size: 20px;
+    font-size: 15px;
     padding: 25px;
 }
 
@@ -136,49 +136,59 @@ h1{
     color: #68829e;
 }
 
-#questionTable{
-    font-size: 30px;
+.questionTable{
+    font-size: 20px;
     width: 100%;
             }
+
+.questionTable td,tr{
+    text-align: left;
+    padding-top: 20px;
+    padding-left: 20px;
+}
+
+.questionTable a{
+    font-size: 20px;
+}
 
 .header{
     text-align: left;
 }
 
-.questionRows{
-    border-radius: 10px;
-        
-}
-
 #responseBody{
     background:#f2f2f2;
     font-size: 150%;
-    box-shadow: 1px 1px 1px #595959;
-   }
+       }
 #signIn{
     font-family: 'Roboto Slab', serif;
     color: white;
 }
 
 
-/*td{
+td{
    
    font-family: 'Roboto Slab';
-   width: 100%;    
+   width: 100%;
+   
 }
 
-th{
-    
-    font-family: 'Roboto Slab';
-    text-align: center;
-        color: #336b87;
-}*/
 
-
-.glyphicon.glyphicon-chevron-up {
-    font-size: 60px;
+.glyphicon.glyphicon-chevron-up{
+    font-size: 40px;
     padding-left: 10px;
-    color: #ffd98d;
-    
+    color: #f2f2f2;
+}
 
+.glyphicon.glyphicon-check { 
+    font-size: 40px;
+    padding-left: 10px;
+    color: #f2f2f2;
+}
+
+.glyphicon.glyphicon-chevron-up:hover { 
+    color: #93af92;
+}
+
+.glyphicon.glyphicon-check:hover { 
+    color: #93af92;
 }

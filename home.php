@@ -97,32 +97,13 @@ function printCheck()
        	             
         <h1 id="secondLevelLinks">
           <a href="home.php"><span class="glyphicon glyphicon-home"></span> Home</a> &nbsp; 
+          <a href="ask.php"><span class="glyphicon glyphicon-question-sign"></span> Ask</a>
           <a href="profile.php"><span class="glyphicon glyphicon-user"></span> Profile</a>
           <a href="browse.php"><span class="glyphicon glyphicon-eye-open"></span> Browse</a>
           </h1>
                 
        	<hr />
-        <!-- Post question form below-->
-                    <form class="form" method="post" action="postQuestion.php">
-            <p class="Question Title">
-              <input type="text" name="questionTitle" id="questionTitle" placeholder="Your Question's Title" />
-            </p>
-
-            <p class="Question Body">
-              <textarea  name="questionBody" id="questionBody" placeholder="Enter your question here." rows="4" cols="50"/></textarea>
-            </p>
-
-            <p class="submit">
-                <input type="submit" value="Post Question">
-
-          </form>
-
-              <hr>
-
-              
-
-
-
+                  
         <!-- Table that will display questions -->
         <?php
                 
@@ -138,27 +119,27 @@ function printCheck()
         //Store collection of rows in variable called result
         $result = $conn->query($sql);
 
-                echo "<table id=\"questionTable\"> 
+                echo "<table class=\"questionTable\"> 
                 <th class=\"header\">Top Questions</th>
                 <th class=\"header\">Asker</th>
                 <th class=\"header\">Solved</th>";
     
           if($result->num_rows > 0)
         {
-                  //This puts the resulting row into an array for access
+                 //This puts the resulting row into an array for access
             while($row = $result->fetch_assoc())
             {          
                 $solved = is_null($row["is_solved"]);//Pass this variable into method to determine if x or check will print
 
-                    echo "<tr class=\"questionRows\">
+                    echo "<tr>
                     
-                    <td class=\"questionTable\">
+                    <td>
                     <a href=\"answer.php?q_id=".$row["question_id"]. "\">
                     ".$row["question_title"]."
                     </a>
                     </td>
 
-                    <td class=\"questionTable\">"
+                    <td>"
                     .$row["user_name"].
                     "</td>";
                     
