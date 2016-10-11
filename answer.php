@@ -78,7 +78,8 @@ session_start();
     <div class="container">
        	             
         <h1 id="secondLevelLinks">
-          <a href="home.php"><span class="glyphicon glyphicon-home"></span> Home</a> &nbsp; 
+          <a href="home.php"><span class="glyphicon glyphicon-home"></span> Home</a> &nbsp;
+          <a href="ask.php"><span class="glyphicon glyphicon-question-sign"></span> Ask</a>
           <a href="profile.php"><span class="glyphicon glyphicon-user"></span> Profile</a>
           <a href="browse.php"><span class="glyphicon glyphicon-eye-open"></span> Browse</a>
           </h1>
@@ -97,21 +98,62 @@ session_start();
 		
 	<?php
 
-	$sql = "SELECT answer_id, answer, responder_id, user_name 
+	$sql = "SELECT answer_id, answer, responder_id, is_best, user_name 
 			FROM answers JOIN users WHERE question_id=$q_id and responder_id=user_id";
 
-	        //Store collection of rows in variable called result
+	  /////VERIFIES LOGGED IN USER IS THE ASKER, IF USER IS THE ASKER THEN GIVE OPTION TO SELECT BEST ANSWER     
+        $getAskerID = "SELECT asker_id 
+      FROM questions WHERE question_id=$q_id";
+
+      $result = $conn->query($getAskerID);
+      $row = $result->fetch_assoc();
+  
+      $isAsker = FALSE;
+
+      $askerID = $row["asker_id"];
+      $loggedInID = $_SESSION['user_id'];
+
+
+    if($askerID == $loggedInID)
+    {
+    $isAsker = TRUE;
+    }
+    /////////////////////////////////////////////////////////////////////////////////////
+		        //Store collection of rows in variable called result
         $result = $conn->query($sql);
-        
+        //if session user id != asker id then hide choose best answer glyph
+        //if response has been selected as best answer then set color to green
         while($row = $result->fetch_assoc())
         {
+        	$ans_id = $row["answer_id"];
+        	$is_best = $row["is_best"];
+        	        	
         	echo "<hr><table>";
         	echo "<tr>
         		<td id=\"answerTD\"><p id=\"responseBody\">".$row["answer"]."</p></td>
         		<td id=\"answerTD\"> 
         			<table>
-        			<tr> <span class=\"glyphicon glyphicon-check\"></span> </tr>
-        			<tr> <span class=\"glyphicon glyphicon-chevron-up\"></span> </tr>
+        			
+        			<form name=\"bestAnswerForm\" method=\"post\" action=\"selectbestanswer.php\">";
+        			
+        
+        	if($isAsker == TRUE and $is_best == TRUE) echo		 
+        			"<tr> 
+        				<button type=\"submit\" name=\"answer_id\" value=\"$ans_id\"><span style =\"color: #93af92;\" class=\"glyphicon glyphicon-check\"></span></button>
+        			</tr>";
+
+        	if($isAsker == TRUE and $is_best == FALSE) echo		 
+        			"<tr> 
+        				<button type=\"submit\" name=\"answer_id\" value=\"$ans_id\"><span class=\"glyphicon glyphicon-check\"></span></button>
+        			</tr>";
+
+        	//Non asker needs to be able to see the best answer which is chosen by asker.
+        	if($isAsker == FALSE and $is_best == TRUE) echo		 
+        			"<tr> <span class=\"glyphicon glyphicon-flag\"></span> </tr>";
+
+			if($isAsker == FALSE) echo "<tr> <span class=\"glyphicon glyphicon-chevron-up\"></span> </tr>";
+        			
+        	echo "</form>      			
         			</table>
         		</td>
         		</tr>";
@@ -124,6 +166,10 @@ session_start();
         		<td>".$row["answer"]."</td><tr><td>".$row["user_name"].
         		"<td><a href=\"#\" class=\"btn btn-info btn-lg\"><span class=\"glyphicon glyphicon-chevron-up\"></span> Vote Up</a></td>
         		<td>3 Upvotes</td>
+
+        		<button type="submit">
+   <span class="glyphicon glyphicon-edit"></span>
+</button>
 
         	</tr>";
 

@@ -17,10 +17,10 @@
 		}
         
         //Establish connection
-        $question_title = $_POST[questionTitle];
+        $question_title = addslashes($_POST[questionTitle]);
         echo "<br>Question Title: ".$question_title;
 
-        $question_body = $_POST[questionBody];
+        $question_body = addslashes($_POST[questionBody]);
         echo "<br>Question Body: ".$question_body;
 
         

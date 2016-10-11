@@ -21,11 +21,17 @@ body{
 color: white;
 }
 
-h2,p.h2,.h5,a{
+h2,p.h2,.h5{
     color: #68829e;
     font-size: 15px;
     padding: 25px;
 }
+
+a{
+    color: #68829e;
+    font-size: 25px;
+    }
+
 
 #secondLevelLinks
 {
@@ -185,10 +191,25 @@ td{
     color: #f2f2f2;
 }
 
+.glyphicon.glyphicon-flag { 
+    font-size: 40px;
+    padding-left: 10px;
+    color: #93af92;
+}
+
 .glyphicon.glyphicon-chevron-up:hover { 
     color: #93af92;
 }
 
 .glyphicon.glyphicon-check:hover { 
     color: #93af92;
+}
+
+button{
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
 }
