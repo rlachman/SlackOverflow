@@ -92,7 +92,6 @@ function Solved($solved)
 
 
 <div class="container-fluid" style="margin-top:80px;">
-<<<<<<< HEAD
 	
     <div class="container">
        	             
