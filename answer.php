@@ -1,6 +1,6 @@
 <?php
-session_start();
-		$servername = "localhost";
+        session_start();
+        $servername = "localhost";
         $username = "root";
         $password = "odu2017";
         $dbname = "slackoverflow";
@@ -14,6 +14,7 @@ session_start();
 		{
 			echo "Connection OKAY.";
 		}
+
 		$q_id = $_GET["q_id"];
 		echo "       ".$q_id;
 		$sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_id, user_name, is_solved FROM questions join users on asker_id=user_id
@@ -180,7 +181,6 @@ session_start();
 
 	<hr>
 
-	<center>
 <!--LOGGED IN USERS RESPONSE ENTRY BELOW-->
 	<h3>Your Response:</h3>
 
@@ -196,9 +196,9 @@ session_start();
     </p>
     
     </form>
-    </center>
 
 
 <script src="bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
+?>

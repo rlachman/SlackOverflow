@@ -62,7 +62,7 @@ a{
     width: 400px;
     color: #2a3132;
     box-shadow: rgba(0,0,0,0.1) 0px 0px 8px;
-    background: #f1f1f2;     
+    background: #f1f1f2;
 }
 
 #form-signin-heading{
@@ -86,15 +86,14 @@ a{
     margin: 0 auto;
     //margin-top:90px;
     background-color: #90afc5;
-    
+
         -webkit-border-radius: 5px;
        -moz-border-radius: 5px;
             border-radius: 5px;
     -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
        -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
             box-shadow: 0 1px 2px rgba(0,0,0,.05);
-            
-    font-family:Tahoma, Geneva, sans-serif;
+            font-family:Tahoma, Geneva, sans-serif;
     color:#990000;
     font-weight:lighter;
     box-shadow: 1px 1px 1px grey;

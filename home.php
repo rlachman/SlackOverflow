@@ -43,6 +43,7 @@ function Solved($solved)
     return printCheck();
   }
 }
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -103,8 +104,7 @@ function Solved($solved)
           </h1>
                 
        	<hr />
-                  
-        <!-- Table that will display questions -->
+<!-- Table that will display questions -->
         <?php
                 
         $servername = "localhost";

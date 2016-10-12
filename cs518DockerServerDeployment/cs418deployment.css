@@ -1,0 +1,43 @@
+form {
+  width: 455px;
+  padding: 1em;
+}
+
+label {
+	display: block;
+	float: left;
+	padding: 1px 5px 1px 0px;
+	text-align: right;
+	clear: both;
+}
+input[type='text'], input[type='password'] {
+  font: 1em sans-serif;
+
+  width: 300px;
+  -moz-box-sizing: border-box;
+       box-sizing: border-box;
+
+  border: 1px solid #999;
+  float: left;
+  display: block;
+  text-align: right;
+}
+
+input[type='button'], input[type='submit']{
+  width : auto;
+  float: right;
+  margin: 0.5em auto 3.0em auto;
+  clear: both;
+}
+
+input:focus {
+  border-color: #000;
+}
+
+h2 {clear: both;}
+
+#srcRepo {font-style: italic;}
+#srcRepo.ok {color: green; font-style: normal;}
+#srcRepo.invalid {color: red; font-style: normal;}
+
+dl {background-color: #eee; padding: 5px; border: 1px solid #999; border-radius: 5px;}
