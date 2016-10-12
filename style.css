@@ -2,7 +2,7 @@
 /* CSS Document */
 
 body{
-	background:white;
+    background:white;
 }
 
 .navbar{
@@ -13,7 +13,7 @@ body{
 
 .logo{
     font-family:'Roboto Slab', serif;
-    font-size: 40px;
+    font-size: 30px;
     color: white;
 }
 
@@ -21,11 +21,17 @@ body{
 color: white;
 }
 
-h2,p.h2,.h5,a{
+h2,p.h2,.h5{
     color: #68829e;
-    font-size: 20px;
+    font-size: 15px;
     padding: 25px;
 }
+
+a{
+    color: #68829e;
+    font-size: 25px;
+    }
+
 
 #secondLevelLinks
 {
@@ -41,6 +47,15 @@ h2,p.h2,.h5,a{
     color: #2a3132;
         }
 
+#answerBody{
+    border: 1px solid #e5e5e5;
+    width: 100%;
+    color: #999999;
+    box-shadow: rgba(0,0,0,0.1) 0px 0px 8px;
+    background: #f1f1f2;
+    color: #2a3132;
+        }
+
 #questionTitle{
     width: 100%;
     border: 1px solid #e5e5e5;
@@ -48,7 +63,6 @@ h2,p.h2,.h5,a{
     color: #2a3132;
     box-shadow: rgba(0,0,0,0.1) 0px 0px 8px;
     background: #f1f1f2;
-        
 }
 
 #form-signin-heading{
@@ -70,19 +84,18 @@ h2,p.h2,.h5,a{
     max-width: 500px;
     padding: 19px 29px 29px;
     margin: 0 auto;
-	//margin-top:90px;
+    //margin-top:90px;
     background-color: #90afc5;
-	
+
         -webkit-border-radius: 5px;
        -moz-border-radius: 5px;
             border-radius: 5px;
     -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
        -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
             box-shadow: 0 1px 2px rgba(0,0,0,.05);
-			
-	font-family:Tahoma, Geneva, sans-serif;
-	color:#990000;
-	font-weight:lighter;
+            font-family:Tahoma, Geneva, sans-serif;
+    color:#990000;
+    font-weight:lighter;
     box-shadow: 1px 1px 1px grey;
 }
 
@@ -107,8 +120,8 @@ h2,p.h2,.h5,a{
 
 .signin-form, .body-container
 {
-	//border:solid red 1px;
-	margin-top:110px;
+    //border:solid red 1px;
+    margin-top:110px;
 }
 
 .submit{
@@ -120,25 +133,37 @@ h2,p.h2,.h5,a{
 }
 
 .h5{
-	font-family:'Roboto Slab',Verdana, Geneva, sans-serif;
-}
-h1{
-	font-family:'Roboto Slab',Verdana, Geneva, sans-serif;
+    font-family:'Roboto Slab',Verdana, Geneva, sans-serif;
 }
 
-#questionTable{
-    font-size: 30px;
+h1{
+    font-family:'Roboto Slab',Verdana, Geneva, sans-serif;
+    color: #68829e;
+}
+
+.questionTable{
+    font-size: 20px;
     width: 100%;
             }
+
+.questionTable td,tr{
+    text-align: left;
+    padding-top: 20px;
+    padding-left: 20px;
+}
+
+.questionTable a{
+    font-size: 20px;
+}
 
 .header{
     text-align: left;
 }
 
-.questionRows{
-    border-radius: 10px;
-        
-}
+#responseBody{
+    background:#f2f2f2;
+    font-size: 150%;
+       }
 #signIn{
     font-family: 'Roboto Slab', serif;
     color: white;
@@ -148,16 +173,42 @@ h1{
 td{
    
    font-family: 'Roboto Slab';
-   text-align: left;
-    font-size: 18px;
-            color: #336b87;
-        background: #F1F1F2;
-        border-bottom: 20px solid white;
+   width: 100%;
+   
 }
 
-th{
-    /*.header controls this text-align: left;*/
-    font-family: 'Roboto Slab';
-    text-align: center;
-        color: #336b87;
+
+.glyphicon.glyphicon-chevron-up{
+    font-size: 40px;
+    padding-left: 10px;
+    color: #f2f2f2;
+}
+
+.glyphicon.glyphicon-check { 
+    font-size: 40px;
+    padding-left: 10px;
+    color: #f2f2f2;
+}
+
+.glyphicon.glyphicon-flag { 
+    font-size: 40px;
+    padding-left: 10px;
+    color: #93af92;
+}
+
+.glyphicon.glyphicon-chevron-up:hover { 
+    color: #93af92;
+}
+
+.glyphicon.glyphicon-check:hover { 
+    color: #93af92;
+}
+
+button{
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
 }

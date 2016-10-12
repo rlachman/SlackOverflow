@@ -65,7 +65,8 @@
     <div class="container">
     
         <h1 id="secondLevelLinks">
-        <a href="home.php"><span class="glyphicon glyphicon-home"></span> Home</a> &nbsp; 
+        <a href="home.php"><span class="glyphicon glyphicon-home"></span> Home</a> &nbsp;
+        <a href="ask.php"><span class="glyphicon glyphicon-question-sign"></span> Ask</a>
         <a href="profile.php"><span class="glyphicon glyphicon-user"></span> Profile</a>
         <a href="browse.php"><span class="glyphicon glyphicon-eye-open"></span> Browse</a>
         </h1>
