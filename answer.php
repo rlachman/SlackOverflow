@@ -2,7 +2,7 @@
         session_start();
         $servername = "localhost";
         $username = "root";
-        $password = "odu2017";
+        $password = "";
         $dbname = "slackoverflow";
         
         $conn = new mysqli($servername, $username, $password, $dbname);
@@ -201,4 +201,3 @@
 <script src="bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
-?>

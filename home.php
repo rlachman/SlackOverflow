@@ -109,7 +109,7 @@ function Solved($solved)
                 
         $servername = "localhost";
         $username = "root";
-        $password = "odu2017";
+        $password = "";
         $dbname = "slackoverflow";
         
         //Establish connection
