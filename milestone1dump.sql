@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 02, 2016 at 07:04 PM
+-- Generation Time: Oct 12, 2016 at 03:06 AM
 -- Server version: 5.7.15-0ubuntu0.16.04.1
 -- PHP Version: 7.0.8-0ubuntu0.16.04.2
 
@@ -30,8 +30,20 @@ CREATE TABLE `answers` (
   `answer_id` int(11) NOT NULL,
   `answer` varchar(5000) NOT NULL,
   `responder_id` int(11) NOT NULL,
-  `question_id` int(11) NOT NULL
+  `question_id` int(11) NOT NULL,
+  `is_best` tinyint(1) DEFAULT '0',
+  `num_upvotes` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `answers`
+--
+
+INSERT INTO `answers` (`answer_id`, `answer`, `responder_id`, `question_id`, `is_best`, `num_upvotes`) VALUES
+(62, 'The answer is 2.', 12, 42, 1, NULL),
+(63, 'John Wayne.', 12, 43, 1, NULL),
+(64, 'lkajsdfo;iaudopf9adusfo;kajsdlkfjasdflas;dfkjasdf', 6, 43, 0, NULL),
+(65, 'kalskdjfa9sd0f809238490jlkjkfasdfadf', 6, 42, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -53,16 +65,8 @@ CREATE TABLE `questions` (
 --
 
 INSERT INTO `questions` (`question_id`, `question_title`, `question`, `asker_id`, `answer_id`, `is_solved`) VALUES
-(1, '', 'What is the meaning of the universe?', 3, NULL, 1),
-(2, '', 'What does deadlock mean in the context of operating systems?', 5, NULL, 0),
-(3, '', 'What programming language should I learn first?', 4, NULL, NULL),
-(4, '', 'How do I connect to MySQL db using PHP?', 3, NULL, NULL),
-(5, '', 'When is appropriate to use GET over POST?', 2, NULL, 1),
-(9, 'First question using form', 'I finally got this *** to work.', 5, NULL, NULL),
-(18, 'How to redirect after submitting form using PHP?', 'How to redirect after submitting form using PHP?', 5, NULL, NULL),
-(19, '', '', 5, NULL, NULL),
-(20, 'Test', 'Test', 5, NULL, NULL),
-(21, 'ABC', '1234', 5, NULL, NULL);
+(42, 'How do I add this?', '1+1', 5, NULL, 1),
+(43, 'What is my name?', 'What is my first and last name?', 5, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -86,7 +90,13 @@ INSERT INTO `users` (`user_id`, `user_name`, `user_email`, `user_pass`) VALUES
 (2, 'bob', 'bob@bob.com', '$2y$10$lQnGeg0V65uMomPxddu3luSE8AEa1k6yGI4tj/2W1qHAkURKLDBd.'),
 (3, 'john', 'john@john.com', '$2y$10$FouKLN5PmmYkYUi1cRS4j.Cke230BddZx3CpFCJK8eGZ1Bj1OGvXe'),
 (4, 'stevieWonder', 'email@emails.com', '$2y$10$JAn7B.AHoOtPy57f79yFi.mjOaaNcbVzBRZDpC0daHIXUvnZYQRua'),
-(5, 'JohnWayne', 'jw@jw.com', '$2y$10$FuZc7.iHZfSo/2YMIW5WOehOagQBJu7HEyzTIQ5ZYuzqj7Xyu9zBG');
+(5, 'JohnWayne', 'jw@jw.com', '$2y$10$FuZc7.iHZfSo/2YMIW5WOehOagQBJu7HEyzTIQ5ZYuzqj7Xyu9zBG'),
+(6, 'RayCharles', 'rc@email.com', '$2y$10$uXI53uGpoT0hEnsP84S89uVZsq.i4PRJmwpCwCuwBY4jQ.RWfnDc6'),
+(7, 'DarthVader', 'jw@email.com', '$2y$10$DSnn44sNqq1UCujVxp4tAOZEch5yxP.pMAHVOmJlh161zdtu3t7gO'),
+(8, 'kitten', 'kitten@kitten.com', '$2y$10$SjUTi2ZBNFtOFZalPoHfy.dabSJqg/aFyustI1OIjc3gTTw5PwjnW'),
+(9, 'steve', 'steve@steve.com', '$2y$10$ZTPijWz/rD3c.hMvlBq4Y.kWAdpC3EIayoReNQ0LEbqiuKIBfvvVy'),
+(12, 'BillGates', 'Bg@email.com', '$2y$10$4/3rIs0o6w2ftARi4eEl0eegsBtWaoxCptau3Zs4q8WsiU5TgeWha'),
+(13, 'Joe', 'joe@email.com', '$2y$10$8wXWQEeEyurTJAFVT4uj.OL5IbqrFXKwPBhVANbl.eigsIGgCYvse');
 
 --
 -- Indexes for dumped tables
@@ -124,17 +134,17 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `answers`
 --
 ALTER TABLE `answers`
-  MODIFY `answer_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `answer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 --
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- Constraints for dumped tables
 --
@@ -143,7 +153,7 @@ ALTER TABLE `users`
 -- Constraints for table `answers`
 --
 ALTER TABLE `answers`
-  ADD CONSTRAINT `answers_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `questions` (`answer_id`),
+  ADD CONSTRAINT `answers_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `questions` (`question_id`),
   ADD CONSTRAINT `answers_ibfk_2` FOREIGN KEY (`responder_id`) REFERENCES `users` (`user_id`);
 
 --
