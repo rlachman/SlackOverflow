@@ -23,7 +23,7 @@
 <script type="text/javascript" src="jquery-1.11.3-jquery.min.js"></script>
 <link rel="stylesheet" href="style.css" type="text/css"  />
 <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet"> 
-<title>welcome - <?php print($userRow['user_email']); ?></title>
+<title>SlackOverflow - <?php print($userRow['user_email']); ?></title>
 </head>
 
 <body>
