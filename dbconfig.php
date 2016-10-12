@@ -4,7 +4,7 @@ class Database
     private $host = "localhost";
     private $db_name = "slackoverflow";
     private $username = "root";
-    private $password = "odu2017";
+    private $password = "";
     public $conn;
      
     public function dbConnection()
