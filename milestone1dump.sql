@@ -21,7 +21,8 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
-
+CREATE DATABASE slackoverflow;
+USE slackoverflow;
 --
 -- Table structure for table `answers`
 --
