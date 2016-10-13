@@ -71,7 +71,7 @@ if(isset($_POST['btn-login']))
         
         <div class="form-group">
             <button type="submit" name="btn-login" class="btn btn-default">
-                	<i class="glyphicon glyphicon-log-in"></i> &nbsp; SIGN IN
+                	<i class="glyphicon glyphicon-log-in"></i> &nbsp; Sign In
             </button>
         </div>  
       	<br />

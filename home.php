@@ -5,7 +5,6 @@ require_once("dbconfig.php");
 require_once("class.user.php");
 $auth_user = new USER();
 
-
 $user_id = $_SESSION['user_session'];
 
 $stmt = $auth_user->runQuery("SELECT * FROM users WHERE user_id=:user_id");
@@ -80,6 +79,7 @@ function Solved($solved)
             <span class="glyphicon glyphicon-user"></span>&nbsp;Hello <?php echo $userRow['user_email']; ?>&nbsp;<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="profile.php"><span class="glyphicon glyphicon-user"></span>&nbsp;View Profile</a></li>
+            <li><a href="logout.php?logout=true"><span class="glyphicon glyphicon-off"></span>&nbsp;Sign In</a></li>
             <li><a href="logout.php?logout=true"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Sign Out</a></li>
           </ul>
         </li>
