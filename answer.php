@@ -1,5 +1,9 @@
 <?php
         session_start();
+        require_once("session.php");
+        require_once("class.user.php");
+        $auth_user = new USER();
+        
         $servername = "localhost";
         $username = "root";
         $password = "";
@@ -14,6 +18,13 @@
 		{
 			echo "Connection OKAY.";
 		}
+
+  $stmt = $auth_user->runQuery("SELECT * FROM users WHERE user_id=:user_id");
+  $stmt->execute(array(":user_id"=>$user_id));
+  
+  $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
+  $_SESSIONS['user_name'] = $userRow['user_name'];
+
 
 		$q_id = $_GET["q_id"];
 		echo "       ".$q_id;
@@ -191,8 +202,20 @@
 
     <input type="hidden" name="questionID" id="questionID" value="<?php echo $q_id ?>"/>
 
-    <p class="submit">
-        <input type="submit" value="Post Response">
+    <?php
+    if($_SESSION['user_name'] != "guest")
+              {
+                echo "
+                <p class=\"submit\">
+                <input type=\"submit\" value=\"Post Response\">
+                ";
+              }
+              else{
+                echo "<label>Guests can't answer a question. You must sign in.</label>";
+              }
+    ?>
+
+    
     </p>
     
     </form>

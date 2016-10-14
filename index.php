@@ -21,8 +21,24 @@ if(isset($_POST['btn-login']))
 	else
 	{
 		$error = "Incorrect Username or Password.";
-	}	
+	}
 }
+
+//Guest login process below
+if(isset($_POST['btn-guest-login']))
+{
+  $uname = "guest";
+  $umail = "guest@guest.com";
+  $upass = "adminadmin";
+    
+  if($login->doLogin($uname,$umail,$upass))
+  {
+    $login->redirect('home.php');
+    echo "correct pw";
+  }
+}
+/*End of Guest login process*/
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -73,8 +89,12 @@ if(isset($_POST['btn-login']))
             <button type="submit" name="btn-login" class="btn btn-default">
                 	<i class="glyphicon glyphicon-log-in"></i> &nbsp; Sign In
             </button>
-        </div>  
+        </div> 
+            <button type="submit" name="btn-guest-login" class="btn btn-default">
+                  <i class="glyphicon glyphicon-log-in"></i> &nbsp; Guest Access
+            </button>
       	<br />
+        <br />
             <label class="sign-in-label">No Account? <a class="sign-in-label" href="sign-up.php">Sign Up</a></label>
       </form>
 
