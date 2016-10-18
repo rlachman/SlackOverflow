@@ -10,5 +10,5 @@
 	if(isset($_GET['logout']) && $_GET['logout']=="true")
 	{
 		$user_logout->doLogout();
-		$user_logout->redirect('index.php');
+		$user_logout->redirect('index.php?home=no');
 	}
