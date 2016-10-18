@@ -85,18 +85,15 @@ $conn = new mysqli($servername, $username, $password, $dbname);
                     echo "<li><a href=\"profile.php\"><span class=\"glyphicon glyphicon-user\"></span>&nbsp;View Profile</a></li>";
                   }
             
-            if(!$auth_user->is_loggedin() or $user_is_guest = TRUE)
+            if($user_is_guest == TRUE)
             {
-              echo "<li><a href=\"logout.php?logout=true\"><span class=\"glyphicon glyphicon-off\"></span>&nbsp;Sign In</a></li>";
+              echo "<li><a href=\"index.php?home=yes\"><span class=\"glyphicon glyphicon-off\"></span>&nbsp;Sign In</a></li>";
             }
 
-            if($auth_user->is_loggedin() and $user_name != "guest" and $user_is_guest != TRUE)
+            if($auth_user->is_loggedin() and $user_name != "guest")
             {
               echo "<li><a href=\"logout.php?logout=true\"><span class=\"glyphicon glyphicon-log-out\"></span>&nbsp;Sign Out</a></li>";
             }
-            
-
-
             ?>
           </ul>
         </li>
@@ -178,7 +175,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
         			</tr>";}
         	
           //allow asker to select best answer if not selected already
-          if($isAsker == TRUE and $is_solved == FALSE AND $is_best != TRUE) {echo		 
+          if($isAsker == TRUE and $is_solved == FALSE AND $is_best == FALSE) {echo		 
         			"<tr> 
         				<button type=\"submit\" name=\"answer_id\" value=\"$ans_id\"><span class=\"glyphicon glyphicon-check\"></span></button>
         			</tr>";}
