@@ -3,8 +3,8 @@ class Database
 {   
     private $host = "localhost";
     private $db_name = "slackoverflow";
-    private $username = "root";
-    private $password = "";
+    private $username = "admin";
+    private $password = "M0n@rch$";
     public $conn;
      
     public function dbConnection()

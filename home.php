@@ -136,8 +136,8 @@ function Solved($solved)
         <?php
                 
         $servername = "localhost";
-        $username = "root";
-        $password = "";
+        $username = "admin";
+        $password = "M0n@rch$";
         $dbname = "slackoverflow";
         
         //Establish connection
