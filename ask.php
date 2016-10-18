@@ -168,8 +168,8 @@ function printCheck()
         <?php
                 
         $servername = "localhost";
-        $username = "root";
-        $password = "";
+        $username = "admin";
+        $password = "M0n@rch$";
         $dbname = "slackoverflow";
         
         //Establish connection

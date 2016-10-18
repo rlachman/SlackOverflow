@@ -4,8 +4,8 @@ require_once("class.user.php");
 $login = new USER();
 
 $servername = "localhost";
-$username = "root";
-$password = "";
+$username = "admin";
+$password = "M0n@rch$";
 $dbname = "slackoverflow";
 $conn = new mysqli($servername, $username, $password, $dbname);
 

@@ -8,8 +8,8 @@
   $user_id = $_SESSION['user_session'];
   
   $servername = "localhost";
-$username = "root";
-$password = "";
+$username = "admin";
+$password = "M0n@rch$";
 $dbname = "slackoverflow";
 $conn = new mysqli($servername, $username, $password, $dbname);
   $stmt = $auth_user->runQuery("SELECT * FROM users WHERE user_id=:user_id");

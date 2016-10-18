@@ -2,8 +2,8 @@
 		session_start();
 
 		$servername = "localhost";
-        $username = "root";
-        $password = "";
+        $username = "admin";
+        $password = "M0n@rch$";
         $dbname = "slackoverflow";
         
         $conn = new mysqli($servername, $username, $password, $dbname);
