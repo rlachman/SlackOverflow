@@ -3,10 +3,10 @@ session_start();
 require_once('class.user.php');
 $user = new USER();
 
-if($user->is_loggedin()!="")
+/*if($user->is_loggedin()!="")
 {
 	$user->redirect('home.php');
-}
+}*/
 
 if(isset($_POST['btn-signup']))
 {
@@ -93,7 +93,7 @@ if(isset($_POST['btn-signup']))
 			{
 				 ?>
                  <div class="alert alert-info">
-                      <i class="glyphicon glyphicon-log-in"></i> &nbsp; Successfully registered <a href='index.php'>login</a> here
+                      <i class="glyphicon glyphicon-log-in"></i> &nbsp; Successfully registered <a href='index.php?home=yes'>login</a> here
                  </div>
                  <?php
 			}
@@ -114,7 +114,7 @@ if(isset($_POST['btn-signup']))
                 </button>
             </div>
             <br />
-            <label id="signIn">If you have an account please <a id="signIn" href="index.php">Sign In</a></label>
+            <label id="signIn">If you have an account please <a id="signIn" href="index.php?home=yes">Sign In</a></label>
         </form>
        </div>
 </div>
