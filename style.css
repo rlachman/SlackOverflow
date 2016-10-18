@@ -30,7 +30,10 @@ h2,p.h2,.h5{
 a{
     color: #68829e;
     font-size: 25px;
-    }
+    width: 100%;
+    text-align: left;
+    padding-left: 10px;
+}
 
 
 #secondLevelLinks
@@ -144,16 +147,19 @@ h1{
 .questionTable{
     font-size: 20px;
     width: 100%;
-            }
+}
 
 .questionTable td,tr{
     text-align: left;
     padding-top: 20px;
-    padding-left: 20px;
+    padding-left: 1px;
+    width: 80%;
 }
 
 .questionTable a{
     font-size: 20px;
+    padding-left: 1px;
+    width: 80%;
 }
 
 .header{
@@ -163,7 +169,8 @@ h1{
 #responseBody{
     background:#f2f2f2;
     font-size: 150%;
-       }
+}
+
 #signIn{
     font-family: 'Roboto Slab', serif;
     color: white;
@@ -171,14 +178,23 @@ h1{
 
 
 td{
-   
-   font-family: 'Roboto Slab';
+    font-family: 'Roboto Slab';
    width: 100%;
+    text-align: left;
+    padding-top: 20px;
+    padding-left: 10px;
    
 }
 
+.glyphicon.glyphicon-remove {
+    color: rgba(199, 167, 9, 0.86);
+}
 
-.glyphicon.glyphicon-chevron-up{
+.glyphicon.glyphicon-ok {
+    color: #93af92;
+}
+
+.glyphicon.glyphicon-chevron-up {
     font-size: 40px;
     padding-left: 10px;
     color: #f2f2f2;
@@ -196,11 +212,11 @@ td{
     color: #93af92;
 }
 
-.glyphicon.glyphicon-chevron-up:hover { 
+.glyphicon.glyphicon-chevron-up:hover {
     color: #93af92;
 }
 
-.glyphicon.glyphicon-check:hover { 
+.glyphicon.glyphicon-check:hover {
     color: #93af92;
 }
 
