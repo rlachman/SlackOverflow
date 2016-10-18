@@ -73,7 +73,7 @@
               echo "<li><a href=\"index.php\"><span class=\"glyphicon glyphicon-off\"></span>&nbsp;Sign In</a></li>";
             }
 
-            if($auth_user->is_loggedin() and $user_name != "guest")
+            if($auth_user->is_loggedin() and $user_name != "guest" and $user_is_guest == FALSE)
             {
               echo "<li><a href=\"logout.php?logout=true\"><span class=\"glyphicon glyphicon-log-out\"></span>&nbsp;Sign Out</a></li>";
             }
@@ -102,7 +102,7 @@
         
         <?php
           
-          if($user_is_guest == 1)
+          if($user_is_guest == FALSE)
           {
             echo "<label class=\"h5\">User Profile: ".$userRow['user_name']."</label>";
           }
