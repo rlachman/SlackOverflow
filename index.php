@@ -3,11 +3,17 @@ session_start();
 require_once("class.user.php");
 $login = new USER();
 
-if($login->is_loggedin()!="")
+if(isset($_GET["home"]))
 {
-	$login->redirect('home.php');
+  $from_home = $_GET["home"];
 }
 
+/*if($login->is_loggedin()!="" and $login->is_loggedin()!= "guest")
+{
+	$login->redirect('home.php');
+}*/
+
+// Will login with credentials if form is submitted via button
 if(isset($_POST['btn-login']))
 {
 	$uname = strip_tags($_POST['txt_uname_email']);
@@ -16,13 +22,29 @@ if(isset($_POST['btn-login']))
 		
 	if($login->doLogin($uname,$umail,$upass))
 	{
-		$login->redirect('home.php');
+		$user_is_guest = FALSE;
+    $login->redirect('home.php');
 	}
 	else
 	{
 		$error = "Incorrect Username or Password.";
-	}	
+	}
 }
+
+// By default user is logged in as guest until they sign out and manually enter credentials
+if(isset($_POST['btn-guest-login']) or !isset($_GET["home"]))
+{
+  $uname = "guest";
+  $umail = "guest@guest.com";
+  $upass = "adminadmin";
+    
+  if($login->doLogin($uname,$umail,$upass))
+  {
+    $login->redirect('home.php');
+  }
+}
+/*End of Guest login process*/
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -41,7 +63,7 @@ if(isset($_POST['btn-login']))
 	<div class="container">
      
         
-       <form class="form-signin" method="post" id="login-form">
+       <form class="form-signin" method="post" id="login-form" novalidate>
       
         <h2 id="form-signin-heading">SlackOverflow | Sign In</h2><hr />
         
@@ -73,8 +95,12 @@ if(isset($_POST['btn-login']))
             <button type="submit" name="btn-login" class="btn btn-default">
                 	<i class="glyphicon glyphicon-log-in"></i> &nbsp; Sign In
             </button>
-        </div>  
+        </div> 
+            <button type="submit" name="btn-guest-login" class="btn btn-default">
+                  <i class="glyphicon glyphicon-log-in"></i> &nbsp; Guest Access
+            </button>
       	<br />
+        <br />
             <label class="sign-in-label">No Account? <a class="sign-in-label" href="sign-up.php">Sign Up</a></label>
       </form>
 

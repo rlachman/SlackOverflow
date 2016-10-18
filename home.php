@@ -13,6 +13,8 @@ $stmt->execute(array(":user_id"=>$user_id));
 $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
 
 $_SESSION['user_id'] = $userRow['user_id'];
+$user_name = $userRow['user_name'];
+$user_is_guest = $userRow['is_guest'];
 
 function debug_to_console($data) {
   if(is_array($data) || is_object($data))
@@ -76,11 +78,37 @@ function Solved($solved)
 
         <li class="dropdown">
           <a href="#" id="dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-            <span class="glyphicon glyphicon-user"></span>&nbsp;Hello <?php echo $userRow['user_email']; ?>&nbsp;<span class="caret"></span></a>
+            
+            <span class="glyphicon glyphicon-user"></span>&nbsp;Hello 
+              <?php 
+                  if($user_is_guest == FALSE) {
+                    echo $userRow['user_email'];}
+                  else{
+                    echo " Guest";
+                  }
+
+              ?>&nbsp;
+              <span class="caret">
+              </span>
+          </a>
+          
           <ul class="dropdown-menu">
-            <li><a href="profile.php"><span class="glyphicon glyphicon-user"></span>&nbsp;View Profile</a></li>
-            <li><a href="logout.php?logout=true"><span class="glyphicon glyphicon-off"></span>&nbsp;Sign In</a></li>
-            <li><a href="logout.php?logout=true"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Sign Out</a></li>
+            <?php 
+                  if($user_is_guest == FALSE) 
+                  {
+                    echo "<li><a href=\"profile.php\"><span class=\"glyphicon glyphicon-user\"></span>&nbsp;View Profile</a></li>";
+                  }
+            
+            if($user_is_guest == TRUE)
+            {
+              echo "<li><a href=\"index.php?home=yes\"><span class=\"glyphicon glyphicon-off\"></span>&nbsp;Sign In</a></li>";
+            }
+
+            if($auth_user->is_loggedin() and $user_name != "guest")
+            {
+              echo "<li><a href=\"logout.php?logout=true\"><span class=\"glyphicon glyphicon-log-out\"></span>&nbsp;Sign Out</a></li>";
+            }
+            ?>
           </ul>
         </li>
       </ul>
