@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 18, 2016 at 05:38 AM
+-- Generation Time: Oct 18, 2016 at 06:33 AM
 -- Server version: 5.7.15-0ubuntu0.16.04.1
 -- PHP Version: 7.0.8-0ubuntu0.16.04.2
 
@@ -21,8 +21,7 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
-CREATE DATABASE slackoverflow;
-USE slackoverflow;
+
 --
 -- Table structure for table `answers`
 --
@@ -50,10 +49,10 @@ INSERT INTO `answers` (`answer_id`, `answer`, `responder_id`, `question_id`, `is
 (68, '16', 5, 44, 0, NULL),
 (69, 'I have them.', 7, 45, 1, NULL),
 (70, 'Don\'t know.', 12, 45, 0, NULL),
-(71, '', 14, 44, 0, NULL),
 (72, '123', 5, 42, 0, NULL),
 (73, 'cvgn', 8, 42, 0, NULL),
-(74, 'Resp1', 5, 47, 1, NULL);
+(74, 'Resp1', 5, 47, 1, NULL),
+(75, 'Some guy.', 5, 48, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -80,7 +79,8 @@ INSERT INTO `questions` (`question_id`, `question_title`, `question`, `asker_id`
 (44, 'How many movies have I starred in?', '', 5, NULL, 1),
 (45, 'Where are my glasses?', '', 6, NULL, 1),
 (46, 'TEST', 'TEST', 5, NULL, NULL),
-(47, 'Test', '???', 5, NULL, 1);
+(47, 'Test', '???', 5, NULL, 1),
+(48, 'Who is slimer?', 'Who is slimer?Who is slimer?Who is slimer?', 21, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -93,7 +93,7 @@ CREATE TABLE `users` (
   `user_name` varchar(255) NOT NULL,
   `user_email` varchar(60) NOT NULL,
   `user_pass` varchar(255) NOT NULL,
-  `is_guest` tinyint(1) NOT NULL
+  `is_guest` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -112,7 +112,15 @@ INSERT INTO `users` (`user_id`, `user_name`, `user_email`, `user_pass`, `is_gues
 (9, 'steve', 'steve@steve.com', '$2y$10$ZTPijWz/rD3c.hMvlBq4Y.kWAdpC3EIayoReNQ0LEbqiuKIBfvvVy', 0),
 (12, 'BillGates', 'Bg@email.com', '$2y$10$4/3rIs0o6w2ftARi4eEl0eegsBtWaoxCptau3Zs4q8WsiU5TgeWha', 0),
 (13, 'Joe', 'joe@email.com', '$2y$10$8wXWQEeEyurTJAFVT4uj.OL5IbqrFXKwPBhVANbl.eigsIGgCYvse', 0),
-(14, 'guest', 'guest@guest.com', '$2y$10$FuZc7.iHZfSo/2YMIW5WOehOagQBJu7HEyzTIQ5ZYuzqj7Xyu9zBG', 1);
+(14, 'guest', 'guest@guest.com', '$2y$10$FuZc7.iHZfSo/2YMIW5WOehOagQBJu7HEyzTIQ5ZYuzqj7Xyu9zBG', 1),
+(15, 'moe', 'moe@email.com', '$2y$10$1Cd3nMHaz9gaF8oyfuUn8ucTSBh2zVOKzCib6ny8O3og9Zysywthe', 0),
+(16, '123', '123@email.com', '$2y$10$bKl6UV6JxEj5z9dQcusZoe682EJGUsfy/RvcNe3A/6MZNl5mhM9se', 0),
+(17, '1234', '1234@email.com', '$2y$10$L0bsruJe6d.Vn3M4pfqdkuIzBEZUnyacwE8mEbCa7o4oijSg3fegq', 0),
+(18, 'abc', 'abc@email.com', '$2y$10$fMHC6W9.GwusMb.SFcKAheqbCnIVGJJ1UbpuVjPQGK0iPfGFz3ulO', 0),
+(19, 'rstantz', 'rstantz@email.com', '$2y$10$m0QO81Hdx/JEQ9LlMOc1GeYJUZ9RVgIz5UJkF11etZYQfH1l5fEzK', 0),
+(20, 'jbrunelle', 'jbrunelle@email.com', '$2y$10$7u3kaxoXuTe2azFEyg2tyOJCy5AYo1Coh60.FZc7f7Rxu0GVQHJHS', 0),
+(21, 'slimer', 'slimer@email.com', '$2y$10$PeymSvdwnTkpqJFxZR7G4uFv35kjVst7kGVmWFqqHkSPfU.MxUt6O', 0),
+(22, '123123', '123123@email.com', 'adminadmin', 0);
 
 --
 -- Indexes for dumped tables
@@ -150,17 +158,17 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `answers`
 --
 ALTER TABLE `answers`
-  MODIFY `answer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `answer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 --
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 --
 -- Constraints for dumped tables
 --
