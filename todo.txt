@@ -1,0 +1,13 @@
+10/28/2016
+
+TODO:
+
+-Figure out why upvote/downvote stops working after best answer is selected
+
+-Sort responses based on score, best answer always on top
+
+-Implement up/down vote of questions
+
+-Highest 5 scoring questions on homepage
+
+-Profile page with info about questions asked, answers given etc

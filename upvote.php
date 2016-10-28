@@ -6,7 +6,6 @@ require_once("class.user.php");
 $auth_user = new USER();
 $user_id = $_SESSION['user_session'];
 $answer_id = $_SESSION["answer_id"];
-$isUp = $_SESSION["isUp"];
 
 // SQL CONNECTION  
 $servername = "localhost";
@@ -20,29 +19,19 @@ if ($conn->connect_error) {
 		} 
 		if(!$conn->connect_error)
 		{
-			echo "Connection OKAY.<br>";
+			//echo "Connection OKAY.<br>";
 		}
 
 $numUpvotes = $_POST[upvote];
 echo "num upvotes: ".$numUpvotes;
 
-$numDownvotes = $_POST[downvote];
-echo ", num Downvotes: ".$numDownvotes."<br>";
-
-        if($isUp)
-        	{
-        		$sql = "UPDATE answers SET num_upvotes = $numUpvotes WHERE answer_id=$answer_id";
-        	}
-        	else
-        	{
-        		$sql = "UPDATE answers SET num_downvotes = $numDownvotes WHERE answer_id=$answer_id";
-        	}
+        $sql = "UPDATE answers SET num_upvotes = $numUpvotes WHERE answer_id=$answer_id";
               
        if ($conn->query($sql) === TRUE) {
-    	echo "You have updated upvotes and downvotes";
+    	//echo "You have updated upvotes ";
 		} else {
-    	echo "Error: " . $sql . "<br>" . $conn->error;
+    	//echo "Error: " . $sql . "<br>" . $conn->error;
 		}
-        	}
 
+header('Location: ' . $_SERVER['HTTP_REFERER']);
 ?>

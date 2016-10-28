@@ -167,7 +167,6 @@ h1{
 }
 
 #responseBody{
-    background:#85adad;
     font-size: 150%;
 }
 
@@ -197,19 +196,19 @@ td{
 .glyphicon.glyphicon-chevron-up {
     font-size: 40px;
     padding-left: 10px;
-    color: #f2f2f2;
+    color: #6e7f85;
 }
 
 .glyphicon.glyphicon-chevron-down {
     font-size: 40px;
     padding-left: 10px;
-    color: #f2f2f2;
+    color: #6e7f85;
 }
 
 .glyphicon.glyphicon-check { 
     font-size: 40px;
     padding-left: 10px;
-    color: #f2f2f2;
+    color: #6e7f85;
 }
 
 .glyphicon.glyphicon-flag { 
