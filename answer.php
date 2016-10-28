@@ -207,7 +207,7 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
           $numUpvotesTotal = $numUpvotes + 1;
           $numDownvotesTotal = $numDownvotes + 1;
 
-$votingPacket = array( 1 -> $numUpvotesTotal, 2 -> $numDownvotesTotal, 3 -> $ans_id );
+//$votingPacket = array( 1 -> $numUpvotesTotal, 2 -> $numDownvotesTotal, 3 -> $ans_id );
 
           if(!$user_is_guest) {echo "<tr> <button type=\"submit\" name=\"upvote\" value=\"$numUpvotesTotal\"><span class=\"glyphicon glyphicon-chevron-up\"></span></button> </tr>
                                       <tr> <button type=\"submit\" name=\"downvote\" value=\"$numDownvotesTotal\"><span class=\"glyphicon glyphicon-chevron-down\"></span></button> </tr>";
