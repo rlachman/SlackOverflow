@@ -1,34 +1,38 @@
 <?php
- require_once("session.php");
-  
-  require_once("class.user.php");
-  $auth_user = new USER();
-  
-  
-  $user_id = $_SESSION['user_session'];
-  
-  $servername = "localhost";
+require_once("session.php");
+require_once("class.user.php");
+
+// SESSION
+$auth_user = new USER();
+$user_id = $_SESSION['user_session'];
+
+// SQL CONNECTION  
+$servername = "localhost";
 $username = "admin";
 $password = "M0n@rch$";
 $dbname = "slackoverflow";
 $conn = new mysqli($servername, $username, $password, $dbname);
+  
+// GET ROW FOR LOGGED IN USER
   $stmt = $auth_user->runQuery("SELECT * FROM users WHERE user_id=:user_id");
   $stmt->execute(array(":user_id"=>$user_id));
   
   $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
 
-  $_SESSION['user_id'] = $userRow['user_id'];
-  $_SESSION['user_name'] = $userRow['user_name'];
-  $user_is_guest = $userRow['is_guest'];
+// ADDITIONAL SESSION VARIABLES
+$_SESSION['user_id'] = $userRow['user_id'];
+$_SESSION['user_name'] = $userRow['user_name'];
+$user_is_guest = $userRow['is_guest'];
 
-
-		$q_id = $_GET["q_id"];
-		echo "       ".$q_id;
-		$sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_id, user_name, is_solved FROM questions join users on asker_id=user_id
+// GET QUESTION ID FROM PREVIOUS PAGE
+$q_id = $_GET["q_id"];
+echo "       ".$q_id;
+$sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_id, user_name, is_solved FROM questions join users on asker_id=user_id
 			WHERE question_id=$q_id";
-        //Store collection of rows in variable called result
-        $result = $conn->query($sql);
-        $row = $result->fetch_assoc();
+    
+    //Store collection of rows in variable called result
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
         
 ?>
 
@@ -129,10 +133,10 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 	
 		
 	<?php
-	$sql = "SELECT answer_id, answer, responder_id, is_best, user_name 
+	$sql = "SELECT answer_id, answer, responder_id, is_best, num_upvotes, num_downvotes, user_name 
 			FROM answers JOIN users WHERE question_id=$q_id and responder_id=user_id";
 	  /////VERIFIES LOGGED IN USER IS THE ASKER, IF USER IS THE ASKER THEN GIVE OPTION TO SELECT BEST ANSWER     
-        
+  
       $getAskerID = "SELECT asker_id, is_solved FROM questions WHERE question_id=$q_id";
       $result = $conn->query($getAskerID);
       $questionInfo = $result->fetch_assoc();
@@ -151,14 +155,19 @@ $conn = new mysqli($servername, $username, $password, $dbname);
     }
     
 		    //Store collection of rows in variable called result
-        $result = $conn->query($sql);
         //if session user id != asker id then hide choose best answer glyph
         //if response has been selected as best answer then set color to green
+              
+        $result = $conn->query($sql);
         while($row = $result->fetch_assoc())
         {
-        	$ans_id = $row["answer_id"];
+                
+          $ans_id = $row["answer_id"];
+          echo $ans_id.$num_upvotes.$num_downvotes;
+          $numUpvotes = $row["num_upvotes"];
+          $numDownvotes = $row["num_downvotes"];      
         	$is_best = $row["is_best"];
-          	        	
+        	        	
         	echo "<hr><table>";
         	echo "<tr>
         		<td id=\"answerTD\"><p id=\"responseBody\">".$row["answer"]."</p></td>
@@ -183,29 +192,39 @@ $conn = new mysqli($servername, $username, $password, $dbname);
           //Non asker needs to be able to see the best answer which is chosen by asker.
         	if($isAsker == FALSE and $is_best == TRUE) {echo		 
         			"<tr> <span class=\"glyphicon glyphicon-flag\"></span> </tr>";}
-			
+			                
+          
+        
+                  //<button type=\"submit\" name=\"downvote\" value=\"$num_downvotes\"><span class=\"glyphicon glyphicon-chevron-down\"></span></button>
+
+
+          echo "</form>";
+
+          //FORM THAT HANDLES VOTING
+          echo "<form name=\"votingForm\" method=\"post\" action=\"voting.php\">";
           //Upvote for non asker
-          if($isAsker == FALSE) {echo "<tr> <span class=\"glyphicon glyphicon-chevron-up\"></span> </tr>";}
-        			
-        	echo "</form>      			
-        			</table>
+          //before upvote submit grab upvote number from db and add one to it
+          $numUpvotesTotal = $numUpvotes + 1;
+          $numDownvotesTotal = $numDownvotes + 1;
+
+$votingPacket = array( 1 -> $numUpvotesTotal, 2 -> $numDownvotesTotal, 3 -> $ans_id );
+
+          if(!$user_is_guest) {echo "<tr> <button type=\"submit\" name=\"upvote\" value=\"$numUpvotesTotal\"><span class=\"glyphicon glyphicon-chevron-up\"></span></button> </tr>
+                                      <tr> <button type=\"submit\" name=\"downvote\" value=\"$numDownvotesTotal\"><span class=\"glyphicon glyphicon-chevron-down\"></span></button> </tr>";
+        }
+          echo "</form>";
+          ///////
+
+        		echo "</table>
         		</td>
-        		</tr>";
+        		</tr>
+            Num Up: ".$numUpvotes." | Num Down: ".$numDownvotes." | Tags: random, php";
         	echo"<tr>
         			<td><div align=\"right\">".$row["user_name"]."</div>
         		</tr>
         	";
         	echo"</table>";
-        	/*echo "<tr>
-        		<td>".$row["answer"]."</td><tr><td>".$row["user_name"].
-        		"<td><a href=\"#\" class=\"btn btn-info btn-lg\"><span class=\"glyphicon glyphicon-chevron-up\"></span> Vote Up</a></td>
-        		<td>3 Upvotes</td>
-        		<button type="submit">
-   <span class="glyphicon glyphicon-edit"></span>
-</button>
-        	</tr>";
-        	*/
-        }
+      }
         
         
         if ($conn->query($sql) === FALSE) {
