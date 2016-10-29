@@ -21,12 +21,13 @@ if ($conn->connect_error) {
 		{
 			//echo "Connection OKAY.<br>";
 		}
-list($votes, $ans_id) = explode("-", $_POST[upvote], 2);
+list($votes, $ans_id, $q_id) = explode("-", $_POST[upvote], 3);
 
 $votes = $votes + 1;
 
 echo "num upvotes: ".$votes;
 echo "<br>ans id: ".$ans_id;
+echo "<br>q_id: ".$q_id;
 
         $sql = "UPDATE answers SET num_upvotes = $votes WHERE answer_id=$ans_id";
               
@@ -34,6 +35,14 @@ echo "<br>ans id: ".$ans_id;
     	//echo "You have updated upvotes ";
 		} else {
     	//echo "Error: " . $sql . "<br>" . $conn->error;
+		}
+
+		//insert vote record into the db
+		$sql = "INSERT INTO votes (question_id,answer_id,voter_id,is_upvote) VALUES ($q_id,$ans_id,$user_id,1)";
+		if ($conn->query($sql) === TRUE) {
+    	echo "You have inserted a vote record";
+		} else {
+    	echo "Error: " . $sql . "<br>" . $conn->error;
 		}
 
 header('Location: ' . $_SERVER['HTTP_REFERER']);

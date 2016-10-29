@@ -13,7 +13,7 @@ body{
 
 .logo{
     font-family:'Roboto Slab', serif;
-    font-size: 30px;
+    font-size: 40px;
     color: white;
 }
 
@@ -28,7 +28,7 @@ h2,p.h2,.h5{
 }
 
 a{
-    color: #68829e;
+    color: #6e7f85;
     font-size: 25px;
     width: 100%;
     text-align: left;
@@ -141,7 +141,7 @@ a{
 
 h1{
     font-family:'Roboto Slab',Verdana, Geneva, sans-serif;
-    color: #68829e;
+    color: #6e7f85;
 }
 
 .questionTable{
@@ -168,6 +168,7 @@ h1{
 
 #responseBody{
     font-size: 150%;
+    background: #eff0f1;
 }
 
 #signIn{
@@ -211,7 +212,7 @@ td{
     color: #6e7f85;
 }
 
-.glyphicon.glyphicon-flag { 
+.glyphicon.glyphicon-thumbs-up { 
     font-size: 40px;
     padding-left: 10px;
     color: #93af92;

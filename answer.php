@@ -26,8 +26,10 @@ $user_is_guest = $userRow['is_guest'];
 
 // GET QUESTION ID FROM PREVIOUS PAGE
 $q_id = $_GET["q_id"];
+$userVoted = TRUE;
 echo "       ".$q_id;
-$sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_id, user_name, is_solved FROM questions join users on asker_id=user_id
+$sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_id, user_name, is_solved FROM questions 
+        join users on asker_id=user_id
 			WHERE question_id=$q_id";
     
     //Store collection of rows in variable called result
@@ -163,19 +165,22 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
         {
                 
           $ans_id = $row["answer_id"];
+          
           $_SESSION["answer_id"] = $ans_id;
-          echo $ans_id;
-          $numUpvotes = $row["num_upvotes"];//.'-'.$ans_id;
-          $numDownvotes = $row["num_downvotes"];//.'-'.$ans_id;      
-        	$upvotes = $row["num_upvotes"];
+          
+          $numUpvotes = $row["num_upvotes"];
+          $numDownvotes = $row["num_downvotes"];    
+        	
+          $upvotes = $row["num_upvotes"];
           $downvotes = $row["num_downvotes"];
+          
           $is_best = $row["is_best"];
 
         	        	
         	echo "<hr><table>";
         	echo "<tr>
         		<td id=\"answerTD\"><p id=\"responseBody\">".$row["answer"]."</p></td>
-        		<td id=\"answerTD\"> 
+            <td id=\"answerTD\"> 
         			<table>
         			
         			<form name=\"bestAnswerForm\" method=\"post\" action=\"selectbestanswer.php\">";
@@ -196,7 +201,7 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
         	
             //Non asker needs to be able to see the best answer which is chosen by asker.
         	  if($isAsker == FALSE and $is_best == TRUE) {echo		 
-        			"<tr> <span class=\"glyphicon glyphicon-flag\"></span> </tr>";}
+        			"<tr> <span class=\"glyphicon glyphicon-thumbs-up\"></span> </tr>";}
 			            
           echo "</form>"; // End of form that handles best answer selection
 
@@ -206,8 +211,9 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
           
             if(!$user_is_guest) 
             { //numUpvotes contains the num of upvotes as well as the answer id, break apart once to php file
-              $numUpvotes = $numUpvotes."-".$ans_id;
-              echo "<tr> <button type=\"submit\" name=\"upvote\" value=\"$numUpvotes\"><span class=\"glyphicon glyphicon-chevron-up\"></span></button> </tr>";
+              $numUpvotes = $numUpvotes."-".$ans_id."-".$q_id;
+              $score = $upvotes - $downvotes;
+              echo "<tr> <button type=\"submit\" name=\"upvote\" value=\"$numUpvotes\"><span class=\"glyphicon glyphicon-chevron-up\"></span>".$score."</button> </tr>";
 
             }
             echo "</form>";
@@ -219,7 +225,7 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
           
             if(!$user_is_guest) 
             {
-              $numDownvotes = $numDownvotes."-".$ans_id;
+              $numDownvotes = $numDownvotes."-".$ans_id."-".$q_id;
               echo "<tr> <button type=\"submit\" name=\"downvote\" value=\"$numDownvotes\"><span class=\"glyphicon glyphicon-chevron-down\"></span></button> </tr>";
             }
           echo "</form>";
@@ -227,9 +233,8 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
 
         		echo "</table>
         		</td>
-        		</tr>
-            Num Up: ".$upvotes." | Num Down: ".$downvotes." | Tags: random, php";
-        	echo"<tr>
+        		</tr>";
+            echo"<tr>
         			<td><div align=\"right\">".$row["user_name"]."</div>
         		</tr>
         	";
