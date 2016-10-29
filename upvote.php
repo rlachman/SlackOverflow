@@ -21,11 +21,14 @@ if ($conn->connect_error) {
 		{
 			//echo "Connection OKAY.<br>";
 		}
+list($votes, $ans_id) = explode("-", $_POST[upvote], 2);
 
-$numUpvotes = $_POST[upvote];
-echo "num upvotes: ".$numUpvotes;
+$votes = $votes + 1;
 
-        $sql = "UPDATE answers SET num_upvotes = $numUpvotes WHERE answer_id=$answer_id";
+echo "num upvotes: ".$votes;
+echo "<br>ans id: ".$ans_id;
+
+        $sql = "UPDATE answers SET num_upvotes = $votes WHERE answer_id=$ans_id";
               
        if ($conn->query($sql) === TRUE) {
     	//echo "You have updated upvotes ";

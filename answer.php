@@ -164,10 +164,13 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
                 
           $ans_id = $row["answer_id"];
           $_SESSION["answer_id"] = $ans_id;
-          echo $ans_id.$num_upvotes.$num_downvotes;
-          $numUpvotes = $row["num_upvotes"];
-          $numDownvotes = $row["num_downvotes"];      
-        	$is_best = $row["is_best"];
+          echo $ans_id;
+          $numUpvotes = $row["num_upvotes"];//.'-'.$ans_id;
+          $numDownvotes = $row["num_downvotes"];//.'-'.$ans_id;      
+        	$upvotes = $row["num_upvotes"];
+          $downvotes = $row["num_downvotes"];
+          $is_best = $row["is_best"];
+
         	        	
         	echo "<hr><table>";
         	echo "<tr>
@@ -178,58 +181,54 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
         			<form name=\"bestAnswerForm\" method=\"post\" action=\"selectbestanswer.php\">";
         			
           
-        	//Best answer not chosen yet, SHOULD SHOW GREY CHECK FOR ASKER
-          if($isAsker == TRUE and $is_solved == TRUE and $is_best == TRUE) {echo		 
+        	/* Display Check or Flag based on whether best answer is selected */
+            //Best answer not chosen yet, SHOULD SHOW GREY CHECK FOR ASKER
+            if($isAsker == TRUE and $is_solved == TRUE and $is_best == TRUE) {echo		 
         			"<tr> 
         				<span style=\"color: #93af92;\" class=\"glyphicon glyphicon-check\"></span>
         			</tr>";}
         	
-          //allow asker to select best answer if not selected already
-          if($isAsker == TRUE and $is_solved == FALSE AND $is_best == FALSE) {echo		 
+            //allow asker to select best answer if not selected already
+            if($isAsker == TRUE and $is_solved == FALSE AND $is_best == FALSE) {echo		 
         			"<tr> 
         				<button type=\"submit\" name=\"answer_id\" value=\"$ans_id\"><span class=\"glyphicon glyphicon-check\"></span></button>
         			</tr>";}
         	
-          //Non asker needs to be able to see the best answer which is chosen by asker.
-        	if($isAsker == FALSE and $is_best == TRUE) {echo		 
+            //Non asker needs to be able to see the best answer which is chosen by asker.
+        	  if($isAsker == FALSE and $is_best == TRUE) {echo		 
         			"<tr> <span class=\"glyphicon glyphicon-flag\"></span> </tr>";}
-			                
-          
-        
-                  //<button type=\"submit\" name=\"downvote\" value=\"$num_downvotes\"><span class=\"glyphicon glyphicon-chevron-down\"></span></button>
-
-
-          echo "</form>";
+			            
+          echo "</form>"; // End of form that handles best answer selection
 
           ////// FORM BELOW HANDLES UPVOTING ///////
-          echo "<form name=\"votingForm\" method=\"post\" action=\"upvote.php\">";
-          $numUpvotesTotal = $numUpvotes + 1;
+          echo "<form name=\"upVotingForm\" method=\"post\" action=\"upvote.php\">";
           
-          if(!$user_is_guest) 
-          {
-            
-            echo "<tr> <button type=\"submit\" name=\"upvote\" value=\"$numUpvotesTotal\"><span class=\"glyphicon glyphicon-chevron-up\"></span></button> </tr>";
-        }
-          echo "</form>";
+          
+            if(!$user_is_guest) 
+            { //numUpvotes contains the num of upvotes as well as the answer id, break apart once to php file
+              $numUpvotes = $numUpvotes."-".$ans_id;
+              echo "<tr> <button type=\"submit\" name=\"upvote\" value=\"$numUpvotes\"><span class=\"glyphicon glyphicon-chevron-up\"></span></button> </tr>";
+
+            }
+            echo "</form>";
 
           /// FORM BELOW HANDLES DOWNVOTING ////
 
-          echo "<form name=\"votingForm\" method=\"post\" action=\"downvote.php\">";
-          $numDownvotesTotal = $numDownvotes + 1;
-
+          echo "<form name=\"downVotingForm\" method=\"post\" action=\"downvote.php\">";
           
-          if(!$user_is_guest) 
-          {
-            
-            echo "<tr> <button type=\"submit\" name=\"downvote\" value=\"$numDownvotesTotal\"><span class=\"glyphicon glyphicon-chevron-down\"></span></button> </tr>";
-        }
+          
+            if(!$user_is_guest) 
+            {
+              $numDownvotes = $numDownvotes."-".$ans_id;
+              echo "<tr> <button type=\"submit\" name=\"downvote\" value=\"$numDownvotes\"><span class=\"glyphicon glyphicon-chevron-down\"></span></button> </tr>";
+            }
           echo "</form>";
           ///////
 
         		echo "</table>
         		</td>
         		</tr>
-            Num Up: ".$numUpvotes." | Num Down: ".$numDownvotes." | Tags: random, php";
+            Num Up: ".$upvotes." | Num Down: ".$downvotes." | Tags: random, php";
         	echo"<tr>
         			<td><div align=\"right\">".$row["user_name"]."</div>
         		</tr>

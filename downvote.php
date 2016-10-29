@@ -19,18 +19,21 @@ if ($conn->connect_error) {
         } 
         if(!$conn->connect_error)
         {
-            echo "Connection OKAY.<br>";
+            //echo "Connection OKAY.<br>";
         }
+list($votes, $ans_id) = explode("-", $_POST[downvote], 2);
 
-$numDownvotes = $_POST[downvote];
-echo ", num Downvotes: ".$numDownvotes."<br>";
+$votes = $votes + 1;
 
-        $sql = "UPDATE answers SET num_downvotes = $numDownvotes WHERE answer_id=$answer_id";
+echo "num downvotes: ".$votes;
+echo "<br>ans id: ".$ans_id;
+
+        $sql = "UPDATE answers SET num_downvotes = $votes WHERE answer_id=$ans_id";
               
        if ($conn->query($sql) === TRUE) {
-        echo "You have updated downvotes";
+        //echo "You have updated downvotes ";
         } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        //echo "Error: " . $sql . "<br>" . $conn->error;
         }
 
 header('Location: ' . $_SERVER['HTTP_REFERER']);
