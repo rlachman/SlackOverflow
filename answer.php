@@ -26,10 +26,8 @@ $user_is_guest = $userRow['is_guest'];
 
 // GET QUESTION ID FROM PREVIOUS PAGE
 $q_id = $_GET["q_id"];
-$userVoted = TRUE;
 echo "       ".$q_id;
-$sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_id, user_name, is_solved FROM questions 
-        join users on asker_id=user_id
+$sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_id, user_name, is_solved FROM questions join users on asker_id=user_id
 			WHERE question_id=$q_id";
     
     //Store collection of rows in variable called result
@@ -136,17 +134,34 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
 		
 	<?php
 	$sql = "SELECT answer_id, answer, responder_id, is_best, num_upvotes, num_downvotes, user_name 
-			FROM answers JOIN users WHERE question_id=$q_id and responder_id=user_id";
+			FROM answers 
+      JOIN users 
+      WHERE question_id=$q_id 
+      and responder_id=user_id";
 	  /////VERIFIES LOGGED IN USER IS THE ASKER, IF USER IS THE ASKER THEN GIVE OPTION TO SELECT BEST ANSWER     
   
       $getAskerID = "SELECT asker_id, is_solved FROM questions WHERE question_id=$q_id";
       $result = $conn->query($getAskerID);
       $questionInfo = $result->fetch_assoc();
-  
+
      
       $askerID = $questionInfo["asker_id"];
       $loggedInID = $_SESSION['user_id'];
       $is_solved = $questionInfo["is_solved"];
+
+      //Voter stuff
+      $userVoted = "SELECT voter_id, is_upvote FROM votes WHERE voter_id=$loggedInID and question_id = $q_id";
+      $result2 = $conn->query($userVoted);
+      $voterInfo = $result2->fetch_assoc();
+      //echo "q id:".$q_id;
+      //echo "Voter id:".$voterInfo["voter_id"].", upvote yes or no: ".$voterInfo["is_upvote"];
+
+      $userHasVoted = FALSE;
+      //if records come back showing that user has voted for a response for this question then userHasVoted
+      if(mysqli_num_rows($result2) > 0)
+      {
+        $userHasVoted = TRUE;
+      }
       
     if($askerID == $loggedInID)
     {
@@ -208,12 +223,24 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
           ////// FORM BELOW HANDLES UPVOTING ///////
           echo "<form name=\"upVotingForm\" method=\"post\" action=\"upvote.php\">";
           
-          
+            
             if(!$user_is_guest) 
             { //numUpvotes contains the num of upvotes as well as the answer id, break apart once to php file
-              $numUpvotes = $numUpvotes."-".$ans_id."-".$q_id;
-              $score = $upvotes - $downvotes;
-              echo "<tr> <button type=\"submit\" name=\"upvote\" value=\"$numUpvotes\"><span class=\"glyphicon glyphicon-chevron-up\"></span>".$score."</button> </tr>";
+              if(!$userHasVoted)//If user hasn't voted then add their vote in prior to form submit
+                {
+                  $numUpvotes = $numUpvotes."-".$ans_id."-".$q_id;
+                  $score = $upvotes - $downvotes;
+              echo "<tr> <button type=\"submit\" name=\"upvote\" value=\"$numUpvotes\"><span class=\"glyphicon glyphicon-chevron-up\"></span>";
+              echo $score;
+              echo "</button> </tr>";
+                }
+                else{
+                      $score = $upvotes - $downvotes;
+                      echo "<tr> <span class=\"glyphicon glyphicon-chevron-up\"></span>";
+                      echo str_repeat('&nbsp;', 5).$score;
+                      echo "</tr>";
+                    }
+              
 
             }
             echo "</form>";
@@ -225,8 +252,17 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
           
             if(!$user_is_guest) 
             {
-              $numDownvotes = $numDownvotes."-".$ans_id."-".$q_id;
-              echo "<tr> <button type=\"submit\" name=\"downvote\" value=\"$numDownvotes\"><span class=\"glyphicon glyphicon-chevron-down\"></span></button> </tr>";
+              if(!$userHasVoted)
+                {
+                  $numDownvotes = $numDownvotes."-".$ans_id."-".$q_id;
+                  echo "<tr> <button type=\"submit\" name=\"downvote\" value=\"$numDownvotes\"><span class=\"glyphicon glyphicon-chevron-down\"></span></button> </tr>";
+                }
+                else{
+                  $score = $upvotes - $downvotes;
+                      echo "<tr> <span class=\"glyphicon glyphicon-chevron-down\"></span>";
+                      echo "</tr>";
+                }
+              
             }
           echo "</form>";
           ///////
