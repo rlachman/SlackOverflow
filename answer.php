@@ -124,9 +124,83 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
 
 <body>
 	
-	<h1 id="questionAnswerPage"><?php echo $row['question_title']; ?></h1>
-	<h3 id="questionAnswerPage"><?php echo $row['question']; ?></h1>
-	<h4>asked by <?php echo $row['user_name']; ?></h3>
+	<!-- Table handles question voting up down, similar to answer voting -->
+<!-- $numUpvotes = $numUpvotes."-".$ans_id."-".$q_id;
+                  $score = $upvotes - $downvotes;-->
+  <table> <!-- check to see if user has voted for question similar to how it's done for answers -->
+  <tr>
+        <td><h1 id="questionAnswerPage"><?php echo $row['question']; ?></h1></td>
+        <td><table> <!-- Beginning of table that handles upvote of questions etc-->
+           
+            <?php
+            echo "<tr>";
+                             
+                  //Determine if user has voted for question previously
+                  
+                  $userHasVotedForQuestion = FALSE;
+
+                  $lid = $_SESSION['user_id'];
+                
+                  $userVoted3 = "SELECT voter_id FROM questionVotes WHERE voter_id=$lid and question_id = $q_id";
+                  $result3 = $conn->query($userVoted3);
+                  // If any records of this user voting for this question exist then set bool to true
+                  if(mysqli_num_rows($result3) > 0)
+                  {
+                    $userHasVotedForQuestion = TRUE;
+                    //echo "<br><br>user has already voted for this question!";
+                  }
+                  
+                  $sqlQ = "SELECT num_upvotes, num_downvotes FROM questions WHERE question_id=$q_id";
+              
+                  $result2 = $conn->query($sqlQ);
+                  $row2 = $result2->fetch_assoc();
+                  $numQuestionUpvotes = $row2["num_upvotes"];
+                  $numQuestionDownvotes = $row2["num_downvotes"];
+                               
+                  $numQuestionUpvotes = $numQuestionUpvotes."-".$q_id;
+                  $numQuestionDownvotes = $numQuestionDownvotes."-".$q_id;
+                  $QScore = $numQuestionUpvotes - $numQuestionDownvotes;
+              
+                  if(!$userHasVotedForQuestion)
+                  {
+                    echo "<form name=\"questionUpVotingForm\" method=\"post\" action=\"question_upvote.php\">";
+                    echo "<button type=\"submit\" name=\"Qupvote\" value=\"$numQuestionUpvotes\"> 
+                          <span class=\"glyphicon glyphicon-chevron-up\"></span>
+                          </button>
+                          </form>";
+                  }
+                  else
+                  {
+                    echo "<span class=\"glyphicon glyphicon-chevron-up\"></span>";
+                  }
+        echo "</tr>
+              <tr>";
+                  //Put question score here
+                  echo str_repeat('&nbsp;', 6).$QScore;
+        echo "</tr>
+              <tr>";
+                
+                if(!$userHasVotedForQuestion)
+                  {
+                echo "<form name=\"questionDownVotingForm\" method=\"post\" action=\"question_downvote.php\">";
+              
+              
+                  echo "<button type=\"submit\" name=\"Qdownvote\" value=\"$numQuestionDownvotes\"> 
+                    <span class=\"glyphicon glyphicon-chevron-down\"></span>
+                  </button>
+                  </form>";
+                }
+                else{
+                  echo "<span class=\"glyphicon glyphicon-chevron-down\"></span>";
+                }
+        echo "</tr>";        
+              ?>
+                
+        </table></td> <!-- End of table that handles upvote of questions etc-->
+  </tr>
+	<tr><h1 id="questionAnswerPage"><?php echo $row['question_title']; ?></h1></tr>
+	<tr><h4>asked by <?php echo $row['user_name']; ?></h3></tr>
+  </table>
 
 	
 <!--PREVIOUS ANSWERS TABLE BELOW-->
@@ -137,7 +211,8 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
 			FROM answers 
       JOIN users 
       WHERE question_id=$q_id 
-      and responder_id=user_id";
+      and responder_id=user_id
+      ORDER BY is_best DESC, (num_upvotes-num_downvotes) DESC";
 	  /////VERIFIES LOGGED IN USER IS THE ASKER, IF USER IS THE ASKER THEN GIVE OPTION TO SELECT BEST ANSWER     
   
       $getAskerID = "SELECT asker_id, is_solved FROM questions WHERE question_id=$q_id";

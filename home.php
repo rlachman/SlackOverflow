@@ -147,20 +147,29 @@ function Solved($solved)
         //Establish connection
         $conn = new mysqli($servername, $username, $password, $dbname);
         //Store query into a php variable
-        $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_id, user_name, is_solved FROM questions join users on asker_id=user_id";
+        $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_id, user_name, is_solved, num_upvotes, num_downvotes
+                FROM questions 
+                join users 
+                on asker_id=user_id
+                order by num_upvotes-num_downvotes desc";
         //Store collection of rows in variable called result
         $result = $conn->query($sql);
 
+
+        
                 echo "<table class=\"questionTable\"> 
                 <th class=\"header\">Top Questions</th>
                 <th class=\"header\">Asker</th>
-                <th class=\"header\">Solved</th>";
+                <th class=\"header\">Solved</th>
+                <th class=\"header\"></th>";
     
           if($result->num_rows > 0)
         {
                  //This puts the resulting row into an array for access
             while($row = $result->fetch_assoc())
             {          
+                //Question score
+                $QuestionScore = $row["num_upvotes"] - $row["num_downvotes"];
                 $solved = is_null($row["is_solved"]);//Pass this variable into method to determine if x or check will print
 
                     echo "<tr>
@@ -178,6 +187,10 @@ function Solved($solved)
                     echo "<td>" 
                     .Solved($solved). 
                     "</td>
+
+                    <td>".$QuestionScore."</td>
+
+                    
                                       
                     </tr>";
       }

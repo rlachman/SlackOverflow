@@ -21,25 +21,25 @@ if ($conn->connect_error) {
         {
             //echo "Connection OKAY.<br>";
         }
-list($votes, $ans_id, $q_id) = explode("-", $_POST[downvote], 3);
+list($votes,$q_id) = explode("-", $_POST[Qdownvote], 2);
 
 $votes = $votes + 1;
+echo "<br>q_id: ".$q_id;
 
 echo "num downvotes: ".$votes;
-echo "<br>ans id: ".$ans_id;
 
-        $sql = "UPDATE answers SET num_downvotes = $votes WHERE answer_id=$ans_id";
+        $sql = "UPDATE questions SET num_downvotes = $votes WHERE question_id=$q_id";
               
        if ($conn->query($sql) === TRUE) {
-        //echo "You have updated downvotes ";
+        echo "You have updated downvotes ";
         } else {
-        //echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "Error: " . $sql . "<br>" . $conn->error;
         }
 
         //insert vote record into the db
-        $sql = "INSERT INTO votes (question_id,answer_id,voter_id,is_upvote) VALUES ($q_id,$ans_id,$user_id,0)";
+        $sql = "INSERT INTO questionVotes (question_id,voter_id,is_upvote) VALUES ($q_id,$user_id,0)";
         if ($conn->query($sql) === TRUE) {
-        echo "You have inserted a vote record";
+        echo "You have inserted a question vote record";
         } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
         }
