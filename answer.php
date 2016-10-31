@@ -370,13 +370,13 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
             echo "<td><div align=\"right\">".$row["user_name"]."</div></td>";
             if($UserHasPhoto)
             {
-            echo "<td><div align =\"right\">".'<img style="width:64px;height:64px" src="data:image/jpeg;base64,'.base64_encode( $row9['data'] ).'"/>'."</div>";
+            echo "<td><div align =\"right\">".'<img style="width:64px;height:64px" src="data:image/jpeg;base64,'.base64_encode( $row9['data'] ).'"/>'."</div></td>";
             }
             else{
-              echo "<div align =\"right\"><span class=\"glyphicon glyphicon-user\"></span></div>";
+              echo "<td><div align =\"right\"><span style=\"font-size:3em;\" class=\"glyphicon glyphicon-user\"></span></div></td>";
             }
 
-            echo "</td></tr>";
+            echo "</tr>";
 
             echo"</table>";
       }

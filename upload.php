@@ -29,17 +29,17 @@ if ( isset($_FILES['image']['tmp_name']) ) {
     $type = $finfo->file($_FILES['image']['tmp_name']);
     $mime = substr($type, 0, strpos($type, ';'));
 
-    //if(!$UserHasPhoto)
+    if(!$UserHasPhoto)
     {
         $query = "INSERT INTO `images` (`data`,`mime`,`name`,`avatar_user_id`) VALUES('".$mysqli->real_escape_string($binary)."','".$mysqli->real_escape_string($mime)."','".$mysqli->real_escape_string($_FILES['image']['name'])."', $user_id)";    
     }
-    //else{//If photo exists then don't create new record, simply replace it.
+    /*else{//If photo exists then don't create new record, simply replace it.
         $query = "UPDATE `images` 
         SET `data` = '".$mysqli->real_escape_string($binary)."',
             `mime` = '".$mysqli->real_escape_string($mime)."',
             `name` = '".$mysqli->real_escape_string($_FILES['image']['name'])."',
             `avatar_user_id` = $user_id";
-    }
+    }*/
     
     /*
     UPDATE table_name
