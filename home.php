@@ -165,9 +165,15 @@ function Solved($solved)
     
           if($result->num_rows > 0)
         {
+                 //Only display the top 5
+                $count = 0;
+
                  //This puts the resulting row into an array for access
-            while($row = $result->fetch_assoc())
+            while($row = $result->fetch_assoc() and $count < 5)
             {          
+                //Increment the count
+              $count = $count + 1;
+
                 //Question score
                 $QuestionScore = $row["num_upvotes"] - $row["num_downvotes"];
                 $solved = is_null($row["is_solved"]);//Pass this variable into method to determine if x or check will print

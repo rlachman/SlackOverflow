@@ -221,6 +221,7 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
 
      
       $askerID = $questionInfo["asker_id"];
+      
       $loggedInID = $_SESSION['user_id'];
       $is_solved = $questionInfo["is_solved"];
 
@@ -255,6 +256,7 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
         {
                 
           $ans_id = $row["answer_id"];
+          $responderID = $row["responder_id"];
           
           $_SESSION["answer_id"] = $ans_id;
           
@@ -266,7 +268,16 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
           
           $is_best = $row["is_best"];
 
-        	        	
+          ////Check to see if user has uploaded photo already
+          $UserHasPhoto = FALSE;
+
+          $queryB = "SELECT * FROM `images` WHERE avatar_user_id=$responderID";
+          $resultB = $conn->query($queryB);
+          if(mysqli_num_rows($resultB) > 0)
+          {
+            $UserHasPhoto = TRUE;
+          }
+
         	echo "<hr><table>";
         	echo "<tr>
         		<td id=\"answerTD\"><p id=\"responseBody\">".$row["answer"]."</p></td>
@@ -345,11 +356,29 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
         		echo "</table>
         		</td>
         		</tr>";
-            echo"<tr>
-        			<td><div align=\"right\">".$row["user_name"]."</div>
-        		</tr>
-        	";
-        	echo"</table>";
+            
+            // User avatar and user name below
+            //echo $responderID;
+            $sql = "SELECT `data` FROM `images` WHERE avatar_user_id=$responderID";
+            //echo $sql;
+            $result9 = $conn->query($sql);              
+            $row9 = $result9->fetch_assoc();
+            
+              
+            
+            echo"<tr>";
+            echo "<td><div align=\"right\">".$row["user_name"]."</div></td>";
+            if($UserHasPhoto)
+            {
+            echo "<td><div align =\"right\">".'<img style="width:64px;height:64px" src="data:image/jpeg;base64,'.base64_encode( $row9['data'] ).'"/>'."</div>";
+            }
+            else{
+              echo "<div align =\"right\"><span class=\"glyphicon glyphicon-user\"></span></div>";
+            }
+
+            echo "</td></tr>";
+
+            echo"</table>";
       }
         
         
