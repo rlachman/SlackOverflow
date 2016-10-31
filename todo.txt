@@ -2,12 +2,10 @@
 
 TODO:
 
--Figure out why upvote/downvote stops working after best answer is selected
+3) Figure out what is causing crash when updating to new avatar.
 
--Sort responses based on score, best answer always on top
+2) SQL Injection
 
--Implement up/down vote of questions
+4) Fix ugliness
 
--Highest 5 scoring questions on homepage
-
--Profile page with info about questions asked, answers given etc
+1) Need to be able to click on user name or pic, carry a query parameter to a profile php that dynamically builds their profile. Use the user id that is passed in as the parameter to query the db and get all info needed to generate their profile page including questions they have asked.
