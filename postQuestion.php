@@ -17,12 +17,15 @@
 		{
 			echo "Connection OKAY.";
 		}
+
+        $qTitle = $_POST[questionTitle];
+        $qBody = $_POST[questionBody];
         
         //Establish connection
-        $question_title = $_POST[questionTitle];//addslashes($_POST[questionTitle]);
+        $question_title = htmlspecialchars($qTitle);//addslashes($_POST[questionTitle]);
         //echo "<br>Question Title: ".$question_title;
 
-        $question_body = $_POST[questionBody];//addslashes($_POST[questionBody]);
+        $question_body = htmlspecialchars($qBody);//addslashes($_POST[questionBody]);
         //echo "<br>Question Body: ".$question_body;
 
         
