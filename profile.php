@@ -97,7 +97,7 @@ function Solved($solved)
             
             if($user_is_guest == TRUE)
             {
-              echo "<li><a href=\"index.php\"><span class=\"glyphicon glyphicon-off\"></span>&nbsp;Sign In</a></li>";
+              echo "<li><a href=\"index.php?home=yes\"><span class=\"glyphicon glyphicon-off\"></span>&nbsp;Sign In</a></li>";
             }
 
             if($auth_user->is_loggedin() and $user_name != "guest" and $user_is_guest == FALSE)
