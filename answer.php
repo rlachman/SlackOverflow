@@ -94,7 +94,7 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
               echo "<li><a href=\"index.php?home=yes\"><span class=\"glyphicon glyphicon-off\"></span>&nbsp;Sign In</a></li>";
             }
 
-            if($auth_user->is_loggedin() and $user_name != "guest")
+            if($auth_user->is_loggedin() and !$user_is_guest)
             {
               echo "<li><a href=\"logout.php?logout=true\"><span class=\"glyphicon glyphicon-log-out\"></span>&nbsp;Sign Out</a></li>";
             }
