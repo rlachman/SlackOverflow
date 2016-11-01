@@ -162,7 +162,7 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
                   $numQuestionDownvotes = $numQuestionDownvotes."-".$q_id;
                   $QScore = $numQuestionUpvotes - $numQuestionDownvotes;
               
-                  if(!$userHasVotedForQuestion)
+                  if(!$userHasVotedForQuestion && !$user_is_guest)
                   {
                     echo "<form name=\"questionUpVotingForm\" method=\"post\" action=\"question_upvote.php\">";
                     echo "<button type=\"submit\" name=\"Qupvote\" value=\"$numQuestionUpvotes\"> 
@@ -181,7 +181,7 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
         echo "</tr>
               <tr>";
                 
-                if(!$userHasVotedForQuestion)
+                if(!$userHasVotedForQuestion && !$user_is_guest)
                   {
                 echo "<form name=\"questionDownVotingForm\" method=\"post\" action=\"question_downvote.php\">";
               
