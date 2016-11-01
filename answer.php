@@ -342,9 +342,8 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
           echo "<form name=\"upVotingForm\" method=\"post\" action=\"upvote.php\">";
           
             
-            if(!$user_is_guest) 
-            { //numUpvotes contains the num of upvotes as well as the answer id, break apart once to php file
-              if(!$userHasVoted)//If user hasn't voted then add their vote in prior to form submit
+             //numUpvotes contains the num of upvotes as well as the answer id, break apart once to php file
+              if(!$userHasVoted && !$user_is_guest)//If user hasn't voted then add their vote in prior to form submit
                 {
                   $numUpvotes = $numUpvotes."-".$ans_id."-".$q_id;
                   $score = $upvotes - $downvotes;
@@ -360,7 +359,7 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
                     }
               
 
-            }
+            
             echo "</form>";
 
           /// FORM BELOW HANDLES DOWNVOTING ////
@@ -368,9 +367,8 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
           echo "<form name=\"downVotingForm\" method=\"post\" action=\"downvote.php\">";
           
           
-            if(!$user_is_guest) 
-            {
-              if(!$userHasVoted)
+            
+              if(!$userHasVoted && !$user_is_guest)
                 {
                   $numDownvotes = $numDownvotes."-".$ans_id."-".$q_id;
                   echo "<tr> <button type=\"submit\" name=\"downvote\" value=\"$numDownvotes\"><span class=\"glyphicon glyphicon-chevron-down\"></span></button> </tr>";
@@ -381,7 +379,7 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
                       echo "</tr>";
                 }
               
-            }
+            
           echo "</form>";
           ///////
 
