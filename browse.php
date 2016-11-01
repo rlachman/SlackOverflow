@@ -158,7 +158,7 @@ function Solved($solved)
 
         
                 echo "<table class=\"questionTable\"> 
-                <th class=\"header\">Top Questions</th>
+                <th class=\"header\">Past Questions</th>
                 <th class=\"header\">Asker</th>
                 <th class=\"header\">Solved</th>
                 <th class=\"header\"></th>";

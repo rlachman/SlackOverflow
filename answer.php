@@ -128,8 +128,9 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
 <!-- $numUpvotes = $numUpvotes."-".$ans_id."-".$q_id;
                   $score = $upvotes - $downvotes;-->
   <table> <!-- check to see if user has voted for question similar to how it's done for answers -->
+  <tr><th><h1 id="questionAnswerPage"><?php echo $row['question_title']; ?></h1><th><tr>
   <tr>
-        <td><h1 id="questionAnswerPage"><?php echo $row['question']; ?></h1></td>
+        <td><h3><?php echo $row['question']; ?></h3></td>
         <td><table> <!-- Beginning of table that handles upvote of questions etc-->
            
             <?php
@@ -198,8 +199,23 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
                 
         </table></td> <!-- End of table that handles upvote of questions etc-->
   </tr>
-	<tr><h1 id="questionAnswerPage"><?php echo $row['question_title']; ?></h1></tr>
-	<tr><h4>asked by <?php echo $row['user_name']; ?></h3></tr>
+	
+  <table align="right">
+  
+  <th><th>
+	<th valign="middle"><h3><?php echo "<h3>".$row['user_name']."</h3>"; ?></h3></th>
+  <th>
+  <?php 
+            $askerID = $row["asker_id"];
+            $sql = "SELECT `data` FROM `images` WHERE avatar_user_id=$askerID";
+            $resultA = $conn->query($sql);              
+            $rowA = $resultA->fetch_assoc();
+            
+            echo "<img style=\"width:64px;height:64px\" src=\"data:image/jpeg;base64,"   .base64_encode( $rowA['data'] ).   "\"/>";
+           
+          ?>
+  </th>
+
   </table>
 
 	
@@ -285,7 +301,7 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
             $UserHasPhoto = TRUE;
           }
 
-        	echo "<hr><table>";
+        	echo "<br><br><br><hr><table>";
         	echo "<tr>
         		<td id=\"answerTD\"><p id=\"responseBody\">".$row["answer"]."</p></td>
             <td id=\"answerTD\"> 
