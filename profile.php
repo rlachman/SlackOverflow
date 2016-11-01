@@ -5,8 +5,6 @@
 	
 	require_once("class.user.php");
 	$auth_user = new USER();
-	
-	
 	$user_id = $_SESSION['user_session'];
 	
 	$stmt = $auth_user->runQuery("SELECT * FROM users WHERE user_id=:user_id");
@@ -21,19 +19,6 @@ $username = "admin";
 $password = "M0n@rch$";
 $dbname = "slackoverflow";
 $conn = new mysqli($servername, $username, $password, $dbname);
-
-////Check to see if user has uploaded photo already
-$UserHasPhoto = FALSE;
-
-$query = "SELECT * FROM `images` WHERE avatar_user_id=$user_id";
-$result = $conn->query($query);
-if(mysqli_num_rows($result) > 0)
-                  {
-        $UserHasPhoto = TRUE;
-
-}
-$_SESSION["UserHasPhoto"] = $UserHasPhoto;
-////////////////////////////////////////////
 	
 // PRINT CHECK/X IF Q HAS BEEN ANSWERED
 function printCheck()
@@ -143,32 +128,64 @@ function Solved($solved)
 
         
         <?php
+
+          //Set externalUser bool to true, this controls how profile is displayed
+          $isExternalProfileViewer = FALSE;
+          if (isset($_REQUEST['ext_user']))
+          {
+            $ext_user_id = $_GET["ext_user"];
+            $ext_user_name = $_GET["ext_user_name"];
+
+            //echo $ext_user_name;
+            $isExternalProfileViewer = TRUE;
+          }
           
           if($user_is_guest == FALSE)
           {
           
-          echo "<table>
-          <tr><td>
-          <label class=\"h2\">".$userRow['user_name']."</label><td></tr>";
+            if(!$isExternalProfileViewer)
+            {
+              echo "<table>
+            <tr><td>
+            <label class=\"h2\">".$userRow['user_name']."</label><td></tr>";
+            }else{
+            echo "<table>
+            <tr><td>
+            <label class=\"h2\">".$ext_user_name."</label><td></tr>";
+            }
             
-            $sql = "SELECT * FROM `images` WHERE avatar_user_id=$user_id";
+            if(!$isExternalProfileViewer)
+              {
+                $sql = "SELECT * FROM `images` WHERE avatar_user_id=$user_id";
+              }
+              else{
+                $sql = "SELECT * FROM `images` WHERE avatar_user_id=$ext_user_id";
+              }
+
+
             $result = $conn->query($sql);
             $row = $result->fetch_assoc();
+
+            ////Check to see if user has uploaded photo already
+            $UserHasPhoto = FALSE;
+            if(mysqli_num_rows($result) > 0)
+            {
+            $UserHasPhoto = TRUE;
+            }
+            $_SESSION["UserHasPhoto"] = $UserHasPhoto;
           
           if($UserHasPhoto) echo '<tr><td><img style="width:128px;height:128px" src="data:image/jpeg;base64,'.base64_encode( $row['data'] ).'"/></td><tr>';
 
-          if(!$UserHasPhoto)
+          if(!$UserHasPhoto && !$isExternalProfileViewer)
           {
-            echo "Please select a profile photo.";
-          }
-
-          
+          echo "<b><h3>Please select a profile photo.</h3></b>";
           echo "<tr><td>
           <form method=\"post\" enctype=\"multipart/form-data\" action=\"upload.php\">
           <input type=\"file\" name=\"image\" />
           <input type=\"submit\" />
           </form></td></tr>
           </table>";
+        }
           
           }
           else{
@@ -177,12 +194,23 @@ function Solved($solved)
 
           ////// DISPLAY USERS QUESTIONS BELOW
 
-          $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_id, user_name, is_solved, num_upvotes, num_downvotes
+          if(!$isExternalProfileViewer){
+            $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_id, user_name, is_solved, num_upvotes, num_downvotes
                 FROM questions 
                 join users 
                 on asker_id=user_id
                 WHERE asker_id = $user_id
                 order by num_upvotes-num_downvotes desc";
+          }
+          else{
+            $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_id, user_name, is_solved, num_upvotes, num_downvotes
+                FROM questions 
+                join users 
+                on asker_id=user_id
+                WHERE asker_id = $ext_user_id
+                order by num_upvotes-num_downvotes desc";
+          } 
+            
 
         //Store collection of rows in variable called result
         $result = $conn->query($sql);

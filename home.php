@@ -158,7 +158,7 @@ function Solved($solved)
 
         
                 echo "<table class=\"questionTable\"> 
-                <th class=\"header\">Top Questions</th>
+                <th class=\"header\">Top 5 Questions</th>
                 <th class=\"header\">Asker</th>
                 <th class=\"header\">Solved</th>
                 <th class=\"header\"></th>";
@@ -171,7 +171,13 @@ function Solved($solved)
                  //This puts the resulting row into an array for access
             while($row = $result->fetch_assoc() and $count < 5)
             {          
-                //Increment the count
+              
+              // Store url, user id info in case of redirect to view external users profile
+              $_SESSION["user_id_profile"] = $row["asker_id"];
+              $_SESSION["user_id_name"] = $row["user_name"];
+              $path = 'profile.php?ext_user='.$_SESSION["user_id_profile"].'&ext_user_name='.$_SESSION["user_id_name"];  // change accordingly
+              
+              //Increment the count
               $count = $count + 1;
 
                 //Question score
@@ -184,11 +190,9 @@ function Solved($solved)
                     <a href=\"answer.php?q_id=".$row["question_id"]. "\">
                     ".$row["question_title"]."
                     </a>
-                    </td>
-
-                    <td>"
-                    .$row["user_name"].
-                    "</td>";
+                    </td>";
+                                       
+                    echo "<td><a href=".$path.">".$row["user_name"]."</a></td>";
                     
                     echo "<td>" 
                     .Solved($solved). 

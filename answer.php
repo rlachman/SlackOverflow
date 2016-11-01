@@ -254,7 +254,8 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
         $result = $conn->query($sql);
         while($row = $result->fetch_assoc())
         {
-                
+      
+          //Answer id, responder id etc
           $ans_id = $row["answer_id"];
           $responderID = $row["responder_id"];
           
@@ -267,6 +268,12 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
           $downvotes = $row["num_downvotes"];
           
           $is_best = $row["is_best"];
+
+          //External viewer and profile vars
+          // Store url, user id info in case of redirect to view external users profile
+          $_SESSION["user_id_profile"] = $responderID;
+          $_SESSION["user_id_name"] = $row["user_name"];
+          $path = 'profile.php?ext_user='.$_SESSION["user_id_profile"].'&ext_user_name='.$_SESSION["user_id_name"];  // change accordingly
 
           ////Check to see if user has uploaded photo already
           $UserHasPhoto = FALSE;
@@ -367,7 +374,7 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
               
             
             echo"<tr>";
-            echo "<td><div align=\"right\">".$row["user_name"]."</div></td>";
+            echo "<td><div align=\"right\"><a href=".$path.">".$row["user_name"]."</a></div></td>";
             if($UserHasPhoto)
             {
             echo "<td><div align =\"right\">".'<img style="width:64px;height:64px" src="data:image/jpeg;base64,'.base64_encode( $row9['data'] ).'"/>'."</div></td>";
