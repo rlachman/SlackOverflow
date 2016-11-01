@@ -219,8 +219,15 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
             $sql = "SELECT `data` FROM `images` WHERE avatar_user_id=$askerID";
             $resultA = $conn->query($sql);              
             $rowA = $resultA->fetch_assoc();
-            
+
+            if(mysqli_num_rows($resultA) > 0)
+          {
             echo "<img style=\"width:64px;height:64px\" src=\"data:image/jpeg;base64,"   .base64_encode( $rowA['data'] ).   "\"/>";
+          }
+          else{
+            echo "<span style=\"font-size:3em;\" class=\"glyphicon glyphicon-user\"></span>";
+          }
+            
            
           ?>
   </th>
@@ -277,8 +284,17 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
         //if response has been selected as best answer then set color to green
               
         $result = $conn->query($sql);
+
+        //Bool represents if responses exist, use for various things.
+        $responsesExist = FALSE;
+        if(mysqli_num_rows($result) > 0)
+        {
+        $responsesExist = TRUE;
+        }
+        
         while($row = $result->fetch_assoc())
         {
+
       
           //Answer id, responder id etc
           $ans_id = $row["answer_id"];
@@ -419,7 +435,12 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
     ?>
 	</table>
 
-	<hr>
+	<?php if($responsesExist){
+    echo "<hr>";
+    }
+    else{
+      echo "<br>";
+    }  ?>
 
 <!--LOGGED IN USERS RESPONSE ENTRY BELOW-->
 	<h3>Your Response:</h3>
