@@ -140,7 +140,7 @@ function Solved($solved)
             $isExternalProfileViewer = TRUE;
           }
           
-          if($user_is_guest == FALSE)
+          if($user_is_guest == FALSE or $user_is_guest && $isExternalProfileViewer)
           {
           
             if(!$isExternalProfileViewer)

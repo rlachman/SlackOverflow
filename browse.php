@@ -161,7 +161,7 @@ function Solved($solved)
                 <th class=\"header\">Past Questions</th>
                 <th class=\"header\">Asker</th>
                 <th class=\"header\">Solved</th>
-                <th class=\"header\"></th>";
+                <th class=\"header\">Score</th>";
     
           if($result->num_rows > 0)
         {

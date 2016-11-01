@@ -201,12 +201,21 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
   </tr>
 	
   <table align="right">
-  
+  <?php 
+
+          $askerID = $row["asker_id"];
+          $_SESSION["user_id_profile"] = $askerID;
+          $_SESSION["user_id_name"] = $row["user_name"];
+          $path = 'profile.php?ext_user='.$_SESSION["user_id_profile"].'&ext_user_name='.$_SESSION["user_id_name"];  // change accordingly
+
+  ?>
   <th><th>
-	<th valign="middle"><h3><?php echo "<h3>".$row['user_name']."</h3>"; ?></h3></th>
+	<th valign="middle"><?php echo "<a href=".$path.">".$row['user_name']."</a>"; ?></th>
   <th>
   <?php 
-            $askerID = $row["asker_id"];
+          
+
+            
             $sql = "SELECT `data` FROM `images` WHERE avatar_user_id=$askerID";
             $resultA = $conn->query($sql);              
             $rowA = $resultA->fetch_assoc();
