@@ -7,6 +7,8 @@
         $dbname = "slackoverflow";
         
         $conn = new mysqli($servername, $username, $password, $dbname);
+        $stmt = $conn->prepare("INSERT INTO `questions` (`question_title`, `question`, `asker_id`) VALUES (?,?,?)");
+        $stmt->bind_param("sss", $question_title, $question_body, $user_id);
 		
 		if ($conn->connect_error) {
     	die("Connection failed: " . $conn->connect_error);
@@ -17,25 +19,17 @@
 		}
         
         //Establish connection
-        $question_title = addslashes($_POST[questionTitle]);
-        echo "<br>Question Title: ".$question_title;
+        $question_title = $_POST[questionTitle];//addslashes($_POST[questionTitle]);
+        //echo "<br>Question Title: ".$question_title;
 
-        $question_body = addslashes($_POST[questionBody]);
-        echo "<br>Question Body: ".$question_body;
+        $question_body = $_POST[questionBody];//addslashes($_POST[questionBody]);
+        //echo "<br>Question Body: ".$question_body;
 
         
         $user_id = $_SESSION['user_id'];
-        echo "<br>User ID: ".$user_id;
+        //echo "<br>User ID: ".$user_id;
+        $stmt->execute();
 	
-        $insert_query = "INSERT INTO questions (question_title,question,asker_id)
-        				VALUES ('$question_title','$question_body',$user_id)";
+        header('Location: home.php');
 
-       if ($conn->query($insert_query) === TRUE) {
-    	echo "<br>Your question has been posted!";
-		} else {
-    	echo "Error: " . $insert_query . "<br>" . $conn->error;
-		}
-        
-		//Redirect back to home page after submitting
-		header('Location: home.php');
         ?>

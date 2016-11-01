@@ -1,0 +1,11 @@
+10/28/2016
+
+TODO:
+
+3) Figure out what is causing crash when updating to new avatar.
+
+2) SQL Injection
+
+4) Fix ugliness
+
+1) Need to be able to click on user name or pic, carry a query parameter to a profile php that dynamically builds their profile. Use the user id that is passed in as the parameter to query the db and get all info needed to generate their profile page including questions they have asked.

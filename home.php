@@ -3,19 +3,22 @@
 require_once("session.php");
 require_once("dbconfig.php");
 require_once("class.user.php");
-$auth_user = new USER();
 
+// SESSION
+$auth_user = new USER();
 $user_id = $_SESSION['user_session'];
 
+// USER VALIDATION
 $stmt = $auth_user->runQuery("SELECT * FROM users WHERE user_id=:user_id");
 $stmt->execute(array(":user_id"=>$user_id));
-
 $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
 
+// SET USER ID,NAME,ISGUEST FOR SESSION
 $_SESSION['user_id'] = $userRow['user_id'];
 $user_name = $userRow['user_name'];
 $user_is_guest = $userRow['is_guest'];
 
+// DEBUG PURPOSES
 function debug_to_console($data) {
   if(is_array($data) || is_object($data))
   {
@@ -25,6 +28,7 @@ function debug_to_console($data) {
   }
 }
 
+// PRINT CHECK/X IF Q HAS BEEN ANSWERED
 function printCheck()
 {
   return "<span class='glyphicon glyphicon-ok'></span>";
@@ -143,20 +147,41 @@ function Solved($solved)
         //Establish connection
         $conn = new mysqli($servername, $username, $password, $dbname);
         //Store query into a php variable
-        $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_id, user_name, is_solved FROM questions join users on asker_id=user_id";
+        $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_id, user_name, is_solved, num_upvotes, num_downvotes
+                FROM questions 
+                join users 
+                on asker_id=user_id
+                order by num_upvotes-num_downvotes desc";
         //Store collection of rows in variable called result
         $result = $conn->query($sql);
 
+
+        
                 echo "<table class=\"questionTable\"> 
-                <th class=\"header\">Top Questions</th>
+                <th class=\"header\">Top 5 Questions</th>
                 <th class=\"header\">Asker</th>
-                <th class=\"header\">Solved</th>";
+                <th class=\"header\">Solved</th>
+                <th class=\"header\">Score</th>";
     
           if($result->num_rows > 0)
         {
+                 //Only display the top 5
+                $count = 0;
+
                  //This puts the resulting row into an array for access
-            while($row = $result->fetch_assoc())
+            while($row = $result->fetch_assoc() and $count < 5)
             {          
+              
+              // Store url, user id info in case of redirect to view external users profile
+              $_SESSION["user_id_profile"] = $row["asker_id"];
+              $_SESSION["user_id_name"] = $row["user_name"];
+              $path = 'profile.php?ext_user='.$_SESSION["user_id_profile"].'&ext_user_name='.$_SESSION["user_id_name"];  // change accordingly
+              
+              //Increment the count
+              $count = $count + 1;
+
+                //Question score
+                $QuestionScore = $row["num_upvotes"] - $row["num_downvotes"];
                 $solved = is_null($row["is_solved"]);//Pass this variable into method to determine if x or check will print
 
                     echo "<tr>
@@ -165,15 +190,17 @@ function Solved($solved)
                     <a href=\"answer.php?q_id=".$row["question_id"]. "\">
                     ".$row["question_title"]."
                     </a>
-                    </td>
-
-                    <td>"
-                    .$row["user_name"].
-                    "</td>";
+                    </td>";
+                                       
+                    echo "<td><a href=".$path.">".$row["user_name"]."</a></td>";
                     
                     echo "<td>" 
                     .Solved($solved). 
                     "</td>
+
+                    <td>".$QuestionScore."</td>
+
+                    
                                       
                     </tr>";
       }

@@ -1,17 +1,13 @@
 <?php
-session_start();
 require_once("class.user.php");
-$login = new USER();
 
+// SESSION
+session_start();
+$login = new USER();
 if(isset($_GET["home"]))
 {
   $from_home = $_GET["home"];
 }
-
-/*if($login->is_loggedin()!="" and $login->is_loggedin()!= "guest")
-{
-	$login->redirect('home.php');
-}*/
 
 // Will login with credentials if form is submitted via button
 if(isset($_POST['btn-login']))

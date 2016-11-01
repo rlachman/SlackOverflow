@@ -15,9 +15,12 @@
 		{
 			echo "Connection OKAY.";
 		}
+
+        $stmt = $conn->prepare("INSERT INTO `answers` (`answer`, `responder_id`, `question_id`) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $answer_body, $user_id, $q_id);
         
         //Establish connection
-        $answer_body = addslashes($_POST[answerBody]);
+        $answer_body = $_POST[answerBody];//addslashes($_POST[answerBody]);
         //$answer_body = mysql_real_escape_string($answer_body);
         echo "<br>Answer Body: ".$answer_body;
 
@@ -26,15 +29,19 @@
         
         $user_id = $_SESSION['user_id'];
         echo "<br>User ID: ".$user_id."<br>";
+
+        $stmt->execute();
 	
-        $insert_query = "INSERT INTO `answers` (`answer`, `responder_id`, `question_id`) VALUES ('$answer_body',$user_id, $q_id)";
+        /*$insert_query = "INSERT INTO `answers` (`answer`, `responder_id`, `question_id`) VALUES ('$answer_body',$user_id, $q_id)";
         
                        
        if ($conn->query($insert_query) === TRUE) {
     	echo "<br>Your question has been posted!";
 		} else {
     	echo "Error: " . $insert_query . "<br>" . $conn->error;
-		}
+		}*/
+
+        
         
 		//Redirect back to home page after submitting
 		header('Location: ' . $_SERVER['HTTP_REFERER']);
