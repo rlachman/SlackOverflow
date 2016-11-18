@@ -21,6 +21,10 @@ body{
 color: white;
 }
 
+.pagination li{
+    display: inline-block;
+}
+
 h2,p.h2,.h5{
     color: #68829e;
     font-size: 15px;

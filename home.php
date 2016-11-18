@@ -18,6 +18,9 @@ $_SESSION['user_id'] = $userRow['user_id'];
 $user_name = $userRow['user_name'];
 $user_is_guest = $userRow['is_guest'];
 
+//Pagination, Question End point in array
+$_SESSION['endPoint'] = $_GET['end'];
+
 // DEBUG PURPOSES
 function debug_to_console($data) {
   if(is_array($data) || is_object($data))
@@ -154,8 +157,15 @@ function Solved($solved)
                 order by num_upvotes-num_downvotes desc";
         //Store collection of rows in variable called result
         $result = $conn->query($sql);
-
-
+        
+        //Pagination Variables
+        $numberOfQuestionsTotal = $result->num_rows;
+        $numberOfQuestionsDisplayedPerPage = 5;
+        $numberOfQuestionsOnLastPage = $numberOfQuestionsTotal % 
+        $numberOfQuestionsDisplayedPerPage;
+        $numberOfPages = ceil($numberOfQuestionsTotal/
+        $numberOfQuestionsDisplayedPerPage);
+        $questionArray[] = array(""); 
         
                 echo "<table class=\"questionTable\"> 
                 <th class=\"header\">Top 5 Questions</th>
@@ -169,8 +179,12 @@ function Solved($solved)
                 $count = 0;
 
                  //This puts the resulting row into an array for access
-            while($row = $result->fetch_assoc() and $count < 5)
-            {          
+            
+            while($row = $result->fetch_assoc() )//and $count < 5)
+            { 
+              //for use with pagination
+              $questionArray[] = $row;
+
               
               // Store url, user id info in case of redirect to view external users profile
               $_SESSION["user_id_profile"] = $row["asker_id"];
@@ -178,7 +192,7 @@ function Solved($solved)
               $path = 'profile.php?ext_user='.$_SESSION["user_id_profile"].'&ext_user_name='.$_SESSION["user_id_name"];  // change accordingly
               
               //Increment the count
-              $count = $count + 1;
+              //$count = $count + 1;
 
                 //Question score
                 $QuestionScore = $row["num_upvotes"] - $row["num_downvotes"];
@@ -204,6 +218,7 @@ function Solved($solved)
                                       
                     </tr>";
       }
+
     }
     echo "</table>";
 
@@ -211,8 +226,30 @@ function Solved($solved)
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 
+    //Pagination below
+    $count = 1;
+    echo "<ul class=\"pagination\">";
+    while($count <= $numberOfPages)
+    {
+      $end = ($count * 5) - 1;
+      echo "<li><a href=\"home.php?end=".$end."\">".$count."</a><li>";
+      $count++;
+    }   
+    echo "</ul>";
+
     $conn->close();
     ?>
+
+    <!--<ul class = "pagination">
+   <li><a href = "#">&laquo;</a></li>
+   <li><a href = "#">1</a></li>
+   <li><a href = "#">2</a></li>
+   <li><a href = "#">3</a></li>
+   <li><a href = "#">4</a></li>
+   <li><a href = "#">5</a></li>
+   <li><a href = "#">&raquo;</a></li>
+  </ul>-->
+ 
     <hr>
     <script src="bootstrap/js/bootstrap.min.js"></script>
 </body>
