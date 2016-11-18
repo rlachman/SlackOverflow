@@ -19,7 +19,16 @@ $user_name = $userRow['user_name'];
 $user_is_guest = $userRow['is_guest'];
 
 //Pagination, Question End point in array
+$numberOfQuestionsDisplayedPerPage = 5;
+if(count($_GET) > 0)
+{
+$_SESSION['startPoint'] = $_GET['start'];
 $_SESSION['endPoint'] = $_GET['end'];
+}
+else{//Else set it to some default start and end points
+    $_SESSION['startPoint'] = 1;
+    $_SESSION['endPoint'] = $numberOfQuestionsDisplayedPerPage;
+}
 
 // DEBUG PURPOSES
 function debug_to_console($data) {
@@ -160,7 +169,6 @@ function Solved($solved)
         
         //Pagination Variables
         $numberOfQuestionsTotal = $result->num_rows;
-        $numberOfQuestionsDisplayedPerPage = 5;
         $numberOfQuestionsOnLastPage = $numberOfQuestionsTotal % 
         $numberOfQuestionsDisplayedPerPage;
         $numberOfPages = ceil($numberOfQuestionsTotal/
@@ -179,13 +187,29 @@ function Solved($solved)
                 $count = 0;
 
                  //This puts the resulting row into an array for access
+
+                //Pagination start and end points
+                $qStart = $_SESSION['startPoint'];
+                if($qStart < 0)
+                {
+                  $qStart = 1;
+                }
+                $qEnd = $_SESSION['endPoint'];
+                
+
+
+                echo "Start index:".$qStart.", End Index: ".$qEnd;
+
             
-            while($row = $result->fetch_assoc() )//and $count < 5)
+            while($row = $result->fetch_assoc()  )//and $count < 5)
             { 
               //for use with pagination
               $questionArray[] = $row;
+            }
 
-              
+            for($i = $qStart; $i <= $qEnd && !is_null($questionArray[$i]); $i++)
+            {
+              $row = $questionArray[$i];
               // Store url, user id info in case of redirect to view external users profile
               $_SESSION["user_id_profile"] = $row["asker_id"];
               $_SESSION["user_id_name"] = $row["user_name"];
@@ -228,11 +252,16 @@ function Solved($solved)
 
     //Pagination below
     $count = 1;
+    $start = 1;
+    $end = $start + $numberOfQuestionsDisplayedPerPage - 1;
     echo "<ul class=\"pagination\">";
     while($count <= $numberOfPages)
     {
-      $end = ($count * 5) - 1;
-      echo "<li><a href=\"home.php?end=".$end."\">".$count."</a><li>";
+      
+      echo "<li><a href=\"home.php?start=".$start."&end=".$end."\">".$count."</a><li>";
+      $start = $count*$numberOfQuestionsDisplayedPerPage + 1;
+      $end = $start + $numberOfQuestionsDisplayedPerPage - 1;
+
       $count++;
     }   
     echo "</ul>";

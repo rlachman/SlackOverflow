@@ -18,6 +18,18 @@ $_SESSION['user_id'] = $userRow['user_id'];
 $user_name = $userRow['user_name'];
 $user_is_guest = $userRow['is_guest'];
 
+//Pagination, Question End point in array
+$numberOfQuestionsDisplayedPerPage = 10; // <------ Where number of questions per page gets set
+if(count($_GET) > 0)
+{
+$_SESSION['startPoint'] = $_GET['start'];
+$_SESSION['endPoint'] = $_GET['end'];
+}
+else{//Else set it to some default start and end points
+    $_SESSION['startPoint'] = 1;
+    $_SESSION['endPoint'] = $numberOfQuestionsDisplayedPerPage;
+}
+
 // DEBUG PURPOSES
 function debug_to_console($data) {
   if(is_array($data) || is_object($data))
@@ -125,9 +137,9 @@ function Solved($solved)
 
 
 <div class="container-fluid" style="margin-top:80px;">
-	
+  
     <div class="container">
-       	             
+                     
         <h1 id="secondLevelLinks">
           <a href="home.php"><span class="glyphicon glyphicon-home"></span> Home</a> &nbsp; 
           <a href="ask.php"><span class="glyphicon glyphicon-question-sign"></span> Ask</a>
@@ -135,7 +147,7 @@ function Solved($solved)
           <a href="browse.php"><span class="glyphicon glyphicon-eye-open"></span> Browse</a>
           </h1>
                 
-       	<hr />
+        <hr />
 <!-- Table that will display questions -->
         <?php
                 
@@ -154,11 +166,17 @@ function Solved($solved)
                 order by num_upvotes-num_downvotes desc";
         //Store collection of rows in variable called result
         $result = $conn->query($sql);
-
-
+        
+        //Pagination Variables
+        $numberOfQuestionsTotal = $result->num_rows;
+        $numberOfQuestionsOnLastPage = $numberOfQuestionsTotal % 
+        $numberOfQuestionsDisplayedPerPage;
+        $numberOfPages = ceil($numberOfQuestionsTotal/
+        $numberOfQuestionsDisplayedPerPage);
+        $questionArray[] = array(""); 
         
                 echo "<table class=\"questionTable\"> 
-                <th class=\"header\">Past Questions</th>
+                <th class=\"header\">Previous Questions</th>
                 <th class=\"header\">Asker</th>
                 <th class=\"header\">Solved</th>
                 <th class=\"header\">Score</th>";
@@ -169,22 +187,37 @@ function Solved($solved)
                 $count = 0;
 
                  //This puts the resulting row into an array for access
-            while($row = $result->fetch_assoc())
-            {          
-              
+
+                //Pagination start and end points
+                $qStart = $_SESSION['startPoint'];
+                if($qStart < 0)
+                {
+                  $qStart = 1;
+                }
+                $qEnd = $_SESSION['endPoint'];
+                
+
+
+                echo "Start index:".$qStart.", End Index: ".$qEnd;
+
+            
+            while($row = $result->fetch_assoc()  )//and $count < 5)
+            { 
+              //for use with pagination
+              $questionArray[] = $row;
+            }
+
+            for($i = $qStart; $i <= $qEnd && !is_null($questionArray[$i]); $i++)
+            {
+              $row = $questionArray[$i];
               // Store url, user id info in case of redirect to view external users profile
               $_SESSION["user_id_profile"] = $row["asker_id"];
               $_SESSION["user_id_name"] = $row["user_name"];
-              /*$host = $_SERVER['HTTP_HOST'];
-              $uri = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');*/
               $path = 'profile.php?ext_user='.$_SESSION["user_id_profile"].'&ext_user_name='.$_SESSION["user_id_name"];  // change accordingly
-              //echo $path;
-              //$redirectTo = $host.$uri.'/'.$extra;
               
-              //echo $host.$uri.'/'.$extra.'<br>';
-              
+              //Increment the count
+              //$count = $count + 1;
 
-             
                 //Question score
                 $QuestionScore = $row["num_upvotes"] - $row["num_downvotes"];
                 $solved = is_null($row["is_solved"]);//Pass this variable into method to determine if x or check will print
@@ -209,6 +242,7 @@ function Solved($solved)
                                       
                     </tr>";
       }
+
     }
     echo "</table>";
 
@@ -216,8 +250,35 @@ function Solved($solved)
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 
+    //Pagination below
+    $count = 1;
+    $start = 1;
+    $end = $start + $numberOfQuestionsDisplayedPerPage - 1;
+    echo "<ul class=\"pagination\">";
+    while($count <= $numberOfPages)
+    {
+      
+      echo "<li><a href=\"browse.php?start=".$start."&end=".$end."\">".$count."</a><li>";
+      $start = $count*$numberOfQuestionsDisplayedPerPage + 1;
+      $end = $start + $numberOfQuestionsDisplayedPerPage - 1;
+
+      $count++;
+    }   
+    echo "</ul>";
+
     $conn->close();
     ?>
+
+    <!--<ul class = "pagination">
+   <li><a href = "#">&laquo;</a></li>
+   <li><a href = "#">1</a></li>
+   <li><a href = "#">2</a></li>
+   <li><a href = "#">3</a></li>
+   <li><a href = "#">4</a></li>
+   <li><a href = "#">5</a></li>
+   <li><a href = "#">&raquo;</a></li>
+  </ul>-->
+ 
     <hr>
     <script src="bootstrap/js/bootstrap.min.js"></script>
 </body>

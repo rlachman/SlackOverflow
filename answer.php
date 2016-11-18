@@ -12,6 +12,18 @@ $username = "admin";
 $password = "M0n@rch$";
 $dbname = "slackoverflow";
 $conn = new mysqli($servername, $username, $password, $dbname);
+
+//Pagination, Question End point in array
+$numberOfAnswersDisplayedPerPage = 2;
+if(count($_GET) > 0)
+{
+$_SESSION['startPoint'] = $_GET['start'];
+$_SESSION['endPoint'] = $_GET['end'];
+}
+else{//Else set it to some default start and end points
+    $_SESSION['startPoint'] = 1;
+    $_SESSION['endPoint'] = $numberOfAnswersDisplayedPerPage;
+}
   
 // GET ROW FOR LOGGED IN USER
   $stmt = $auth_user->runQuery("SELECT * FROM users WHERE user_id=:user_id");
@@ -291,11 +303,27 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
         {
         $responsesExist = TRUE;
         }
-        
-        while($row = $result->fetch_assoc())
-        {
 
-      
+        //Pagination Variables
+        $numberOfAnswersTotal = $result->num_rows;
+        $numberOfAnswersOnLastPage = $numberOfAnswersTotal % 
+        $numberOfAnswersDisplayedPerPage;
+        $numberOfPages = ceil($numberOfAnswersTotal/
+        $numberOfAnswersDisplayedPerPage);
+        $questionArray[] = array("");
+        
+        while($row = $result->fetch_assoc()  )//and $count < 5)
+            { 
+              //for use with pagination
+              $responseArray[] = $row;
+              $test = $responseArray[1];
+              echo "answer body: ".$test['answerBody'];
+            }
+
+        for($i = $qStart; $i <= $qEnd && !is_null($responseArray[$i]); $i++)
+            {
+              echo "inside for loop";
+              $row = $responseArray[$i];
           //Answer id, responder id etc
           $ans_id = $row["answer_id"];
           $responderID = $row["responder_id"];
@@ -440,7 +468,25 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
     }
     else{
       echo "<br>";
-    }  ?>
+    }  
+
+      //Pagination below
+    $count = 1;
+    $start = 1;
+    $end = $start + $numberOfAnswersDisplayedPerPage - 1;
+    echo "<ul class=\"pagination\">";
+    while($count <= $numberOfPages)
+    {
+      
+      echo "<li><a href=\"answer.php?q_id=".$q_id."&start=".$start."&end=".$end."\">".$count."</a><li>";
+      $start = $count*$numberOfAnswersDisplayedPerPage + 1;
+      $end = $start + $numberOfAnswersDisplayedPerPage - 1;
+
+      $count++;
+    }   
+    echo "</ul>";
+
+    ?>
 
 <!--LOGGED IN USERS RESPONSE ENTRY BELOW-->
 	<h3>Your Response:</h3>
@@ -453,6 +499,7 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
     <input type="hidden" name="questionID" id="questionID" value="<?php echo $q_id ?>"/>
 
     <?php
+
     if($_SESSION['user_name'] != "guest")
               {
                 echo "
