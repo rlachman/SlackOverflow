@@ -21,7 +21,7 @@
         
         //Establish connection
         $aBody = $_POST[answerBody];
-        $answer_body = htmlspecialchars($aBody);//addslashes($_POST[answerBody]);
+        $answer_body = $aBody;// htmlspecialchars($aBody);//addslashes($_POST[answerBody]);
         //$answer_body = mysql_real_escape_string($answer_body);
         echo "<br>Answer Body: ".$answer_body;
 

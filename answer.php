@@ -14,8 +14,8 @@ $dbname = "slackoverflow";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 //Pagination, Question End point in array
-$numberOfAnswersDisplayedPerPage = 2;
-if(count($_GET) > 0)
+$numberOfAnswersDisplayedPerPage = 5; 
+if(count($_GET) > 1)//Greater than 1 because there is already a parameter for question id
 {
 $_SESSION['startPoint'] = $_GET['start'];
 $_SESSION['endPoint'] = $_GET['end'];
@@ -56,6 +56,16 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
 <link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
 <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet"> 
 <script type="text/javascript" src="jquery-1.11.3-jquery.min.js"></script>
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+<script>
+      tinymce.init({
+        selector: "textarea",
+        plugins: "image paste",
+        toolbar: "image paste",
+        paste_data_images: true,
+        forced_root_block : ""
+      });
+    </script>
 <link rel="stylesheet" href="style.css" type="text/css"  />
 <title>SlackOverflow - <?php print($userRow['user_email']); ?></title>
 </head>
@@ -306,24 +316,27 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
 
         //Pagination Variables
         $numberOfAnswersTotal = $result->num_rows;
-        $numberOfAnswersOnLastPage = $numberOfAnswersTotal % 
-        $numberOfAnswersDisplayedPerPage;
-        $numberOfPages = ceil($numberOfAnswersTotal/
-        $numberOfAnswersDisplayedPerPage);
-        $questionArray[] = array("");
-        
-        while($row = $result->fetch_assoc()  )//and $count < 5)
+        //echo "num rows: ".$numberOfAnswersTotal.", ";
+        $numberOfAnswersOnLastPage = $numberOfAnswersTotal % $numberOfAnswersDisplayedPerPage;
+        $numberOfPages = ceil($numberOfAnswersTotal / $numberOfAnswersDisplayedPerPage);
+        $responseArray[] = array("");
+                        
+        //Get all answers and related info into an array
+        //Needs to be in array in order to access by index for pagination
+        while($row = $result->fetch_assoc())//and $count < 5)
             { 
-              //for use with pagination
               $responseArray[] = $row;
-              $test = $responseArray[1];
-              echo "answer body: ".$test['answerBody'];
+              $testRow = $responseArray[1];
+              //echo $testRow["answer"];
             }
+            
+            $qStart = $_SESSION["startPoint"];
+            $qEnd = $_SESSION["endPoint"];
+
 
         for($i = $qStart; $i <= $qEnd && !is_null($responseArray[$i]); $i++)
             {
-              echo "inside for loop";
-              $row = $responseArray[$i];
+          $row = $responseArray[$i];
           //Answer id, responder id etc
           $ans_id = $row["answer_id"];
           $responderID = $row["responder_id"];
@@ -494,7 +507,9 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
 	<form class="form" method="post" action="postAnswer.php">
 	<p class="Answer Body">
         <textarea  name="answerBody" id="answerBody" placeholder="Enter your answer here." rows="4" cols="50"/></textarea>
-    </p>
+  </p>
+
+
 
     <input type="hidden" name="questionID" id="questionID" value="<?php echo $q_id ?>"/>
 

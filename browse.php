@@ -198,7 +198,7 @@ function Solved($solved)
                 
 
 
-                echo "Start index:".$qStart.", End Index: ".$qEnd;
+                //echo "Start index:".$qStart.", End Index: ".$qEnd;
 
             
             while($row = $result->fetch_assoc()  )//and $count < 5)
