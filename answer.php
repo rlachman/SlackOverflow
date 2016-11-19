@@ -56,16 +56,9 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
 <link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
 <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet"> 
 <script type="text/javascript" src="jquery-1.11.3-jquery.min.js"></script>
-<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
-<script>
-      tinymce.init({
-        selector: "textarea",
-        plugins: "image paste",
-        toolbar: "image paste",
-        paste_data_images: true,
-        forced_root_block : ""
-      });
-    </script>
+
+<script src="ckeditor/ckeditor.js"></script>
+
 <link rel="stylesheet" href="style.css" type="text/css"  />
 <title>SlackOverflow - <?php print($userRow['user_email']); ?></title>
 </head>
@@ -507,6 +500,27 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
 	<form class="form" method="post" action="postAnswer.php">
 	<p class="Answer Body">
         <textarea  name="answerBody" id="answerBody" placeholder="Enter your answer here." rows="4" cols="50"/></textarea>
+<script>
+    // Replace the <textarea id="editor1"> with an CKEditor
+    // instance, using the "bbcode" plugin, customizing some of the
+    // editor configuration options to fit BBCode environment.
+    CKEDITOR.replace( 'answerBody', 
+      {
+           // Add plugins providing functionality popular in BBCode environment.
+      extraPlugins: 'bbcode',
+      // Remove unused plugins.
+      removePlugins: 'filebrowser,format,horizontalrule,pastetext,pastefromword,scayt,showborders,stylescombo,table,tabletools,wsc',
+      // Remove unused buttons.
+      removeButtons: 'Anchor,BGColor,Font,Strike,Subscript,Superscript',
+      // Width and height are not supported in the BBCode format, so object resizing is disabled.
+      disableObjectResizing: true,
+      // Define font sizes in percent values.
+      fontSize_sizes: "30/30%;50/50%;100/100%;120/120%;150/150%;200/200%;300/300%",
+      // Strip CKEditor smileys to those commonly used in BBCode.
+      });
+  </script>
+
+
   </p>
 
 
