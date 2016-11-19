@@ -144,7 +144,7 @@ function printCheck()
           // Replace the <textarea id="editor1"> with an CKEditor
           // instance, using the "bbcode" plugin, customizing some of the
           // editor configuration options to fit BBCode environment.
-          CKEDITOR.replace( 'answerBody', 
+          CKEDITOR.replace( 'questionBody', 
           {
             // Add plugins providing functionality popular in BBCode environment.
             extraPlugins: 'bbcode',
