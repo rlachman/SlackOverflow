@@ -131,7 +131,7 @@ function returnQuestions()
                       <td>'.$row['question_title'].'</td>
                       <td>'.$row['user_name'].'</td>
                       <td>
-                        <span class="label label-primary">Edit</span>
+                        <a href="editQuestion.php?question_id='.$row['question_id'].'"><span class="label label-primary">Edit</span></a>
                       </td>
                       <td>
                         <a href="deleteQuestion.php?question_id='.$row['question_id'].'"><span class="label label-danger">Del</span></a>
@@ -167,7 +167,7 @@ function returnResponses()
                       <td>'.$row['answer'].'</td>
                       <td>'.$row['user_name'].'</td>
                       <td>
-                      <span class="label label-primary">Edit</span>
+                      <a href="editResponse.php?response_id='.$row['answer_id'].'"><span class="label label-primary">Edit</span></a>
                       </td>
                       <td><a href="deleteResponses.php?response_id='.$row['answer_id'].'"><span class="label label-danger">Del</span></a></td>
                       <td><span class="label label-info">Frz</span></td>
