@@ -56,7 +56,6 @@ $servername = "";
           <li><a href="admin.php?action=ua">User Actions</a></li> 
           </ul>
       </li>
-          
       <li><a href="admin.php?action=se">Settings</a></li> 
     </ul>
   </div>
@@ -77,7 +76,7 @@ if(count($_GET) > 0)
         break;
     case "ua": echo "<center><h1>Users</h1><hr><center>"; userActions();
         break;
-        
+
     default:
         echo "Your favorite color is neither red, blue, nor green!";
 }//End switch
@@ -111,6 +110,7 @@ function userActions()
 }
 
 function returnQuestions()
+
 {
   $conn = returnDatabaseConnection();
   $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_id, user_name, is_solved, num_upvotes, num_downvotes
@@ -208,6 +208,4 @@ function returnUsers()
             }
         echo '<table></div>';
 }
-
-
 ?>
