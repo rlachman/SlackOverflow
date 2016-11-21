@@ -49,6 +49,7 @@ function returnOriginal($response_id)
 
   $result = $conn->query($sql);
   $row = $result->fetch_assoc();
+  $_SESSION['responseBody'] = $row['answer'];
   echo $row['answer'];
 }
 
@@ -92,7 +93,7 @@ function returnOriginal($response_id)
   <?php returnOriginal($response_id); ?>
 <hr>
   <h1>Make Changes</h1>
-<form class="form" method="post" action="">
+<form class="form" method="post" action="updateResponse.php?response_id=<?php echo $response_id?>">
 <p class="Response Body">
               <textarea  name="responseBody" id="responseBody" placeholder="Enter your question here." rows="4" cols="50"/></textarea>
             <script>
@@ -113,6 +114,8 @@ function returnOriginal($response_id)
             fontSize_sizes: "30/30%;50/50%;100/100%;120/120%;150/150%;200/200%;300/300%",
             // Strip CKEditor smileys to those commonly used in BBCode.
           });
+          var responseBody = "<?php echo $_SESSION['responseBody']; ?>";
+          CKEDITOR.instances.responseBody.setData(responseBody);
             </script>
             </p>
 <input type="submit" value="Update Response">

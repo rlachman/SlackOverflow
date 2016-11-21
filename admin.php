@@ -1,5 +1,4 @@
 <?php
-
 require_once("session.php");
 require_once("dbconfig.php");
 require_once("class.user.php");
@@ -12,6 +11,14 @@ $user_id = $_SESSION['user_session'];
 $stmt = $auth_user->runQuery("SELECT * FROM users WHERE user_id=:user_id");
 $stmt->execute(array(":user_id"=>$user_id));
 $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
+$_SESSION['isAdmin'] = $userRow['is_admin'];
+//Do not allow non admins access here!
+if(!$_SESSION['isAdmin'])
+{
+  header('Location: '."home.php");
+}
+
+
 
 // SET USER ID,NAME,ISGUEST FOR SESSION
 $_SESSION['user_id'] = $userRow['user_id'];
@@ -181,7 +188,7 @@ function returnResponses()
 function returnUsers()
 {
   $conn = returnDatabaseConnection();
-  $sql = "SELECT user_id, user_name, user_email
+  $sql = "SELECT user_id, user_name, user_email, is_admin
       FROM users 
       ORDER BY user_name asc";
 
@@ -190,22 +197,52 @@ function returnUsers()
         //echo "Your search returned ".$result->num_rows." results.";
         echo '<div class="container">
             <table class="table">
-                <th>User Id</th><th>Username</th><th>User Email</th><th>Edit</th><th>Del</th><th>Ban</th>';
+                <th>User Id</th><th>Username</th><th>User Email</th><th>Q Posts</th><th>Q Score</th><th>Admin I/O</th><th>Make Admin</th><th>Delete</th>';
         while($row = $result->fetch_assoc())
             {
               echo '<tr>
                       <td>'.$row['user_id'].'</td>
-                      <td>'.$row['user_name'].'</td>
+                      <td><a href="profile.php?ext_user='.$row['user_id'].'&ext_user_name='.$row['user_name'].'">'.$row['user_name'].'</a></td>
                       <td>'.$row['user_email'].'</td>
+                      <td>'.getNumberOfQuestionsAsked($row['user_id']).'</td>
+                      <td>'.getUserQScore($row['user_id']).'</td>
+                      <td>'.$row['is_admin'].'</td>
                       <td>
-                      <span class="label label-primary">Edit</span>
+                      <a href="makeAdmin.php?user_id='.$row['user_id'].'"><span class="label label-primary">Admin</span></a>
                       </td>
                       <td><span class="label label-danger">Del</span></td>
-                      <td><span class="label label-info">Frz</span></td>
-                                            </td>
+                                                                  </td>
                     </tr>';
 
             }
         echo '<table></div>';
 }
+
+function getNumberOfQuestionsAsked($asker_id)
+{
+  $conn = returnDatabaseConnection();
+  $sql = "SELECT question_id, question
+      FROM questions
+      WHERE asker_id=".$asker_id.";";
+      return mysqli_num_rows($conn->query($sql));
+}
+
+function getUserQScore($user_id)
+{
+ $conn = returnDatabaseConnection();
+  $sql = "SELECT num_upvotes, num_downvotes
+      FROM questions
+      WHERE asker_id=".$user_id.";";
+      
+      $result = $conn->query($sql);
+      $score = 0;
+
+      while($row = $result->fetch_assoc())
+      {
+          $score = $row['num_upvotes'] - $row['num_downvotes'];
+      }
+
+      return $score;
+}
+
 ?>

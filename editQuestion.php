@@ -20,7 +20,7 @@ $user_is_guest = $userRow['is_guest'];
 
 //Get some object id to do something with
 $question_id = $_GET['question_id'];
-
+$_SESSION['question_title'] ="";
 //DB Variables
 $servername = "";
   $username = "";
@@ -41,12 +41,14 @@ $servername = "";
 function returnOriginal($question_id)
 {
   $conn = returnDatabaseConnection();
-  $sql = "SELECT question
+  $sql = "SELECT question, question_title
           FROM questions
           WHERE question_id = ".$question_id."";
 
   $result = $conn->query($sql);
   $row = $result->fetch_assoc();
+  $_SESSION['question_title'] = $row['question_title'];
+  $_SESSION['question'] = $row['question'];
   echo $row['question'];
 }
 
@@ -91,10 +93,16 @@ function returnOriginal($question_id)
 <hr>
   <h1>Make Changes</h1>
 
-<form class="form" method="post" action="">
+<form class="form" method="post" action="updateQuestion.php?question_id=<?php echo $question_id?>">
+
+<div class="form-group">
+      <label for="question_title">Title:</label>
+      <input type="text" class="form-control" name="questionTitle" id="question_title" value="<?php echo $_SESSION['question_title']?>">
+</div>
+
 <p class="Question Body">
-              <textarea  name="questionBody" id="questionBody" placeholder="Enter your question here." rows="4" cols="50"/></textarea>
-            <script>
+  <textarea  name="questionBody" id="questionBody" value="<?php echo $_SESSION['question'] ?>" rows="4" cols="50"/></textarea>
+    <script>
           // Replace the <textarea id="editor1"> with an CKEditor
           // instance, using the "bbcode" plugin, customizing some of the
           // editor configuration options to fit BBCode environment.
@@ -112,8 +120,10 @@ function returnOriginal($question_id)
             fontSize_sizes: "30/30%;50/50%;100/100%;120/120%;150/150%;200/200%;300/300%",
             // Strip CKEditor smileys to those commonly used in BBCode.
           });
-            </script>
-            </p>
+          var questionBody = "<?php echo $_SESSION['question']; ?>";
+          CKEDITOR.instances.questionBody.setData(questionBody);
+    </script>
+</p>
 <input type="submit" value="Update Question">
 </form>
 

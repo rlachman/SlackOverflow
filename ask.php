@@ -130,6 +130,7 @@ function printCheck()
           <a href="profile.php"><span class="glyphicon glyphicon-user"></span> Profile</a>
           <a href="browse.php"><span class="glyphicon glyphicon-eye-open"></span> Browse</a>
           <a href="help.php"><span class="glyphicon glyphicon-book"></span> Help</a>
+          <?php if($_SESSION['isAdmin']) echo '<a href="admin.php"><span class="glyphicon glyphicon-cog"></span> AdminCP</a>'; ?>
           </h1>
                 
         <hr />

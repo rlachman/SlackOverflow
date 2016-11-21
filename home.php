@@ -15,6 +15,7 @@ $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
 
 // SET USER ID,NAME,ISGUEST FOR SESSION
 $_SESSION['user_id'] = $userRow['user_id'];
+$_SESSION['isAdmin'] = $userRow['is_admin'];
 $user_name = $userRow['user_name'];
 $user_is_guest = $userRow['is_guest'];
 
@@ -146,6 +147,7 @@ function Solved($solved)
           <a href="profile.php"><span class="glyphicon glyphicon-user"></span> Profile</a>
           <a href="browse.php"><span class="glyphicon glyphicon-eye-open"></span> Browse</a>
           <a href="help.php"><span class="glyphicon glyphicon-book"></span> Help</a>
+          <?php if($_SESSION['isAdmin']) echo '<a href="admin.php"><span class="glyphicon glyphicon-cog"></span> AdminCP</a>'; ?>
           </h1>
                 
        	<hr />
