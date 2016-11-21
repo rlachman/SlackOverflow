@@ -209,6 +209,7 @@ function returnUsers()
                       <td>'.$row['is_admin'].'</td>
                       <td>
                       <a href="makeAdmin.php?user_id='.$row['user_id'].'"><span class="label label-primary">Admin</span></a>
+                      <a href="makeAdmin.php?user_id='.$row['user_id'].'&revoke=yes"><span class="label label-primary">Revoke</span></a>
                       </td>
                       <td><span class="label label-danger">Del</span></td>
                                                                   </td>

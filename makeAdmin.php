@@ -47,9 +47,10 @@ function returnDatabaseConnection()
 
 $conn = returnDatabaseConnection();
 $sql = "SELECT is_admin FROM users WHERE user_id=".$user_id.";";
-$is_admin = $conn->query($sql);
 
-if(!$is_admin)
+echo count($_GET);
+
+if(count($_GET) < 2)
 {
    $makeAdminSql = "UPDATE users SET is_admin = 1 WHERE user_id=".$user_id.";";
   $conn->query($makeAdminSql);
@@ -59,6 +60,4 @@ if(!$is_admin)
 }
 
 header('Location: ' . $_SERVER['HTTP_REFERER']);
-
-
 ?>
