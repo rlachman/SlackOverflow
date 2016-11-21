@@ -127,7 +127,34 @@ function Solved($solved)
           </h1>
         <hr />
 
-        <p> Insert some helpful stuff here </p>
+        <p>
+          <H1>FAQ</H1>
+          <HR>
+
+          <B>What is SlackOverflow?</B><BR>
+          <BLOCKQUOTE>SlackOverflow is a question and answer forum.</BLOCKQUOTE>
+
+          <B>How do I ask a question?</B><BR>
+          <BLOCKQUOTE>You must <a href="sign-up.php"> Sign Up</a> to SlackOverflow to ask or answer any questions.</BLOCKQUOTE>
+
+          <B>How do I sign up?</B><BR>
+          <BLOCKQUOTE>To sign up you must click the Guest drop down menu on the top right of the page and choose <a href="index.php?home=yes"> Sign In</a>. Once at the <a href="index.php?home=yes"> Sign In</a> window, click <a href="sign-up.php"> Sign Up</a> at the bottom.</BLOCKQUOTE>
+
+          <B>What information is needed to sign up?</B><BR>
+          <BLOCKQUOTE>To sign up simply enter a Username, Email, and Password on the <a href="sign-up.php"> Sign Up</a> page.</BLOCKQUOTE>
+
+          <B>All signed up, but how do I ask a question?</B><BR>
+          <BLOCKQUOTE>In order to ask a question a member can click <a href="ask.php"> Ask</a> at the top of the page.</BLOCKQUOTE>
+
+          <B>How do I add my profile picture?</B><BR>
+          <BLOCKQUOTE>To add a profile image navigate to the profile page via <a href="profile.php"> Profile</a> on the top of the page. Once there, click Choose File. Select an image then click Submit. </BLOCKQUOTE>
+
+          <B>How do I see past questions?</B><BR>
+          <BLOCKQUOTE>To see any old question navigate to the browse page by clicking <a href="browse.php"> Browse</a> at the top of the page. As a side note if looking for your past asked questions simply navigate to your <a href="profile.php"> Profile</a>.</BLOCKQUOTE>
+
+          <B>What are these arrows next to the questions and answers?</B><BR>
+          <BLOCKQUOTE>Next to each question is an Up or Down arrow. These arrows allow members to vote a question up or down. The higher they are voted up the more they move to the top of the questions/answers list. Vice versa for voting down.</BLOCKQUOTE>
+        </p>
         
         <hr />
 
