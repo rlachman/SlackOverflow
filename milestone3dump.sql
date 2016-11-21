@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 01, 2016 at 05:56 AM
+-- Generation Time: Nov 21, 2016 at 06:59 AM
 -- Server version: 5.7.15-0ubuntu0.16.04.1
 -- PHP Version: 7.0.8-0ubuntu0.16.04.2
 
@@ -21,6 +21,7 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE slackoverflow;
 USE slackoverflow;
+
 -- --------------------------------------------------------
 
 --
@@ -42,7 +43,7 @@ CREATE TABLE `answers` (
 --
 
 INSERT INTO `answers` (`answer_id`, `answer`, `responder_id`, `question_id`, `is_best`, `num_upvotes`, `num_downvotes`) VALUES
-(118, 'Belay me six pounders keel chandler coxswain fathom squiffy matey doubloon. Fore poop deck capstan dance the hempen jig Letter of Marque barkadeer tack salmagundi heave to parley.', 6, 83, 1, 4, 0),
+(118, 'Belay me six pounders keel chandler coxswain fathom squiffy matey doubloon. Fore poop deck capstan dance the hempen jig Letter of Marque barkadeer tack salmagundi heave to parley.', 6, 83, 1, 5, 0),
 (119, 'Belay me six pounders keel chandler coxswain fathom squiffy matey doubloon. Fore poop deck capstan dance the hempen jig Letter of Marque barkadeer tack salmagundi heave to parley.', 6, 84, 0, 1, 0),
 (120, 'Belay me six pounders keel chandler coxswain fathom squiffy matey doubloon. Fore poop deck capstan dance the hempen jig Letter of Marque barkadeer tack salmagundi heave to parley.', 6, 86, 0, 1, 0),
 (121, 'Belay me six pounders keel chandler coxswain fathom squiffy matey doubloon. Fore poop deck capstan dance the hempen jig Letter of Marque barkadeer tack salmagundi heave to parley.', 6, 87, 0, 0, 0),
@@ -51,10 +52,7 @@ INSERT INTO `answers` (`answer_id`, `answer`, `responder_id`, `question_id`, `is
 (124, 'Stern driver tender nipper skysail hail-shot draft bilge rat hands mizzen. Furl belay cutlass long boat matey spanker Cat o\'nine tails man-of-war jury mast chase. Shrouds yawl lee keelhaul aye skysail come about Shiver me timbers lanyard careen. Blimey chantey transom long clothes hulk Sail ho dead men tell no tales chandler handsomely no prey, no pay.', 5, 87, 0, 1, 0),
 (125, 'Stern driver tender nipper skysail hail-shot draft bilge rat hands mizzen. Furl belay cutlass long boat matey spanker Cat o\'nine tails man-of-war jury mast chase. Shrouds yawl lee keelhaul aye skysail come about Shiver me timbers lanyard careen. Blimey chantey transom long clothes hulk Sail ho dead men tell no tales chandler handsomely no prey, no pay.', 12, 83, 0, 1, 0),
 (126, 'Boom prow splice the main brace come about chase guns keelhaul Privateer interloper cutlass lookout. Squiffy Jack Ketch six pounders sloop stern chase Chain Shot Admiral of the Black bilge rat lad.', 7, 83, 0, 0, 0),
-(127, 'List loot coxswain lugsail lee trysail strike colors yo-ho-ho loaded to the gunwalls overhaul. Plate Fleet lookout carouser transom hulk dead men tell no tales killick draft loot salmagundi. Cog quarterdeck reef ballast lass parley sheet chase guns run a rig gibbet. Black jack sutler Pieces of Eight no prey, no pay Plate Fleet lad bilge water schooner cog draught.', 20, 84, 0, 0, 0),
-(129, 'Belay me six pounders keel chandler coxswain fathom squiffy matey doubloon. Fore poop deck capstan dance the hempen jig Letter of Marque barkadeer tack salmagundi heave to parley.', 26, 93, 0, 0, 0),
-(133, '&quot;~!@#$%^&amp;*()_+_)(*&amp;^%$#@!~}{:&quot;&gt;&lt;??:{}+}\\|}{P{}|-/*?~!@#$%^&amp;*()_+_)(*&amp;^%$#@!~}{:&quot;&gt;&lt;??:{}+}\\|}{P{}|-/*?~!@#$%^&amp;*()_+_)(*&amp;^%$#@!~}{:&quot;&gt;&lt;??:{}+}\\|}{P{}|-/*?~!@#$%^&amp;*()_+_)(*&amp;^%$#@!~}{:&quot;&gt;&lt;??:{}+}\\|}{P{}|-/*?&quot;', 33, 96, 1, 1, 1),
-(134, '&quot;you can use &lt;!-- to comment all kinds of things! --&gt; &lt;b&gt;hi mom&lt;/b&gt;&quot;\r\n', 33, 96, 0, 0, 0);
+(127, 'Test1', 20, 84, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -108,16 +106,14 @@ CREATE TABLE `questions` (
 --
 
 INSERT INTO `questions` (`question_id`, `question_title`, `question`, `asker_id`, `answer_id`, `is_solved`, `num_upvotes`, `num_downvotes`) VALUES
-(83, 'Arr no prey, no pay Sea Legs grapple avast plunder Letter of Marque spirits holystone heave to.', 'Jolly boat Brethren of the Coast cog heave to barque bilge water gangplank grog blossom lugger lee schooner nipper American Main doubloon tackle. Crow\\\'s nest bounty hardtack black spot take a caulk Blimey yardarm jib fluke Brethren of the Coast heave down aft furl trysail spanker. Square-rigged coffer black jack bring a spring upon her cable Davy Jones\\\' Locker careen wench heave down ye cog brig pirate loot bounty fluke. Poop deck Pirate Round long boat hardtack holystone haul wind ye run a shot across the bow maroon hulk knave skysail gun barque avast. Tender take a caulk scurvy Davy Jones\\\' Locker holystone keel American Main ho carouser stern parrel bucko coffer yardarm sheet. Salmagundi shrouds overhaul six pounders sheet topmast jib Corsair trysail Cat o\\\'nine tails pinnace deadlights gangway black spot gun. Port booty American Main aft black spot ho piracy furl fluke stern crimp gangway transom grog blossom hogshead. Broadside gangway hang the jib run a rig to go on account scuttle yardarm trysail chandler barque lateen sail spike starboard splice the main brace stern. Killick hogshead gangplank tack chantey shrouds ye keel mutiny draught booty cable run a rig fluke clap of thunder. Lugsail barque cutlass no prey, no pay Buccaneer lateen sail list fluke quarterdeck capstan hulk loot rigging skysail Barbary Coast.', 5, NULL, 1, 5, 0),
+(83, 'Arr no prey, no pay Sea Legs grapple avast plunder Letter of Marque spirits holystone heave toooo.', 'Test1', 5, NULL, 1, 6, 0),
 (84, 'Grapple run a rig hearties aye clipper Buccaneer hulk yo-ho-ho rigging gaff.', 'Hang the jib yard hogshead Gold Road gally square-rigged Pieces of Eight gun boatswain jack. Main sheet jib square-rigged maroon draft keel schooner gangway gun killick. Pieces of Eight bilge water clap of thunder chase scuppers lanyard holystone haul wind heave to Blimey.', 12, NULL, 1, 2, 0),
 (86, 'Dance the hempen jig run a rig Admiral of the Black long boat Sail ho.', 'Blimey mutiny Privateer lass case shot Plate Fleet nipper pirate Buccaneer strike colors. Fire in the hole loot tender Cat o\\\'nine tails Spanish Main hogshead booty swab avast bilge water. Maroon square-rigged Pieces of Eight line hornswaggle prow sloop chantey wherry snow. Case shot swing the lead clap of thunder lanyard wherry loot dance the hempen jig tack killick bring a spring upon her cable.', 7, NULL, NULL, 2, 0),
 (87, 'Quarter Sea Legs trysail lee marooned transom schooner cable list bounty pillage poop deck blow the man down strike colors case shot.', 'Blimey mutiny Privateer lass case shot Plate Fleet nipper pirate Buccaneer strike colors. Fire in the hole loot tender Cat o\\\'nine tails Spanish Main hogshead booty swab avast bilge water. Maroon square-rigged Pieces of Eight line hornswaggle prow sloop chantey wherry snow. Case shot swing the lead clap of thunder lanyard wherry loot dance the hempen jig tack killick bring a spring upon her cable.', 20, NULL, NULL, 1, 0),
-(88, 'Lass rutters main sheet six pounders no prey, no pay mizzenmast heave to league crow\\\'s nest spanker.', 'Bilged on her anchor Nelsons folly booty blow the man down run a shot across the bow mutiny pink to go on account parrel marooned gabion schooner scourge of the seven seas clipper prow me careen rum rigging spanker. Overhaul sloop scallywag black jack code of conduct pressgang yo-ho-ho bilge reef Corsair squiffy avast gally draught Gold Road jolly boat chase bowsprit hang the jib parrel. Gally lad driver Yellow Jack run a rig ballast keelhaul no prey, no pay mizzenmast wherry weigh anchor tackle mutiny grog rope\\\'s end aye clap of thunder case shot heave to fore.\r\nGunwalls grapple fire in the hole barque Cat o\\\'nine tails gun fore mizzenmast scuttle take a caulk boatswain jury mast interloper driver cog chase guns Chain Shot maroon tackle Brethren of the Coast. Run a shot across the bow tack reef sails knave topsail flogging spike take a caulk loaded to the gunwalls blow the man down rope\\\'s end lanyard Brethren of the Coast wherry fire in the hole Corsair measured fer yer chains interloper Plate Fleet plunder. \r\n\r\nHearties grog line splice the main brace gun piracy lee long boat swab lugger belaying pin cutlass carouser parley skysail jury mast loot Arr scourge of the seven seas sheet.', 6, NULL, NULL, 0, 0),
-(89, 'Lass rutters main sheet six pounders no prey, no pay mizzenmast heave to league crow\'s nest spanker.', 'Bilged on her anchor Nelsons folly booty blow the man down run a shot across the bow mutiny pink to go on account parrel marooned gabion schooner scourge of the seven seas clipper prow me careen rum rigging spanker. Overhaul sloop scallywag black jack code of conduct pressgang yo-ho-ho bilge reef Corsair squiffy avast gally draught Gold Road jolly boat chase bowsprit hang the jib parrel. Gally lad driver Yellow Jack run a rig ballast keelhaul no prey, no pay mizzenmast wherry weigh anchor tackle mutiny grog rope\'s end aye clap of thunder case shot heave to fore.\r\nGunwalls grapple fire in the hole barque Cat o\'nine tails gun fore mizzenmast scuttle take a caulk boatswain jury mast interloper driver cog chase guns Chain Shot maroon tackle Brethren of the Coast. Run a shot across the bow tack reef sails knave topsail flogging spike take a caulk loaded to the gunwalls blow the man down rope\'s end lanyard Brethren of the Coast wherry fire in the hole Corsair measured fer yer chains interloper Plate Fleet plunder. Hearties grog line splice the main brace gun piracy lee long boat swab lugger belaying pin cutlass carouser parley skysail jury mast loot Arr scourge of the seven seas sheet.', 8, NULL, NULL, 0, 0),
+(88, 'Lass rutters main sheet six pounders no prey, no pay mizzenmast heave to league crow\\\'s nest spanker.', 'Bilged on her anchor Nelsons folly booty blow the man down run a shot across the bow mutiny pink to go on account parrel marooned gabion schooner scourge of the seven seas clipper prow me careen rum rigging spanker. Overhaul sloop scallywag black jack code of conduct pressgang yo-ho-ho bilge reef Corsair squiffy avast gally draught Gold Road jolly boat chase bowsprit hang the jib parrel. Gally lad driver Yellow Jack run a rig ballast keelhaul no prey, no pay mizzenmast wherry weigh anchor tackle mutiny grog rope\\\'s end aye clap of thunder case shot heave to fore. Gunwalls grapple fire in the hole barque Cat o\\\'nine tails gun fore mizzenmast scuttle take a caulk boatswain jury mast interloper driver cog chase guns Chain Shot maroon tackle Brethren of the Coast. Run a shot across the bow tack reef sails knave topsail flogging spike take a caulk loaded to the gunwalls blow the man down rope\\\'s end lanyard Brethren of the Coast wherry fire in the hole Corsair measured fer yer chains interloper Plate Fleet plunder. Hearties grog line splice the main brace gun piracy lee long boat swab lugger belaying pin cutlass carouser parley skysail jury mast loot Arr scourge of the seven seas sheet.', 6, NULL, NULL, 0, 0),
+(89, 'Lass rutters main sheet six pounders no prey, no pay mizzenmast heave to league crow\'s nest spanker.', 'Bilged on her anchor Nelsons folly booty blow the man down run a shot across the bow mutiny pink to go on account parrel marooned gabion schooner scourge of the seven seas clipper prow me careen rum rigging spanker. Overhaul sloop scallywag black jack code of conduct pressgang yo-ho-ho bilge reef Corsair squiffy avast gally draught Gold Road jolly boat chase bowsprit hang the jib parrel. Gally lad driver Yellow Jack run a rig ballast keelhaul no prey, no pay mizzenmast wherry weigh anchor tackle mutiny grog rope\'s end aye clap of thunder case shot heave to fore. Gunwalls grapple fire in the hole barque Cat o\'nine tails gun fore mizzenmast scuttle take a caulk boatswain jury mast interloper driver cog chase guns Chain Shot maroon tackle Brethren of the Coast. Run a shot across the bow tack reef sails knave topsail flogging spike take a caulk loaded to the gunwalls blow the man down rope\'s end lanyard Brethren of the Coast wherry fire in the hole Corsair measured fer yer chains interloper Plate Fleet plunder. Hearties grog line splice the main brace gun piracy lee long boat swab lugger belaying pin cutlass carouser parley skysail jury mast loot Arr scourge of the seven seas sheet.', 8, NULL, NULL, 0, 0),
 (90, 'Clipper Admiral of the Black plunder belay swab Pieces of Eight crack Jennys tea cup yawl rum bilged on her anchor.', 'Crimp lass squiffy hornswaggle trysail chantey gally list stern chase ye Privateer league capstan crack Jennys tea cup jolly boat schooner bilge rat hang the jib scuttle. Swab blow the man down Sea Legs transom Shiver me timbers rigging galleon hands nipper to go on account clap of thunder Plate Fleet snow pirate ye doubloon driver bilge rat topmast clipper. Privateer pillage run a shot across the bow bilge rat mizzen yard quarter gabion port ho sheet dead men tell no tales splice the main brace Pirate Round matey cutlass chantey transom loaded to the gunwalls knave.', 7, NULL, NULL, 0, 0),
-(91, 'Keel lee bilged on her anchor shrouds splice the main brace fluke measured fer yer chains lanyard poop deck jury mast.', 'Haul wind ye American Main Admiral of the Black landlubber or just lubber tender Jack Tar lanyard tackle pirate. To go on account reef splice the main brace cutlass coffer schooner deadlights sloop spirits heave down. Topmast killick chase rope\'s end Admiral of the Black poop deck blow the man down haul wind chantey topgallant.\r\nBowsprit wherry weigh anchor poop deck case shot barkadeer bucko Cat o\'nine tails rum American Main. Run a shot across the bow code of conduct chantey bounty rigging jolly boat barque chase quarter Admiral of the Black. Gabion driver gangway keelhaul scourge of the seven seas aft fore sutler hogshead lookout.', 7, NULL, NULL, 0, 0),
-(92, 'Keel lee bilged on her anchor shrouds splice the main brace fluke measured fer yer chains lanyard poop deck jury mast.', 'Haul wind ye American Main Admiral of the Black landlubber or just lubber tender Jack Tar lanyard tackle pirate. To go on account reef splice the main brace cutlass coffer schooner deadlights sloop spirits heave down. Topmast killick chase rope\'s end Admiral of the Black poop deck blow the man down haul wind chantey topgallant.\r\nBowsprit wherry weigh anchor poop deck case shot barkadeer bucko Cat o\'nine tails rum American Main. Run a shot across the bow code of conduct chantey bounty rigging jolly boat barque chase quarter Admiral of the Black. Gabion driver gangway keelhaul scourge of the seven seas aft fore sutler hogshead lookout.', 6, NULL, NULL, 0, 0),
-(93, 'Long clothes red ensign carouser gibbet lateen sail.', 'Belay me six pounders keel chandler coxswain fathom squiffy matey doubloon. Fore poop deck capstan dance the hempen jig Letter of Marque barkadeer tack salmagundi heave to parley.', 6, NULL, NULL, 1, 0);
+(91, 'Keel lee bilged on her anchor shrouds splice the main brace fluke measured fer yer chains lanyard poop deck jury mast.', 'Wind ye American Main Admiral of the Black landlubber or just lubber tender Jack Tar lanyard tackle pirate. To go on account reef splice the main brace cutlass coffer schooner deadlights sloop spirits heave down. Topmast killick chase rope\'s end Admiral of the Black poop deck blow the man down haul wind chantey topgallant. Bowsprit wherry weigh anchor poop deck case shot barkadeer bucko Cat o\'nine tails rum American Main. Run a shot across the bow code of conduct chantey bounty rigging jolly boat barque chase quarter Admiral of the Black. Gabion driver gangway keelhaul scourge of the seven seas aft fore sutler hogshead lookout.', 7, NULL, NULL, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -171,7 +167,6 @@ INSERT INTO `questionVotes` (`vote_id`, `question_id`, `voter_id`, `is_upvote`) 
 (32, 78, 8, 1),
 (33, 83, 5, 1),
 (34, 84, 5, 1),
-(35, 93, 5, 1),
 (36, 86, 5, 1),
 (37, 87, 5, 1),
 (38, 83, 6, 1),
@@ -181,7 +176,8 @@ INSERT INTO `questionVotes` (`vote_id`, `question_id`, `voter_id`, `is_upvote`) 
 (42, 83, 28, 1),
 (43, 83, 32, 1),
 (44, 96, 33, 1),
-(45, 96, 8, 1);
+(45, 96, 8, 1),
+(46, 83, 41, 1);
 
 -- --------------------------------------------------------
 
@@ -194,48 +190,50 @@ CREATE TABLE `users` (
   `user_name` varchar(255) NOT NULL,
   `user_email` varchar(60) NOT NULL,
   `user_pass` varchar(255) NOT NULL,
-  `is_guest` tinyint(1) NOT NULL DEFAULT '0'
+  `is_guest` tinyint(1) NOT NULL DEFAULT '0',
+  `is_admin` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `user_name`, `user_email`, `user_pass`, `is_guest`) VALUES
-(1, 'harrison', 'email@email.com', '$2y$10$8NnIKUShKJaYPaJD7CGvteJR4Ob4ZrRkMvoRtSYijUeSwG7YFNwjO', 0),
-(2, 'bob', 'bob@bob.com', '$2y$10$lQnGeg0V65uMomPxddu3luSE8AEa1k6yGI4tj/2W1qHAkURKLDBd.', 0),
-(3, 'john', 'john@john.com', '$2y$10$FouKLN5PmmYkYUi1cRS4j.Cke230BddZx3CpFCJK8eGZ1Bj1OGvXe', 0),
-(5, 'JohnWayne', 'jw@jw.com', '$2y$10$FuZc7.iHZfSo/2YMIW5WOehOagQBJu7HEyzTIQ5ZYuzqj7Xyu9zBG', 0),
-(6, 'RayCharles', 'rc@email.com', '$2y$10$uXI53uGpoT0hEnsP84S89uVZsq.i4PRJmwpCwCuwBY4jQ.RWfnDc6', 0),
-(7, 'DarthVader', 'jw@email.com', '$2y$10$DSnn44sNqq1UCujVxp4tAOZEch5yxP.pMAHVOmJlh161zdtu3t7gO', 0),
-(8, 'kitten', 'kitten@kitten.com', '$2y$10$SjUTi2ZBNFtOFZalPoHfy.dabSJqg/aFyustI1OIjc3gTTw5PwjnW', 0),
-(9, 'steve', 'steve@steve.com', '$2y$10$ZTPijWz/rD3c.hMvlBq4Y.kWAdpC3EIayoReNQ0LEbqiuKIBfvvVy', 0),
-(12, 'BillGates', 'Bg@email.com', '$2y$10$4/3rIs0o6w2ftARi4eEl0eegsBtWaoxCptau3Zs4q8WsiU5TgeWha', 0),
-(13, 'Joe', 'joe@email.com', '$2y$10$8wXWQEeEyurTJAFVT4uj.OL5IbqrFXKwPBhVANbl.eigsIGgCYvse', 0),
-(14, 'guest', 'guest@guest.com', '$2y$10$FuZc7.iHZfSo/2YMIW5WOehOagQBJu7HEyzTIQ5ZYuzqj7Xyu9zBG', 1),
-(15, 'moe', 'moe@email.com', '$2y$10$1Cd3nMHaz9gaF8oyfuUn8ucTSBh2zVOKzCib6ny8O3og9Zysywthe', 0),
-(16, '123', '123@email.com', '$2y$10$bKl6UV6JxEj5z9dQcusZoe682EJGUsfy/RvcNe3A/6MZNl5mhM9se', 0),
-(17, '1234', '1234@email.com', '$2y$10$L0bsruJe6d.Vn3M4pfqdkuIzBEZUnyacwE8mEbCa7o4oijSg3fegq', 0),
-(18, 'abc', 'abc@email.com', '$2y$10$fMHC6W9.GwusMb.SFcKAheqbCnIVGJJ1UbpuVjPQGK0iPfGFz3ulO', 0),
-(20, 'jbrunelle', 'jbrunelle@email.com', '$2y$10$7u3kaxoXuTe2azFEyg2tyOJCy5AYo1Coh60.FZc7f7Rxu0GVQHJHS', 0),
-(22, '123123', '123123@email.com', 'adminadmin', 0),
-(24, 'AustinPowers', 'ap@email.com', '$2y$10$zbPFdEbe/Mj5hFGzgqtybOjf/.WSQr6CPNRr0tQvf7.L9Y0VwnDx6', 0),
-(25, 'rstantz', 'rstantz@gmail.com', '$2y$10$.lcQ/S2MPVaiZzF683tRkulvsgSJLRyQAHjUQKTGp4iToxwWaiNTi', 0),
-(26, 'StevieWonder', 'sw@email.com', '$2y$10$Uq4TSkcj2w5/abMMrlarV.Co5WsVmKNsesPoQiAP7hO0KCUZm5bqa', 0),
-(27, 'admin', 'admin@gmail.com', '$2y$10$BWgt58NZs2lxa4u.Vpd74e8EdHu6pxCgODDfSy2AzaRYHBwdjoO3W', 0),
-(28, 'pvenkman', 'pvenkman@gmail.com', '$2y$10$REbQlvJGr21Iw5J8dlaICuFERjrCbUgCuyyIxpUGsU7UEB7DqOXie', 0),
-(29, 'dbarrett', 'dbarrett@gmail.com', '$2y$10$YI56AOWX8LcWsfQ.1D6eteXieGfsSlWt.p8atba3SQMDrB6uoqOo6', 0),
-(30, 'ltully', 'ltully@gmail.com', '$2y$10$qRm73VSeDy7gIKd48Fy80OkFlsm43uWD.erw9FDw5Kl4Q1vGHPHeG', 0),
-(31, 'espengler', 'espengler@gmail.com', '$2y$10$CL1bz1xQmUCTeto/0ujit.QhVMdCCbtOD.LJoCuIbEKkfUBtDeJUm', 0),
-(32, 'janine', 'janine@gmail.com', '$2y$10$nIQRmPuPDLHjM3cN.pX/Sugqv1K3.YWJHzulZ4W6MVq5Qpunw6L5m', 0),
-(33, 'winston', 'winston@gmail.com', '$2y$10$lvJjhxlmZOUanDBXkbgvaODVLpPj77oaMN02Op2dilcRVwEnLoUMC', 0),
-(34, 'gozer', 'gozer@gmail.com', '$2y$10$3f2SZ7bBENeo/kFoO5lAn.pkpZdbSMJrjTp4fSPOSrMRC0QCwdWs6', 0),
-(35, 'slimer', 'slimer@gmail.com', '$2y$10$slYzW8XU9fIpvNdbK3zh.umFdtt9rar6Ftl4kCz/m7kXU4Hy57/rG', 0),
-(36, 'zuul', 'zuul@gmail.com', '$2y$10$svpRQuDY5p7zp0NsmRLnm.x3zkwpIn9iSIADlB9ZgIqDpRy7DlpPq', 0),
-(37, 'keymaster', 'keymaster@gmail.com', '$2y$10$9ML0L4EDdAkg0M2G.9LH/enh6NPm4Ewqp5x/nNEjTg5/bCTMJ8VDC', 0),
-(38, 'gatekeeper', 'gatekeeper@gmail.com', '$2y$10$DWY8iLd.QgQibWxp5bZw7ezQ1H8xppgUttdqjCAJPKKVIVnPU1mOu', 0),
-(39, 'staypuft', 'staypuft@gmail.com', '$2y$10$1NB8OPkLl18H9tk4UF9O7O6RLZrPAmZvD/8BPvJHQiZ9mZ3nVLaCK', 0),
-(40, 'BillyBob', 'bb@email.com', '$2y$10$nPAbLE1s5HCyJcqIOK1CZeZRSUGhVKiE3iXRIRnij358Sct0eo2ge', 0);
+INSERT INTO `users` (`user_id`, `user_name`, `user_email`, `user_pass`, `is_guest`, `is_admin`) VALUES
+(1, 'harrison', 'email@email.com', '$2y$10$8NnIKUShKJaYPaJD7CGvteJR4Ob4ZrRkMvoRtSYijUeSwG7YFNwjO', 0, 0),
+(2, 'bob', 'bob@bob.com', '$2y$10$lQnGeg0V65uMomPxddu3luSE8AEa1k6yGI4tj/2W1qHAkURKLDBd.', 0, 0),
+(3, 'john', 'john@john.com', '$2y$10$FouKLN5PmmYkYUi1cRS4j.Cke230BddZx3CpFCJK8eGZ1Bj1OGvXe', 0, 0),
+(5, 'JohnWayne', 'jw@jw.com', '$2y$10$FuZc7.iHZfSo/2YMIW5WOehOagQBJu7HEyzTIQ5ZYuzqj7Xyu9zBG', 0, 0),
+(6, 'RayCharles', 'rc@email.com', '$2y$10$uXI53uGpoT0hEnsP84S89uVZsq.i4PRJmwpCwCuwBY4jQ.RWfnDc6', 0, 0),
+(7, 'DarthVader', 'jw@email.com', '$2y$10$DSnn44sNqq1UCujVxp4tAOZEch5yxP.pMAHVOmJlh161zdtu3t7gO', 0, 1),
+(8, 'kitten', 'kitten@kitten.com', '$2y$10$SjUTi2ZBNFtOFZalPoHfy.dabSJqg/aFyustI1OIjc3gTTw5PwjnW', 0, 0),
+(9, 'steve', 'steve@steve.com', '$2y$10$ZTPijWz/rD3c.hMvlBq4Y.kWAdpC3EIayoReNQ0LEbqiuKIBfvvVy', 0, 0),
+(12, 'BillGates', 'Bg@email.com', '$2y$10$4/3rIs0o6w2ftARi4eEl0eegsBtWaoxCptau3Zs4q8WsiU5TgeWha', 0, 0),
+(13, 'Joe', 'joe@email.com', '$2y$10$8wXWQEeEyurTJAFVT4uj.OL5IbqrFXKwPBhVANbl.eigsIGgCYvse', 0, 0),
+(14, 'guest', 'guest@guest.com', '$2y$10$FuZc7.iHZfSo/2YMIW5WOehOagQBJu7HEyzTIQ5ZYuzqj7Xyu9zBG', 1, 0),
+(15, 'moe', 'moe@email.com', '$2y$10$1Cd3nMHaz9gaF8oyfuUn8ucTSBh2zVOKzCib6ny8O3og9Zysywthe', 0, 0),
+(16, '123', '123@email.com', '$2y$10$bKl6UV6JxEj5z9dQcusZoe682EJGUsfy/RvcNe3A/6MZNl5mhM9se', 0, 0),
+(17, '1234', '1234@email.com', '$2y$10$L0bsruJe6d.Vn3M4pfqdkuIzBEZUnyacwE8mEbCa7o4oijSg3fegq', 0, 0),
+(18, 'abc', 'abc@email.com', '$2y$10$fMHC6W9.GwusMb.SFcKAheqbCnIVGJJ1UbpuVjPQGK0iPfGFz3ulO', 0, 0),
+(20, 'jbrunelle', 'jbrunelle@email.com', '$2y$10$7u3kaxoXuTe2azFEyg2tyOJCy5AYo1Coh60.FZc7f7Rxu0GVQHJHS', 0, 0),
+(22, '123123', '123123@email.com', 'adminadmin', 0, 0),
+(24, 'AustinPowers', 'ap@email.com', '$2y$10$zbPFdEbe/Mj5hFGzgqtybOjf/.WSQr6CPNRr0tQvf7.L9Y0VwnDx6', 0, 0),
+(25, 'rstantz', 'rstantz@gmail.com', '$2y$10$.lcQ/S2MPVaiZzF683tRkulvsgSJLRyQAHjUQKTGp4iToxwWaiNTi', 0, 0),
+(26, 'StevieWonder', 'sw@email.com', '$2y$10$Uq4TSkcj2w5/abMMrlarV.Co5WsVmKNsesPoQiAP7hO0KCUZm5bqa', 0, 0),
+(27, 'admin', 'admin@gmail.com', '$2y$10$BWgt58NZs2lxa4u.Vpd74e8EdHu6pxCgODDfSy2AzaRYHBwdjoO3W', 0, 0),
+(28, 'pvenkman', 'pvenkman@gmail.com', '$2y$10$REbQlvJGr21Iw5J8dlaICuFERjrCbUgCuyyIxpUGsU7UEB7DqOXie', 0, 0),
+(29, 'dbarrett', 'dbarrett@gmail.com', '$2y$10$YI56AOWX8LcWsfQ.1D6eteXieGfsSlWt.p8atba3SQMDrB6uoqOo6', 0, 0),
+(30, 'ltully', 'ltully@gmail.com', '$2y$10$qRm73VSeDy7gIKd48Fy80OkFlsm43uWD.erw9FDw5Kl4Q1vGHPHeG', 0, 0),
+(31, 'espengler', 'espengler@gmail.com', '$2y$10$CL1bz1xQmUCTeto/0ujit.QhVMdCCbtOD.LJoCuIbEKkfUBtDeJUm', 0, 0),
+(32, 'janine', 'janine@gmail.com', '$2y$10$nIQRmPuPDLHjM3cN.pX/Sugqv1K3.YWJHzulZ4W6MVq5Qpunw6L5m', 0, 0),
+(33, 'winston', 'winston@gmail.com', '$2y$10$lvJjhxlmZOUanDBXkbgvaODVLpPj77oaMN02Op2dilcRVwEnLoUMC', 0, 0),
+(34, 'gozer', 'gozer@gmail.com', '$2y$10$3f2SZ7bBENeo/kFoO5lAn.pkpZdbSMJrjTp4fSPOSrMRC0QCwdWs6', 0, 0),
+(35, 'slimer', 'slimer@gmail.com', '$2y$10$slYzW8XU9fIpvNdbK3zh.umFdtt9rar6Ftl4kCz/m7kXU4Hy57/rG', 0, 0),
+(36, 'zuul', 'zuul@gmail.com', '$2y$10$svpRQuDY5p7zp0NsmRLnm.x3zkwpIn9iSIADlB9ZgIqDpRy7DlpPq', 0, 0),
+(37, 'keymaster', 'keymaster@gmail.com', '$2y$10$9ML0L4EDdAkg0M2G.9LH/enh6NPm4Ewqp5x/nNEjTg5/bCTMJ8VDC', 0, 0),
+(38, 'gatekeeper', 'gatekeeper@gmail.com', '$2y$10$DWY8iLd.QgQibWxp5bZw7ezQ1H8xppgUttdqjCAJPKKVIVnPU1mOu', 0, 0),
+(39, 'staypuft', 'staypuft@gmail.com', '$2y$10$1NB8OPkLl18H9tk4UF9O7O6RLZrPAmZvD/8BPvJHQiZ9mZ3nVLaCK', 0, 0),
+(40, 'BillyBob', 'bb@email.com', '$2y$10$nPAbLE1s5HCyJcqIOK1CZeZRSUGhVKiE3iXRIRnij358Sct0eo2ge', 0, 0),
+(41, 'Test', 'Test@gmail.com', '$2y$10$29F1cajE4hLVLqy55E4juOMVOKmA8aEPycBSb2O5qCkLcYMhxcEBm', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -313,8 +311,7 @@ INSERT INTO `votes` (`vote_id`, `question_id`, `answer_id`, `voter_id`, `is_upvo
 (55, 83, 125, 25, 1),
 (56, 83, 118, 28, 1),
 (57, 83, 118, 26, 1),
-(58, 96, 133, 33, 1),
-(59, 96, 133, 8, 0);
+(60, 83, 118, 41, 1);
 
 --
 -- Indexes for dumped tables
@@ -378,7 +375,7 @@ ALTER TABLE `votes`
 -- AUTO_INCREMENT for table `answers`
 --
 ALTER TABLE `answers`
-  MODIFY `answer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
+  MODIFY `answer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
 --
 -- AUTO_INCREMENT for table `images`
 --
@@ -388,22 +385,22 @@ ALTER TABLE `images`
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 --
 -- AUTO_INCREMENT for table `questionVotes`
 --
 ALTER TABLE `questionVotes`
-  MODIFY `vote_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `vote_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 --
 -- AUTO_INCREMENT for table `votes`
 --
 ALTER TABLE `votes`
-  MODIFY `vote_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `vote_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 --
 -- Constraints for dumped tables
 --
