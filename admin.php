@@ -83,9 +83,11 @@ if(count($_GET) > 0)
         break;
     case "ua": echo "<center><h1>Users</h1><hr><center>"; userActions();
         break;
+    case "se": echo "Settings Stuff";
+        break;
 
     default:
-        echo "Your favorite color is neither red, blue, nor green!";
+        echo "Default";
 }//End switch
 } else {
 	echo "<center><h1><span class=\"label label-warning\">Welcome to the AdminCP. Please select an action from above.</span></h1></center>";

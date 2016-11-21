@@ -54,7 +54,7 @@
         $qBody = $_POST[questionBody];
         
         //Establish connection
-        $question_title = $qTitle;//htmlspecialchars($qTitle);//addslashes($_POST[questionTitle]);
+        $question_title = htmlspecialchars($qTitle);//htmlspecialchars($qTitle);//addslashes($_POST[questionTitle]);
         //echo "<br>Question Title: ".$question_title;
 
         $question_body = bb2html($qBody);//htmlspecialchars($qBody);//addslashes($_POST[questionBody]);
