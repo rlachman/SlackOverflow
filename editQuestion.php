@@ -21,7 +21,6 @@ $user_is_guest = $userRow['is_guest'];
 //Get some object id to do something with
 $question_id = $_GET['question_id'];
 $_SESSION['question_title'] ="";
-
 //DB Variables
 $servername = "";
   $username = "";
