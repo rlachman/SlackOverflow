@@ -1,7 +1,7 @@
  <?php  
- $connect = mysqli_connect("localhost", "root", "", "testing");  
+ $connect = mysqli_connect("localhost", "admin", "M0n@rch$", "slackoverflow");  
  $output = '';  
- $sql = "SELECT * FROM tbl_customer WHERE CustomerName LIKE '%".$_POST["search"]."%'";  
+ $sql = "SELECT * FROM users WHERE user_name LIKE '%".$_POST["search"]."%'";  
  $result = mysqli_query($connect, $sql);  
  if(mysqli_num_rows($result) > 0)  
  {  
@@ -9,21 +9,16 @@
       $output .= '<div class="table-responsive">  
                           <table class="table table bordered">  
                                <tr>  
-                                    <th>Customer Name</th>  
-                                    <th>Address</th>  
-                                    <th>City</th>  
-                                    <th>Postal Code</th>  
-                                    <th>Country</th>  
+                                    <th>Name</th>  
+                                    <th>E-mail</th>  
+                                     
                                </tr>';  
       while($row = mysqli_fetch_array($result))  
       {  
            $output .= '  
                 <tr>  
-                     <td>'.$row["CustomerName"].'</td>  
-                     <td>'.$row["Address"].'</td>  
-                     <td>'.$row["City"].'</td>  
-                     <td>'.$row["PostalCode"].'</td>  
-                     <td>'.$row["Country"].'</td>  
+                     <td>'.$row["user_name"].'</td>  
+                     <td>'.$row["user_email"].'</td>  
                 </tr>  
            ';  
       }  
