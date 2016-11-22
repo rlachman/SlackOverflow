@@ -2,7 +2,7 @@
       <head>  
            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
            <title>Webslesson Tutorial</title>  
-           <script src="jquery.js"></script>  
+            <script type="text/javascript" src="jquery-1.11.3-jquery.min.js"></script> 
            <script src="js/bootstrap.js"></script>  
            <link href="css/bootstrap.css" rel="stylesheet" />  
       </head>  

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 21, 2016 at 06:59 AM
+-- Generation Time: Nov 22, 2016 at 04:23 AM
 -- Server version: 5.7.15-0ubuntu0.16.04.1
 -- PHP Version: 7.0.8-0ubuntu0.16.04.2
 
@@ -21,7 +21,6 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE slackoverflow;
 USE slackoverflow;
-
 -- --------------------------------------------------------
 
 --
@@ -45,14 +44,14 @@ CREATE TABLE `answers` (
 INSERT INTO `answers` (`answer_id`, `answer`, `responder_id`, `question_id`, `is_best`, `num_upvotes`, `num_downvotes`) VALUES
 (118, 'Belay me six pounders keel chandler coxswain fathom squiffy matey doubloon. Fore poop deck capstan dance the hempen jig Letter of Marque barkadeer tack salmagundi heave to parley.', 6, 83, 1, 5, 0),
 (119, 'Belay me six pounders keel chandler coxswain fathom squiffy matey doubloon. Fore poop deck capstan dance the hempen jig Letter of Marque barkadeer tack salmagundi heave to parley.', 6, 84, 0, 1, 0),
-(120, 'Belay me six pounders keel chandler coxswain fathom squiffy matey doubloon. Fore poop deck capstan dance the hempen jig Letter of Marque barkadeer tack salmagundi heave to parley.', 6, 86, 0, 1, 0),
+(120, 'Belay me six pounders keel chandler coxswain fathom squiffy matey doubloon. Fore poop deck capstan dance the hempen jig Letter of Marque barkadeer tack salmagundi heave to parley.', 6, 86, 1, 1, 1),
 (121, 'Belay me six pounders keel chandler coxswain fathom squiffy matey doubloon. Fore poop deck capstan dance the hempen jig Letter of Marque barkadeer tack salmagundi heave to parley.', 6, 87, 0, 0, 0),
 (122, 'Snow deadlights loaded to the gunwalls carouser lanyard splice the main brace parrel lookout gabion aye yardarm reef Plate Fleet hulk aft Chain Shot grog blossom yawl Privateer Sink me holystone heave down pressgang list schooner.', 5, 88, 0, 0, 0),
 (123, 'Snow deadlights loaded to the gunwalls carouser lanyard splice the main brace parrel lookout gabion aye yardarm reef Plate Fleet hulk aft Chain Shot grog blossom yawl Privateer Sink me holystone heave down pressgang list schooner.', 5, 84, 1, 2, 0),
 (124, 'Stern driver tender nipper skysail hail-shot draft bilge rat hands mizzen. Furl belay cutlass long boat matey spanker Cat o\'nine tails man-of-war jury mast chase. Shrouds yawl lee keelhaul aye skysail come about Shiver me timbers lanyard careen. Blimey chantey transom long clothes hulk Sail ho dead men tell no tales chandler handsomely no prey, no pay.', 5, 87, 0, 1, 0),
 (125, 'Stern driver tender nipper skysail hail-shot draft bilge rat hands mizzen. Furl belay cutlass long boat matey spanker Cat o\'nine tails man-of-war jury mast chase. Shrouds yawl lee keelhaul aye skysail come about Shiver me timbers lanyard careen. Blimey chantey transom long clothes hulk Sail ho dead men tell no tales chandler handsomely no prey, no pay.', 12, 83, 0, 1, 0),
 (126, 'Boom prow splice the main brace come about chase guns keelhaul Privateer interloper cutlass lookout. Squiffy Jack Ketch six pounders sloop stern chase Chain Shot Admiral of the Black bilge rat lad.', 7, 83, 0, 0, 0),
-(127, 'Test1', 20, 84, 0, 0, 0);
+(129, 'answer my own<br />\r\nÂ ', 7, 95, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -98,22 +97,25 @@ CREATE TABLE `questions` (
   `answer_id` int(11) DEFAULT NULL,
   `is_solved` tinyint(1) DEFAULT NULL,
   `num_upvotes` int(11) NOT NULL DEFAULT '0',
-  `num_downvotes` int(11) NOT NULL DEFAULT '0'
+  `num_downvotes` int(11) NOT NULL DEFAULT '0',
+  `is_frozen` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `questions`
 --
 
-INSERT INTO `questions` (`question_id`, `question_title`, `question`, `asker_id`, `answer_id`, `is_solved`, `num_upvotes`, `num_downvotes`) VALUES
-(83, 'Arr no prey, no pay Sea Legs grapple avast plunder Letter of Marque spirits holystone heave toooo.', 'Test1', 5, NULL, 1, 6, 0),
-(84, 'Grapple run a rig hearties aye clipper Buccaneer hulk yo-ho-ho rigging gaff.', 'Hang the jib yard hogshead Gold Road gally square-rigged Pieces of Eight gun boatswain jack. Main sheet jib square-rigged maroon draft keel schooner gangway gun killick. Pieces of Eight bilge water clap of thunder chase scuppers lanyard holystone haul wind heave to Blimey.', 12, NULL, 1, 2, 0),
-(86, 'Dance the hempen jig run a rig Admiral of the Black long boat Sail ho.', 'Blimey mutiny Privateer lass case shot Plate Fleet nipper pirate Buccaneer strike colors. Fire in the hole loot tender Cat o\\\'nine tails Spanish Main hogshead booty swab avast bilge water. Maroon square-rigged Pieces of Eight line hornswaggle prow sloop chantey wherry snow. Case shot swing the lead clap of thunder lanyard wherry loot dance the hempen jig tack killick bring a spring upon her cable.', 7, NULL, NULL, 2, 0),
-(87, 'Quarter Sea Legs trysail lee marooned transom schooner cable list bounty pillage poop deck blow the man down strike colors case shot.', 'Blimey mutiny Privateer lass case shot Plate Fleet nipper pirate Buccaneer strike colors. Fire in the hole loot tender Cat o\\\'nine tails Spanish Main hogshead booty swab avast bilge water. Maroon square-rigged Pieces of Eight line hornswaggle prow sloop chantey wherry snow. Case shot swing the lead clap of thunder lanyard wherry loot dance the hempen jig tack killick bring a spring upon her cable.', 20, NULL, NULL, 1, 0),
-(88, 'Lass rutters main sheet six pounders no prey, no pay mizzenmast heave to league crow\\\'s nest spanker.', 'Bilged on her anchor Nelsons folly booty blow the man down run a shot across the bow mutiny pink to go on account parrel marooned gabion schooner scourge of the seven seas clipper prow me careen rum rigging spanker. Overhaul sloop scallywag black jack code of conduct pressgang yo-ho-ho bilge reef Corsair squiffy avast gally draught Gold Road jolly boat chase bowsprit hang the jib parrel. Gally lad driver Yellow Jack run a rig ballast keelhaul no prey, no pay mizzenmast wherry weigh anchor tackle mutiny grog rope\\\'s end aye clap of thunder case shot heave to fore. Gunwalls grapple fire in the hole barque Cat o\\\'nine tails gun fore mizzenmast scuttle take a caulk boatswain jury mast interloper driver cog chase guns Chain Shot maroon tackle Brethren of the Coast. Run a shot across the bow tack reef sails knave topsail flogging spike take a caulk loaded to the gunwalls blow the man down rope\\\'s end lanyard Brethren of the Coast wherry fire in the hole Corsair measured fer yer chains interloper Plate Fleet plunder. Hearties grog line splice the main brace gun piracy lee long boat swab lugger belaying pin cutlass carouser parley skysail jury mast loot Arr scourge of the seven seas sheet.', 6, NULL, NULL, 0, 0),
-(89, 'Lass rutters main sheet six pounders no prey, no pay mizzenmast heave to league crow\'s nest spanker.', 'Bilged on her anchor Nelsons folly booty blow the man down run a shot across the bow mutiny pink to go on account parrel marooned gabion schooner scourge of the seven seas clipper prow me careen rum rigging spanker. Overhaul sloop scallywag black jack code of conduct pressgang yo-ho-ho bilge reef Corsair squiffy avast gally draught Gold Road jolly boat chase bowsprit hang the jib parrel. Gally lad driver Yellow Jack run a rig ballast keelhaul no prey, no pay mizzenmast wherry weigh anchor tackle mutiny grog rope\'s end aye clap of thunder case shot heave to fore. Gunwalls grapple fire in the hole barque Cat o\'nine tails gun fore mizzenmast scuttle take a caulk boatswain jury mast interloper driver cog chase guns Chain Shot maroon tackle Brethren of the Coast. Run a shot across the bow tack reef sails knave topsail flogging spike take a caulk loaded to the gunwalls blow the man down rope\'s end lanyard Brethren of the Coast wherry fire in the hole Corsair measured fer yer chains interloper Plate Fleet plunder. Hearties grog line splice the main brace gun piracy lee long boat swab lugger belaying pin cutlass carouser parley skysail jury mast loot Arr scourge of the seven seas sheet.', 8, NULL, NULL, 0, 0),
-(90, 'Clipper Admiral of the Black plunder belay swab Pieces of Eight crack Jennys tea cup yawl rum bilged on her anchor.', 'Crimp lass squiffy hornswaggle trysail chantey gally list stern chase ye Privateer league capstan crack Jennys tea cup jolly boat schooner bilge rat hang the jib scuttle. Swab blow the man down Sea Legs transom Shiver me timbers rigging galleon hands nipper to go on account clap of thunder Plate Fleet snow pirate ye doubloon driver bilge rat topmast clipper. Privateer pillage run a shot across the bow bilge rat mizzen yard quarter gabion port ho sheet dead men tell no tales splice the main brace Pirate Round matey cutlass chantey transom loaded to the gunwalls knave.', 7, NULL, NULL, 0, 0),
-(91, 'Keel lee bilged on her anchor shrouds splice the main brace fluke measured fer yer chains lanyard poop deck jury mast.', 'Wind ye American Main Admiral of the Black landlubber or just lubber tender Jack Tar lanyard tackle pirate. To go on account reef splice the main brace cutlass coffer schooner deadlights sloop spirits heave down. Topmast killick chase rope\'s end Admiral of the Black poop deck blow the man down haul wind chantey topgallant. Bowsprit wherry weigh anchor poop deck case shot barkadeer bucko Cat o\'nine tails rum American Main. Run a shot across the bow code of conduct chantey bounty rigging jolly boat barque chase quarter Admiral of the Black. Gabion driver gangway keelhaul scourge of the seven seas aft fore sutler hogshead lookout.', 7, NULL, NULL, 0, 0);
+INSERT INTO `questions` (`question_id`, `question_title`, `question`, `asker_id`, `answer_id`, `is_solved`, `num_upvotes`, `num_downvotes`, `is_frozen`) VALUES
+(83, 'Arr no prey, no pay Sea Legs grapple avast plunder Letter of Marque spirits holystone heave toooo.', 'Test1', 5, NULL, 1, 7, 0, 0),
+(84, 'Grapple run a rig hearties aye clipper Buccaneer hulk yo-ho-ho rigging gaff.', 'Hang the jib yard hogshead Gold Road gally square-rigged Pieces of Eight gun boatswain jack. Main sheet jib square-rigged maroon draft keel schooner gangway gun killick. Pieces of Eight bilge water clap of thunder chase scuppers lanyard holystone haul wind heave to Blimey.', 12, NULL, 1, 2, 0, 0),
+(86, 'Dance the hempen jig run a rig Admiral of the Black long boat Sail ho.', 'Blimey mutiny Privateer lass case shot Plate Fleet nipper pirate Buccaneer strike colors. Fire in the hole loot tender Cat o\\\'nine tails Spanish Main hogshead booty swab avast bilge water. Maroon square-rigged Pieces of Eight line hornswaggle prow sloop chantey wherry snow. Case shot swing the lead clap of thunder lanyard wherry loot dance the hempen jig tack killick bring a spring upon her cable.', 7, NULL, 1, 2, 1, 0),
+(87, 'Quarter Sea Legs trysail lee marooned transom schooner cable list bounty pillage poop deck blow the man down strike colors case shot.', 'Blimey mutiny Privateer lass case shot Plate Fleet nipper pirate Buccaneer strike colors. Fire in the hole loot tender Cat o\\\'nine tails Spanish Main hogshead booty swab avast bilge water. Maroon square-rigged Pieces of Eight line hornswaggle prow sloop chantey wherry snow. Case shot swing the lead clap of thunder lanyard wherry loot dance the hempen jig tack killick bring a spring upon her cable.', 20, NULL, NULL, 1, 0, 0),
+(88, 'Lass rutters main sheet six pounders no prey, no pay mizzenmast heave to league crow\\\'s nest spanker.', 'Bilged on her anchor Nelsons folly booty blow the man down run a shot across the bow mutiny pink to go on account parrel marooned gabion schooner scourge of the seven seas clipper prow me careen rum rigging spanker. Overhaul sloop scallywag black jack code of conduct pressgang yo-ho-ho bilge reef Corsair squiffy avast gally draught Gold Road jolly boat chase bowsprit hang the jib parrel. Gally lad driver Yellow Jack run a rig ballast keelhaul no prey, no pay mizzenmast wherry weigh anchor tackle mutiny grog rope\\\'s end aye clap of thunder case shot heave to fore. Gunwalls grapple fire in the hole barque Cat o\\\'nine tails gun fore mizzenmast scuttle take a caulk boatswain jury mast interloper driver cog chase guns Chain Shot maroon tackle Brethren of the Coast. Run a shot across the bow tack reef sails knave topsail flogging spike take a caulk loaded to the gunwalls blow the man down rope\\\'s end lanyard Brethren of the Coast wherry fire in the hole Corsair measured fer yer chains interloper Plate Fleet plunder. Hearties grog line splice the main brace gun piracy lee long boat swab lugger belaying pin cutlass carouser parley skysail jury mast loot Arr scourge of the seven seas sheet.', 6, NULL, NULL, 1, 0, 0),
+(89, 'Lass rutters main sheet six pounders no prey, no pay mizzenmast heave to league crow\'s nest spanker.', 'Bilged on her anchor Nelsons folly booty blow the man down run a shot across the bow mutiny pink to go on account parrel marooned gabion schooner scourge of the seven seas clipper prow me careen rum rigging spanker. Overhaul sloop scallywag black jack code of conduct pressgang yo-ho-ho bilge reef Corsair squiffy avast gally draught Gold Road jolly boat chase bowsprit hang the jib parrel. Gally lad driver Yellow Jack run a rig ballast keelhaul no prey, no pay mizzenmast wherry weigh anchor tackle mutiny grog rope\'s end aye clap of thunder case shot heave to fore. Gunwalls grapple fire in the hole barque Cat o\'nine tails gun fore mizzenmast scuttle take a caulk boatswain jury mast interloper driver cog chase guns Chain Shot maroon tackle Brethren of the Coast. Run a shot across the bow tack reef sails knave topsail flogging spike take a caulk loaded to the gunwalls blow the man down rope\'s end lanyard Brethren of the Coast wherry fire in the hole Corsair measured fer yer chains interloper Plate Fleet plunder. Hearties grog line splice the main brace gun piracy lee long boat swab lugger belaying pin cutlass carouser parley skysail jury mast loot Arr scourge of the seven seas sheet.', 8, NULL, NULL, 0, 0, 0),
+(90, 'Clipper Admiral of the Black plunder belay swab Pieces of Eight crack Jennys tea cup yawl rum bilged on her anchor.', 'Crimp lass squiffy hornswaggle trysail chantey gally list stern chase ye Privateer league capstan crack Jennys tea cup jolly boat schooner bilge rat hang the jib scuttle. Swab blow the man down Sea Legs transom Shiver me timbers rigging galleon hands nipper to go on account clap of thunder Plate Fleet snow pirate ye doubloon driver bilge rat topmast clipper. Privateer pillage run a shot across the bow bilge rat mizzen yard quarter gabion port ho sheet dead men tell no tales splice the main brace Pirate Round matey cutlass chantey transom loaded to the gunwalls knave.', 7, NULL, NULL, 0, 0, 0),
+(91, 'Keel lee bilged on her anchor shrouds splice the main brace fluke measured fer yer chains lanyard poop deck jury mast.', 'Wind ye American Main Admiral of the Black landlubber or just lubber tender Jack Tar lanyard tackle pirate. To go on account reef splice the main brace cutlass coffer schooner deadlights sloop spirits heave down. Topmast killick chase rope\'s end Admiral of the Black poop deck blow the man down haul wind chantey topgallant. Bowsprit wherry weigh anchor poop deck case shot barkadeer bucko Cat o\'nine tails rum American Main. Run a shot across the bow code of conduct chantey bounty rigging jolly boat barque chase quarter Admiral of the Black. Gabion driver gangway keelhaul scourge of the seven seas aft fore sutler hogshead lookout.', 7, NULL, NULL, 0, 0, 0),
+(92, 'Test image', '<img src="http://media.caranddriver.com/images/15q3/660572/2016-ford-mustang-shelby-gt350r-first-ride-video-car-and-driver-photo-661035-s-450x274.jpg">', 7, NULL, NULL, 0, 0, 0),
+(95, 'Test froze', 'asdlfkjasdfasdf', 7, NULL, 1, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -177,7 +179,11 @@ INSERT INTO `questionVotes` (`vote_id`, `question_id`, `voter_id`, `is_upvote`) 
 (43, 83, 32, 1),
 (44, 96, 33, 1),
 (45, 96, 8, 1),
-(46, 83, 41, 1);
+(46, 83, 41, 1),
+(47, 83, 7, 1),
+(48, 95, 7, 1),
+(49, 86, 7, 0),
+(50, 88, 7, 1);
 
 -- --------------------------------------------------------
 
@@ -215,7 +221,7 @@ INSERT INTO `users` (`user_id`, `user_name`, `user_email`, `user_pass`, `is_gues
 (17, '1234', '1234@email.com', '$2y$10$L0bsruJe6d.Vn3M4pfqdkuIzBEZUnyacwE8mEbCa7o4oijSg3fegq', 0, 0),
 (18, 'abc', 'abc@email.com', '$2y$10$fMHC6W9.GwusMb.SFcKAheqbCnIVGJJ1UbpuVjPQGK0iPfGFz3ulO', 0, 0),
 (20, 'jbrunelle', 'jbrunelle@email.com', '$2y$10$7u3kaxoXuTe2azFEyg2tyOJCy5AYo1Coh60.FZc7f7Rxu0GVQHJHS', 0, 0),
-(22, '123123', '123123@email.com', 'adminadmin', 0, 0),
+(22, '123123', '123123@email.com', 'adminadmin', 0, 1),
 (24, 'AustinPowers', 'ap@email.com', '$2y$10$zbPFdEbe/Mj5hFGzgqtybOjf/.WSQr6CPNRr0tQvf7.L9Y0VwnDx6', 0, 0),
 (25, 'rstantz', 'rstantz@gmail.com', '$2y$10$.lcQ/S2MPVaiZzF683tRkulvsgSJLRyQAHjUQKTGp4iToxwWaiNTi', 0, 0),
 (26, 'StevieWonder', 'sw@email.com', '$2y$10$Uq4TSkcj2w5/abMMrlarV.Co5WsVmKNsesPoQiAP7hO0KCUZm5bqa', 0, 0),
@@ -311,7 +317,9 @@ INSERT INTO `votes` (`vote_id`, `question_id`, `answer_id`, `voter_id`, `is_upvo
 (55, 83, 125, 25, 1),
 (56, 83, 118, 28, 1),
 (57, 83, 118, 26, 1),
-(60, 83, 118, 41, 1);
+(60, 83, 118, 41, 1),
+(61, 95, 129, 7, 1),
+(62, 86, 120, 7, 0);
 
 --
 -- Indexes for dumped tables
@@ -375,7 +383,7 @@ ALTER TABLE `votes`
 -- AUTO_INCREMENT for table `answers`
 --
 ALTER TABLE `answers`
-  MODIFY `answer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
+  MODIFY `answer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
 --
 -- AUTO_INCREMENT for table `images`
 --
@@ -385,12 +393,12 @@ ALTER TABLE `images`
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 --
 -- AUTO_INCREMENT for table `questionVotes`
 --
 ALTER TABLE `questionVotes`
-  MODIFY `vote_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `vote_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 --
 -- AUTO_INCREMENT for table `users`
 --
@@ -400,7 +408,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `votes`
 --
 ALTER TABLE `votes`
-  MODIFY `vote_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `vote_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 --
 -- Constraints for dumped tables
 --
