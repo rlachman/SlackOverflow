@@ -472,9 +472,11 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
             //echo $sql;
             $result9 = $conn->query($sql);              
             $row9 = $result9->fetch_assoc();
-                        
+            $num_up = $row9['num_upvotes'];
+            $num_up = $row9['num_downvotes'];
+
             echo"<tr>";
-            echo "<td><div align=\"right\"><a href=".$path.">".$row["user_name"]."(".($row['num_upvotes']-$row['num_downvotes']).")</a></div></td>";
+            echo "<td><div align=\"right\"><a href=".$path.">".$row["user_name"]."(".($row9['num_upvotes']-$row9['num_downvotes']).")</a></div></td>";
             if($UserHasPhoto)
             {
             echo "<td><div align =\"right\">".'<img style="width:64px;height:64px" src="data:image/jpeg;base64,'.base64_encode( $row9['data'] ).'"/>'."</div></td>";

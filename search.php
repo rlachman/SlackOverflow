@@ -128,6 +128,7 @@ function Solved($solved)
           <?php if($_SESSION['isAdmin']) echo '<a href="admin.php"><span class="glyphicon glyphicon-cog"></span> AdminCP</a>'; ?>
           </h1>
         
+        <?php if(!$user_is_guest)echo '
         <div class="container">  
                 <br />  
                 <h2 align="center">Search For a User</h2><br />  
@@ -139,7 +140,13 @@ function Solved($solved)
                 </div>  
                 <br />  
                 <div id="result"></div>  
-           </div>  
+           </div>
+           ';
+           else{
+            echo "<h3><hr>Guests cannot perform a search</h3>";
+            } ?>  
+      
+
       </body>  
  </html>  
  <script>  

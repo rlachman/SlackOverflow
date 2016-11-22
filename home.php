@@ -20,7 +20,7 @@ $user_name = $userRow['user_name'];
 $user_is_guest = $userRow['is_guest'];
 
 //Pagination, Question End point in array
-$numberOfQuestionsDisplayedPerPage = 8;
+$numberOfQuestionsDisplayedPerPage = 5;
 if(count($_GET) > 0)
 {
 $_SESSION['startPoint'] = $_GET['start'];
