@@ -122,7 +122,7 @@ function returnQuestions()
 
 {
   $conn = returnDatabaseConnection();
-  $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_id, user_name, is_solved, num_upvotes, num_downvotes
+  $sql = "SELECT question_title, is_frozen, question, question_id, asker_id, answer_id, user_id, user_name, is_solved, num_upvotes, num_downvotes
           FROM questions 
           join users 
           on asker_id=user_id";
@@ -132,11 +132,12 @@ function returnQuestions()
         //echo "Your search returned ".$result->num_rows." results.";
         echo '<div class="container">
             <table class="table">
-                <th>Q Id</th><th>Question Title</th><th>Asker</th><th>Edit</th><th>Del</th><th>Freeze</th>';
+                <th>Q Id</th><th>Frozen</th><th>Question Title</th><th>Asker</th><th>Edit</th><th>Del</th><th>Freeze</th><th></th>';
         while($row = $result->fetch_assoc()  )//and $count < 5)
             {
               echo '<tr>
                       <td>'.$row['question_id'].'</td>
+                      <td>'.$row['is_frozen'].'</td>
                       <td>'.$row['question_title'].'</td>
                       <td>'.$row['user_name'].'</td>
                       <td>
@@ -146,7 +147,11 @@ function returnQuestions()
                         <a href="deleteQuestion.php?question_id='.$row['question_id'].'"><span class="label label-danger">Del</span></a>
                       </td>
                       <td>
-                        <span class="label label-info">Frz</span>
+                        <a href="freezeQuestion.php?question_id='.$row['question_id'].'"><span class="label label-info">Freeze</span></a>
+                      </td>
+                      <td>
+                      
+                        <a href="freezeQuestion.php?question_id='.$row['question_id'].'&unfreeze=yes"><span class="label label-info">Thaw</span></a>
                       </td>
                     </tr>';
 

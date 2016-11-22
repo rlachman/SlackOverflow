@@ -62,6 +62,16 @@ function Solved($solved)
   }
 }
 
+function returnDatabaseConnection()
+{
+  $servername = "localhost";
+  $username = "admin";
+  $password = "M0n@rch$";
+  $dbname = "slackoverflow";
+  $conn = new mysqli($servername, $username, $password, $dbname);
+  return $conn;
+}
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -233,8 +243,8 @@ function Solved($solved)
                     </a>
                     </td>";
                                        
-                    echo "<td><a href=".$path.">".$row["user_name"]."</a></td>";
-                    
+                    echo "<td><a href=".$path.">".$row["user_name"]." (".($row["num_upvotes"]-$row["num_downvotes"]).")"."</a></td>";
+                                        
                     echo "<td>" 
                     .Solved($solved). 
                     "</td>
