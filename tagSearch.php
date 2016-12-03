@@ -39,17 +39,6 @@ function debug_to_console($data) {
     echo("<script>console.log('PHP: ".$data."');</script>");
   }
 }
-function printTags($dbTags)
-{
-  $exploded_string = explode(" ",$dbTags);
-  $output = "";
-  foreach($exploded_string as $tag)
-  {
-    $output .= '<span class="label label-primary">'.$tag.'</span> ';
-  }
-
-  return $output;
-}
 
 // PRINT CHECK/X IF Q HAS BEEN ANSWERED
 function printCheck()
@@ -162,9 +151,9 @@ function Solved($solved)
           </h1>
                 
         <hr />
-<!-- Table that will display questions -->
-        <?php
-                
+
+<?php
+        $tag = $_GET["tag"];        
         $servername = "localhost";
         $username = "admin";
         $password = "M0n@rch$";
@@ -178,124 +167,22 @@ function Solved($solved)
                 FROM questions 
                 join users 
                 on asker_id=user_id
-                order by num_upvotes-num_downvotes desc";
+                where tags like '%$tag%'";
 
         
         //Store collection of rows in variable called result
         $result = $conn->query($sql);
-        
-        //Pagination Variables
-        $numberOfQuestionsTotal = $result->num_rows;
-        $numberOfQuestionsOnLastPage = $numberOfQuestionsTotal % 
-        $numberOfQuestionsDisplayedPerPage;
-        $numberOfPages = ceil($numberOfQuestionsTotal/
-        $numberOfQuestionsDisplayedPerPage);
-        $questionArray[] = array(""); 
-        
-                echo "<table class=\"questionTable\"> 
-                <th class=\"header\">Previous Questions</th>
-                <th class=\"header\">Asker</th>
-                <th class=\"header\">Solved</th>
-                <th class=\"header\">Score</th>";
-    
-          if($result->num_rows > 0)
+
+        echo "<table>
+              <th>Question Title</th><th>Asker</th>";
+        while($row = $result->fetch_assoc())
         {
-                 //Only display the top 5
-                $count = 0;
-                //this puts the resulting row into an array for access
-
-                //Pagination start and end points
-                $qStart = $_SESSION['startPoint'];
-                if($qStart < 0)
-                {
-                  $qStart = 1;
-                }
-                $qEnd = $_SESSION['endPoint'];
-                
+          echo "<tr><td>".$row["question_title"]."</td><td>".$row["user_name"]."</td></tr>";
+        }
+        echo "</table>";
 
 
-                //echo "Start index:".$qStart.", End Index: ".$qEnd;
 
-            
-            while($row = $result->fetch_assoc()  )//and $count < 5)
-            { 
-              //for use with pagination
-              $questionArray[] = $row;
-            }
-
-            for($i = $qStart; $i <= $qEnd && !is_null($questionArray[$i]); $i++)
-            {
-              $row = $questionArray[$i];
-              // Store url, user id info in case of redirect to view external users profile
-              $_SESSION["user_id_profile"] = $row["asker_id"];
-              $_SESSION["user_id_name"] = $row["user_name"];
-              $path = 'profile.php?ext_user='.$_SESSION["user_id_profile"].'&ext_user_name='.$_SESSION["user_id_name"];  // change accordingly
-              
-              //Increment the count
-              //$count = $count + 1;
-
-                //Question score
-                $QuestionScore = $row["num_upvotes"] - $row["num_downvotes"];
-                $solved = is_null($row["is_solved"]);//Pass this variable into method to determine if x or check will print
-
-                    echo "<tr>
-                  
-                    <td>
-                    <a href=\"answer.php?q_id=".$row["question_id"]. "\">
-                    ".$row["question_title"].printTags($row["tags"])."
-                    </a>
-                    </td>";
-                                       
-                    echo "<td><a href=".$path.">".$row["user_name"]."</a></td>";
-                    
-                    echo "<td>" 
-                    .Solved($solved). 
-                    "</td>
-
-                    <td>".$QuestionScore."</td>
-
-                    
-                                      
-                    </tr>";
-      }
-
-    }
-    echo "</table>";
-
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-
-    //Pagination below
-    $count = 1;
-    $start = 1;
-    $end = $start + $numberOfQuestionsDisplayedPerPage - 1;
-    echo "<ul class=\"pagination\">";
-    while($count <= $numberOfPages)
-    {
-      
-      echo "<li><a href=\"browse.php?start=".$start."&end=".$end."\">".$count."</a><li>";
-      $start = $count*$numberOfQuestionsDisplayedPerPage + 1;
-      $end = $start + $numberOfQuestionsDisplayedPerPage - 1;
-
-      $count++;
-    }   
-    echo "</ul>";
 
     $conn->close();
     ?>
-
-    <!--<ul class = "pagination">
-   <li><a href = "#">&laquo;</a></li>
-   <li><a href = "#">1</a></li>
-   <li><a href = "#">2</a></li>
-   <li><a href = "#">3</a></li>
-   <li><a href = "#">4</a></li>
-   <li><a href = "#">5</a></li>
-   <li><a href = "#">&raquo;</a></li>
-  </ul>-->
- 
-    <hr>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
-</body>
-</html>

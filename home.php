@@ -62,6 +62,18 @@ function Solved($solved)
   }
 }
 
+function printTags($dbTags)
+{
+  $exploded_string = explode(" ",$dbTags);
+  $output = "";
+  foreach($exploded_string as $tag)
+  {
+    $output .= '<span class="label label-primary">'.$tag.'</span> ';
+  }
+
+  return $output;
+}
+
 function returnDatabaseConnection()
 {
   $servername = "localhost";
@@ -174,7 +186,7 @@ function returnDatabaseConnection()
         //Establish connection
         $conn = new mysqli($servername, $username, $password, $dbname);
         //Store query into a php variable
-        $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_id, user_name, is_solved, num_upvotes, num_downvotes
+        $sql = "SELECT question_title, question, question_id, tags, asker_id, answer_id, user_id, user_name, is_solved, num_upvotes, num_downvotes
                 FROM questions 
                 join users 
                 on asker_id=user_id
@@ -225,6 +237,7 @@ function returnDatabaseConnection()
             for($i = $qStart; $i <= $qEnd && !is_null($questionArray[$i]); $i++)
             {
               $row = $questionArray[$i];
+
               // Store url, user id info in case of redirect to view external users profile
               $_SESSION["user_id_profile"] = $row["asker_id"];
               $_SESSION["user_id_name"] = $row["user_name"];
@@ -236,15 +249,15 @@ function returnDatabaseConnection()
                 //Question score
                 $QuestionScore = $row["num_upvotes"] - $row["num_downvotes"];
                 $solved = is_null($row["is_solved"]);//Pass this variable into method to determine if x or check will print
-
+                //$question_tags = explode(" ",$row["tags"]);
                     echo "<tr>
                   
                     <td>
                     <a href=\"answer.php?q_id=".$row["question_id"]. "\">
-                    ".$row["question_title"]."
-                    </a>
+                    ".$row["question_title"]."</a>".printTags($row["tags"])."
+                    
                     </td>";
-                                       
+                                    
                     echo "<td><a href=".$path.">".$row["user_name"]." (".($row["num_upvotes"]-$row["num_downvotes"]).")"."</a></td>";
                                         
                     echo "<td>" 
@@ -256,7 +269,7 @@ function returnDatabaseConnection()
                     
                                       
                     </tr>";
-      }
+            }
 
     }
     echo "</table>";

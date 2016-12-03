@@ -39,8 +39,8 @@
         $dbname = "slackoverflow";
         
         $conn = new mysqli($servername, $username, $password, $dbname);
-        $stmt = $conn->prepare("INSERT INTO `questions` (`question_title`, `question`, `asker_id`) VALUES (?,?,?)");
-        $stmt->bind_param("sss", $question_title, $question_body, $user_id);
+        $stmt = $conn->prepare("INSERT INTO `questions` (`question_title`, `question`, `asker_id`, `tags`) VALUES (?,?,?,?)");
+        $stmt->bind_param("ssss", $question_title, $question_body, $user_id, $question_tags);
 		
 		if ($conn->connect_error) {
     	die("Connection failed: " . $conn->connect_error);
@@ -62,6 +62,8 @@
 
         
         $user_id = $_SESSION['user_id'];
+
+        $question_tags = $_POST[questionTags];
         //echo "<br>User ID: ".$user_id;
         $stmt->execute();
 	

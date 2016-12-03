@@ -143,6 +143,7 @@ function printCheck()
 
             <p class="Question Body">
               <textarea  name="questionBody" id="questionBody" placeholder="Enter your question here." rows="4" cols="50"/></textarea>
+              <textarea  name="questionTags" id="questionTags" placeholder="Enter tags delimited by a space." rows="4" cols="50"/></textarea>
             <script>
           // Replace the <textarea id="editor1"> with an CKEditor
           // instance, using the "bbcode" plugin, customizing some of the
@@ -177,8 +178,7 @@ function printCheck()
               }
             
             ?>
-                
-
+          
           </form>
 
               

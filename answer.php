@@ -23,6 +23,18 @@ function returnDatabaseConnection()
   return $conn;
 }
 
+function printTags($dbTags)
+{
+  $exploded_string = explode(" ",$dbTags);
+  $output = "";
+  foreach($exploded_string as $tag)
+  {
+    $output .= '<a class="tagLink" href="tagSearch.php?tag='.$tag.'"><span class="label label-primary">'.$tag.'</span></a>';
+  }
+
+  return $output;
+}
+
 //Pagination, Question End point in array
 $numberOfAnswersDisplayedPerPage = 5; 
 if(count($_GET) > 1)//Greater than 1 because there is already a parameter for question id
@@ -48,7 +60,7 @@ $user_is_guest = $userRow['is_guest'];
 
 // GET QUESTION ID FROM PREVIOUS PAGE
 $q_id = $_GET["q_id"];
-$sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_id, user_name, is_solved FROM questions join users on asker_id=user_id
+$sql = "SELECT question_title, tags, question, question_id, asker_id, answer_id, user_id, user_name, is_solved FROM questions join users on asker_id=user_id
 			WHERE question_id=$q_id";
     
     //Store collection of rows in variable called result
@@ -170,7 +182,7 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
   <table> <!-- check to see if user has voted for question similar to how it's done for answers -->
   <tr><th><h1 id="questionAnswerPage"><?php echo $row['question_title']; ?></h1><th><tr>
   <tr>
-        <td><h3><?php echo $row['question']; ?></h3></td>
+        <td><h4><?php echo $row['question'].'<br>'.printTags($row["tags"]) ?></h4></td>
         <td><table> <!-- Beginning of table that handles upvote of questions etc-->
                       
             <?php
