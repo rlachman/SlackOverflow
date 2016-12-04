@@ -69,7 +69,7 @@ function printTags($dbTags)
   $output = "";
   foreach($exploded_string as $tag)
   {
-    $output .= '<a href="tagSearch.php?tag='.$tag.'"><span class="label label-primary">'.$tag.'</span></a> ';
+    $output .= '<a href="tagSearch.php?tag='.urlencode($tag).'"><span class="label label-primary">'.$tag.'</span></a> ';
   }
 
   return $output;

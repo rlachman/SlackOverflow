@@ -114,7 +114,7 @@ if(isset($_POST['btn-signup']))
                 	<i class="glyphicon glyphicon-open-file"></i>&nbsp;Sign Up
                 </button>
             </div>
-            <div class="g-recaptcha" data-sitekey="6Lctxw0UAAAAAHuPdnNlkJ0wHIG80Sl0hndwxKRX"></div>
+            
             <br />
             <label id="signIn">If you have an account please <a id="signIn" href="index.php?home=yes">Sign In</a></label>
         

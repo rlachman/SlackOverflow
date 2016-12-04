@@ -57,6 +57,7 @@ function printCheck()
 <script src="ckeditor/ckeditor.js"></script>
 <link rel="stylesheet" href="style.css" type="text/css"  />
 <title>SlackOverflow - <?php print($userRow['user_email']); ?></title>
+<script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 
 <body>
@@ -166,8 +167,10 @@ function printCheck()
             </p>
 
             <?php
+              
               if($_SESSION['user_name'] != "guest")
               {
+                echo '<div class="g-recaptcha" data-sitekey="6Lctxw0UAAAAAHuPdnNlkJ0wHIG80Sl0hndwxKRX"></div>';
                 echo "
                 <p class=\"submit\">
                 <input type=\"submit\" value=\"Post Question\">

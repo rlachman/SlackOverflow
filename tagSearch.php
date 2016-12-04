@@ -46,7 +46,7 @@ function printTags($dbTags)
   $output = "";
   foreach($exploded_string as $tag)
   {
-    $output .= '<a href="tagSearch.php?tag='.$tag.'"><span class="label label-primary">'.$tag.'</span></a> ';
+    $output .= '<a href="tagSearch.php?tag='.urlencode($tag).'"><span class="label label-primary">'.$tag.'</span></a> ';
   }
 
   return $output;
@@ -165,7 +165,14 @@ function Solved($solved)
         <hr />
 
 <?php
-        $tag = $_GET["tag"];        
+        
+        if(!in_array($_GET["tag"], array('c++','f++','d+')))
+        {
+          $tag = urldecode($_GET["tag"]);
+        }else{
+          $tag = $_GET["tag"];
+        }
+                
         $servername = "localhost";
         $username = "admin";
         $password = "M0n@rch$";
@@ -173,7 +180,8 @@ function Solved($solved)
         
         //Establish connection
         $conn = new mysqli($servername, $username, $password, $dbname);
-        //Store query into a php variable
+
+                //Store query into a php variable
         
   $sql = "SELECT question_title, tags, question, question_id, asker_id, answer_id, user_id, user_name, is_solved, num_upvotes, num_downvotes
                 FROM questions 
@@ -189,7 +197,8 @@ function Solved($solved)
               <th>Question Title</th><th>Asker</th>";
         while($row = $result->fetch_assoc())
         {
-          echo "<tr><td><a href=\"answer.php?q_id=".$row["question_id"]."\">".$row["question_title"]."</a>".printTags($row["tags"])."</td><td>".$row["user_name"]."</td></tr>";
+          $path = 'profile.php?ext_user='.$row["asker_id"].'&ext_user_name='.$row["user_name"];  // change accordingly
+          echo "<tr><td><a href=\"answer.php?q_id=".$row["question_id"]."\">".$row["question_title"]."</a>".printTags($row["tags"])."</td><td><a href=".$path.">".$row["user_name"]."</a></td></tr>";
         }
         echo "</table>";
 
