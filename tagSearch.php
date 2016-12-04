@@ -40,6 +40,18 @@ function debug_to_console($data) {
   }
 }
 
+function printTags($dbTags)
+{
+  $exploded_string = explode(" ",$dbTags);
+  $output = "";
+  foreach($exploded_string as $tag)
+  {
+    $output .= '<a href="tagSearch.php?tag='.$tag.'"><span class="label label-primary">'.$tag.'</span></a> ';
+  }
+
+  return $output;
+}
+
 // PRINT CHECK/X IF Q HAS BEEN ANSWERED
 function printCheck()
 {
@@ -172,12 +184,12 @@ function Solved($solved)
         
         //Store collection of rows in variable called result
         $result = $conn->query($sql);
-
+        echo "<h1>Results for ".$tag."</h1>";
         echo "<table>
               <th>Question Title</th><th>Asker</th>";
         while($row = $result->fetch_assoc())
         {
-          echo "<tr><td>".$row["question_title"]."</td><td>".$row["user_name"]."</td></tr>";
+          echo "<tr><td><a href=\"answer.php?q_id=".$row["question_id"]."\">".$row["question_title"]."</a>".printTags($row["tags"])."</td><td>".$row["user_name"]."</td></tr>";
         }
         echo "</table>";
 

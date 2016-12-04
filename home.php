@@ -62,13 +62,14 @@ function Solved($solved)
   }
 }
 
+
 function printTags($dbTags)
 {
   $exploded_string = explode(" ",$dbTags);
   $output = "";
   foreach($exploded_string as $tag)
   {
-    $output .= '<span class="label label-primary">'.$tag.'</span> ';
+    $output .= '<a href="tagSearch.php?tag='.$tag.'"><span class="label label-primary">'.$tag.'</span></a> ';
   }
 
   return $output;
