@@ -19,6 +19,7 @@ $username = "admin";
 $password = "M0n@rch$";
 $dbname = "slackoverflow";
 $conn = new mysqli($servername, $username, $password, $dbname);
+ 
 	
 // PRINT CHECK/X IF Q HAS BEEN ANSWERED
 function printCheck()
@@ -28,22 +29,6 @@ function printCheck()
 function printX()
 {
   return "<span class='glyphicon glyphicon-remove'></span>";
-}
-
-function gravatarToggle()
-{
-
-        echo 
-        '
-        
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" data-toggle="toggle">
-            Use Gravatar
-            </label>
-        </div>
-        
-        ';
 }
 
 function setGravatarBool()
@@ -58,8 +43,6 @@ function setGravatarBool()
   }
 
 }
-
-
 
   function get_gravatar( $email, $s = 120, $d = 'identicon', $r = 'x', $img = true, $atts = array() ) {
     $url = 'https://www.gravatar.com/avatar/';
@@ -296,13 +279,15 @@ return $email;
         {
             
             echo '
-            <form action="profile.php" method="post">
-  <br><input type="radio" name="gender" value="female"> Use Custom<br>
-  <input type="radio" name="gender" value="other"> Use Gravatar
-  <br><input type="submit" name="submit" value="Save Changes">
-  </form>
+            <form action="updateGravatarBool.php?id='.$targetId.'" method="post">
+              <br><input type="radio" name="use_gravatar" value="1"> Use Custom<br>
+                  <input type="radio" name="use_gravatar" value="0"> Use Gravatar
+              <br><input type="submit" name="submit" value="Save Changes">
+            </form>
 
             ';
+
+            updateGravatarBool($targetId);
         }
         
         ?>

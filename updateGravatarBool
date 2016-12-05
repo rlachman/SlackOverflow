@@ -1,0 +1,20 @@
+<?php 
+$choice ="";
+
+  if (isset($_POST['submit'])){
+  $sql = "UPDATE users SET user_gravatar=$choice WHERE user_id=$targetId";
+
+  if(isset($_POST['use_gravatar']) and $_POST['use_gravatar'] == 1)//insert 1 into db
+  {
+    $choice = 1;
+    $conn->query($sql);
+    //echo "Use Gravatar: <h1>".$_POST['use_gravatar'].'</h1>';
+  }
+  else//insert 0 into db
+  {
+    $choice = 0;
+    $conn->query($sql);
+  }
+}
+
+?>

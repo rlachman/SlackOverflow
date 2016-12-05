@@ -13,6 +13,19 @@ $password = "M0n@rch$";
 $dbname = "slackoverflow";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
+function get_gravatar( $email, $s = 60, $d = 'identicon', $r = 'x', $img = true, $atts = array() ) {
+    $url = 'https://www.gravatar.com/avatar/';
+    $url .= md5( strtolower( trim( $email ) ) );
+    $url .= "?s=$s&d=$d&r=$r";
+    if ( $img ) {
+        $url = '<img src="' . $url . '"';
+        foreach ( $atts as $key => $val )
+            $url .= ' ' . $key . '="' . $val . '"';
+        $url .= ' />';
+    }
+    return $url;
+}
+
 function returnDatabaseConnection()
 {
   $servername = "localhost";
@@ -60,7 +73,7 @@ $user_is_guest = $userRow['is_guest'];
 
 // GET QUESTION ID FROM PREVIOUS PAGE
 $q_id = $_GET["q_id"];
-$sql = "SELECT question_title, tags, question, question_id, asker_id, answer_id, user_id, user_name, is_solved FROM questions join users on asker_id=user_id
+$sql = "SELECT question_title, tags, question, question_id, user_email, asker_id, answer_id, user_id, user_name, is_solved FROM questions join users on asker_id=user_id
 			WHERE question_id=$q_id";
     
     //Store collection of rows in variable called result
@@ -259,6 +272,7 @@ $sql = "SELECT question_title, tags, question, question_id, asker_id, answer_id,
   <?php 
 
           $askerID = $row["asker_id"];
+          $askerEmail = $row["user_email"];
           $_SESSION["user_id_profile"] = $askerID;
           $_SESSION["user_id_name"] = $row["user_name"];
           $path = 'profile.php?ext_user='.$_SESSION["user_id_profile"].'&ext_user_name='.$_SESSION["user_id_name"];  // change accordingly
@@ -275,12 +289,14 @@ $sql = "SELECT question_title, tags, question, question_id, asker_id, answer_id,
             $resultA = $conn->query($sql);              
             $rowA = $resultA->fetch_assoc();
 
-            if(mysqli_num_rows($resultA) > 0)
+          if ($askerDisplayGravatar != 1)
           {
             echo "<img style=\"width:64px;height:64px\" src=\"data:image/jpeg;base64,"   .base64_encode( $rowA['data'] ).   "\"/>";
+
           }
-          else{
-            echo "<span style=\"font-size:3em;\" class=\"glyphicon glyphicon-user\"></span>";
+          else
+          {
+            echo get_gravatar($askerEmail);
           }
             
            
@@ -294,7 +310,7 @@ $sql = "SELECT question_title, tags, question, question_id, asker_id, answer_id,
 	
 		
 	<?php
-	$sql = "SELECT answer_id, answer, responder_id, is_best, num_upvotes, num_downvotes, user_name 
+	$sql = "SELECT answer_id, answer, user_email, responder_id, use_gravatar, is_best, num_upvotes, num_downvotes, user_name 
 			FROM answers 
       JOIN users 
       WHERE question_id=$q_id 
@@ -308,7 +324,8 @@ $sql = "SELECT question_title, tags, question, question_id, asker_id, answer_id,
 
      
       $askerID = $questionInfo["asker_id"];
-      
+      $askerDisplayGravatar = $questionInfo["use_gravatar"];
+
       $loggedInID = $_SESSION['user_id'];
       $is_solved = $questionInfo["is_solved"];
 
@@ -361,6 +378,7 @@ $sql = "SELECT question_title, tags, question, question_id, asker_id, answer_id,
               $responseArray[] = $row;
               $testRow = $responseArray[1];
               //echo $testRow["answer"];
+              
             }
             
             $qStart = $_SESSION["startPoint"];
@@ -373,7 +391,9 @@ $sql = "SELECT question_title, tags, question, question_id, asker_id, answer_id,
           //Answer id, responder id etc
           $ans_id = $row["answer_id"];
           $responderID = $row["responder_id"];
-          
+          $responderDisplayGravatar = $row["use_gravatar"];
+          $responderEmail = $row["user_email"];
+                    
           $_SESSION["answer_id"] = $ans_id;
           
           $numUpvotes = $row["num_upvotes"];
@@ -489,12 +509,14 @@ $sql = "SELECT question_title, tags, question, question_id, asker_id, answer_id,
 
             echo"<tr>";
             echo "<td><div align=\"right\"><a href=".$path.">".$row["user_name"]."(".($row9['num_upvotes']-$row9['num_downvotes']).")</a></div></td>";
-            if($UserHasPhoto)
+            if($UserHasPhoto and $responderDisplayGravatar!=1)
             {
+            echo "Bool: ".$responderDisplayGravatar;
             echo "<td><div align =\"right\">".'<img style="width:64px;height:64px" src="data:image/jpeg;base64,'.base64_encode( $row9['data'] ).'"/>'."</div></td>";
             }
             else{
-              echo "<td><div align =\"right\"><span style=\"font-size:3em;\" class=\"glyphicon glyphicon-user\"></span></div></td>";
+              echo "<td><div align =\"right\">".get_gravatar($responderEmail)."</div></td>";
+              
             }
 
             echo "</tr>";
