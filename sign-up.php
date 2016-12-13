@@ -68,6 +68,7 @@ if(isset($_POST['btn-signup']))
 <link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
 <link rel="stylesheet" href="style.css" type="text/css"  />
 <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet"> 
+<script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 <body>
 
@@ -113,8 +114,10 @@ if(isset($_POST['btn-signup']))
                 	<i class="glyphicon glyphicon-open-file"></i>&nbsp;Sign Up
                 </button>
             </div>
+            
             <br />
             <label id="signIn">If you have an account please <a id="signIn" href="index.php?home=yes">Sign In</a></label>
+        
         </form>
        </div>
 </div>

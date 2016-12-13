@@ -57,6 +57,7 @@ function printCheck()
 <script src="ckeditor/ckeditor.js"></script>
 <link rel="stylesheet" href="style.css" type="text/css"  />
 <title>SlackOverflow - <?php print($userRow['user_email']); ?></title>
+<script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 
 <body>
@@ -129,6 +130,9 @@ function printCheck()
           <a href="ask.php"><span class="glyphicon glyphicon-question-sign"></span> Ask</a>
           <a href="profile.php"><span class="glyphicon glyphicon-user"></span> Profile</a>
           <a href="browse.php"><span class="glyphicon glyphicon-eye-open"></span> Browse</a>
+          <a href="help.php"><span class="glyphicon glyphicon-book"></span> Help</a>
+          <a href="search.php"><span class="glyphicon glyphicon-search"></span> User Search</a>
+          <?php if($_SESSION['isAdmin']) echo '<a href="admin.php"><span class="glyphicon glyphicon-cog"></span> AdminCP</a>'; ?>
           </h1>
                 
         <hr />
@@ -140,6 +144,7 @@ function printCheck()
 
             <p class="Question Body">
               <textarea  name="questionBody" id="questionBody" placeholder="Enter your question here." rows="4" cols="50"/></textarea>
+              <textarea  name="questionTags" id="questionTags" placeholder="Enter tags delimited by a space." rows="4" cols="50"/></textarea>
             <script>
           // Replace the <textarea id="editor1"> with an CKEditor
           // instance, using the "bbcode" plugin, customizing some of the
@@ -162,8 +167,10 @@ function printCheck()
             </p>
 
             <?php
+              
               if($_SESSION['user_name'] != "guest")
               {
+                echo '<div class="g-recaptcha" data-sitekey="6Lctxw0UAAAAAHuPdnNlkJ0wHIG80Sl0hndwxKRX"></div>';
                 echo "
                 <p class=\"submit\">
                 <input type=\"submit\" value=\"Post Question\">
@@ -174,8 +181,7 @@ function printCheck()
               }
             
             ?>
-                
-
+          
           </form>
 
               

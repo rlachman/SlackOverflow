@@ -15,11 +15,12 @@ $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
 
 // SET USER ID,NAME,ISGUEST FOR SESSION
 $_SESSION['user_id'] = $userRow['user_id'];
+$_SESSION['isAdmin'] = $userRow['is_admin'];
 $user_name = $userRow['user_name'];
 $user_is_guest = $userRow['is_guest'];
 
 //Pagination, Question End point in array
-$numberOfQuestionsDisplayedPerPage = 8;
+$numberOfQuestionsDisplayedPerPage = 5;
 if(count($_GET) > 0)
 {
 $_SESSION['startPoint'] = $_GET['start'];
@@ -59,6 +60,29 @@ function Solved($solved)
   else{
     return printCheck();
   }
+}
+
+
+function printTags($dbTags)
+{
+  $exploded_string = explode(" ",$dbTags);
+  $output = "";
+  foreach($exploded_string as $tag)
+  {
+    $output .= '<a href="tagSearch.php?tag='.urlencode($tag).'"><span class="label label-primary">'.$tag.'</span></a> ';
+  }
+
+  return $output;
+}
+
+function returnDatabaseConnection()
+{
+  $servername = "localhost";
+  $username = "admin";
+  $password = "M0n@rch$";
+  $dbname = "slackoverflow";
+  $conn = new mysqli($servername, $username, $password, $dbname);
+  return $conn;
 }
 
 ?>
@@ -145,6 +169,10 @@ function Solved($solved)
           <a href="ask.php"><span class="glyphicon glyphicon-question-sign"></span> Ask</a>
           <a href="profile.php"><span class="glyphicon glyphicon-user"></span> Profile</a>
           <a href="browse.php"><span class="glyphicon glyphicon-eye-open"></span> Browse</a>
+          <a href="help.php"><span class="glyphicon glyphicon-book"></span> Help</a>
+          <a href="search.php"><span class="glyphicon glyphicon-search"></span> User Search</a>
+          <?php if($_SESSION['isAdmin']) echo '<a href="admin.php"><span class="glyphicon glyphicon-cog"></span> AdminCP</a>'; ?>
+
           </h1>
                 
        	<hr />
@@ -159,7 +187,7 @@ function Solved($solved)
         //Establish connection
         $conn = new mysqli($servername, $username, $password, $dbname);
         //Store query into a php variable
-        $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_id, user_name, is_solved, num_upvotes, num_downvotes
+        $sql = "SELECT question_title, question, question_id, tags, asker_id, answer_id, user_id, user_name, is_solved, num_upvotes, num_downvotes
                 FROM questions 
                 join users 
                 on asker_id=user_id
@@ -210,6 +238,7 @@ function Solved($solved)
             for($i = $qStart; $i <= $qEnd && !is_null($questionArray[$i]); $i++)
             {
               $row = $questionArray[$i];
+
               // Store url, user id info in case of redirect to view external users profile
               $_SESSION["user_id_profile"] = $row["asker_id"];
               $_SESSION["user_id_name"] = $row["user_name"];
@@ -221,17 +250,17 @@ function Solved($solved)
                 //Question score
                 $QuestionScore = $row["num_upvotes"] - $row["num_downvotes"];
                 $solved = is_null($row["is_solved"]);//Pass this variable into method to determine if x or check will print
-
+                //$question_tags = explode(" ",$row["tags"]);
                     echo "<tr>
                   
                     <td>
                     <a href=\"answer.php?q_id=".$row["question_id"]. "\">
-                    ".$row["question_title"]."
-                    </a>
-                    </td>";
-                                       
-                    echo "<td><a href=".$path.">".$row["user_name"]."</a></td>";
+                    ".$row["question_title"]."</a>".printTags($row["tags"])."
                     
+                    </td>";
+                                    
+                    echo "<td><a href=".$path.">".$row["user_name"]." (".($row["num_upvotes"]-$row["num_downvotes"]).")"."</a></td>";
+                                        
                     echo "<td>" 
                     .Solved($solved). 
                     "</td>
@@ -241,7 +270,7 @@ function Solved($solved)
                     
                                       
                     </tr>";
-      }
+            }
 
     }
     echo "</table>";
