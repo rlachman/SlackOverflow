@@ -1,9 +1,9 @@
-﻿-- phpMyAdmin SQL Dump
+-- phpMyAdmin SQL Dump
 -- version 4.5.4.1deb2ubuntu2
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 13, 2016 at 02:30 AM
+-- Generation Time: Dec 13, 2016 at 03:29 AM
 -- Server version: 5.7.15-0ubuntu0.16.04.1
 -- PHP Version: 7.0.8-0ubuntu0.16.04.2
 
@@ -19,12 +19,9 @@ SET time_zone = "+00:00";
 --
 -- Database: `slackoverflow`
 --
-
 CREATE DATABASE slackoverflow;
 USE slackoverflow;
-
--- CREATE DATABASE slackoverflow;
-USE slackoverflow; --------------------------------------------------------
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `answers`
