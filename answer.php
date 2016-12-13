@@ -73,7 +73,7 @@ $user_is_guest = $userRow['is_guest'];
 
 // GET QUESTION ID FROM PREVIOUS PAGE
 $q_id = $_GET["q_id"];
-$sql = "SELECT question_title, tags, question, question_id, user_email, asker_id, answer_id, user_id, user_name, is_solved FROM questions join users on asker_id=user_id
+$sql = "SELECT question_title, tags, question, question_id, user_email, use_gravatar, asker_id, answer_id, user_id, user_name, is_solved FROM questions join users on asker_id=user_id
 			WHERE question_id=$q_id";
     
     //Store collection of rows in variable called result
@@ -272,6 +272,7 @@ $sql = "SELECT question_title, tags, question, question_id, user_email, asker_id
   <?php 
 
           $askerID = $row["asker_id"];
+          $askerDisplayGravatar = $row["use_gravatar"];
           $askerEmail = $row["user_email"];
           $_SESSION["user_id_profile"] = $askerID;
           $_SESSION["user_id_name"] = $row["user_name"];
@@ -288,8 +289,8 @@ $sql = "SELECT question_title, tags, question, question_id, user_email, asker_id
             $sql = "SELECT `data` FROM `images` WHERE avatar_user_id=$askerID";
             $resultA = $conn->query($sql);              
             $rowA = $resultA->fetch_assoc();
-
-          if ($askerDisplayGravatar != 1)
+            
+          if ($askerDisplayGravatar == 0)
           {
             echo "<img style=\"width:64px;height:64px\" src=\"data:image/jpeg;base64,"   .base64_encode( $rowA['data'] ).   "\"/>";
 
@@ -511,8 +512,7 @@ $sql = "SELECT question_title, tags, question, question_id, user_email, asker_id
             echo "<td><div align=\"right\"><a href=".$path.">".$row["user_name"]."(".($row9['num_upvotes']-$row9['num_downvotes']).")</a></div></td>";
             if($UserHasPhoto and $responderDisplayGravatar!=1)
             {
-            echo "Bool: ".$responderDisplayGravatar;
-            echo "<td><div align =\"right\">".'<img style="width:64px;height:64px" src="data:image/jpeg;base64,'.base64_encode( $row9['data'] ).'"/>'."</div></td>";
+              echo "<td><div align =\"right\">".'<img style="width:64px;height:64px" src="data:image/jpeg;base64,'.base64_encode( $row9['data'] ).'"/>'."</div></td>";
             }
             else{
               echo "<td><div align =\"right\">".get_gravatar($responderEmail)."</div></td>";
