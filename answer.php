@@ -13,6 +13,41 @@ $password = "M0n@rch$";
 $dbname = "slackoverflow";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
+function get_gravatar( $email, $s = 60, $d = 'identicon', $r = 'x', $img = true, $atts = array() ) {
+    $url = 'https://www.gravatar.com/avatar/';
+    $url .= md5( strtolower( trim( $email ) ) );
+    $url .= "?s=$s&d=$d&r=$r";
+    if ( $img ) {
+        $url = '<img src="' . $url . '"';
+        foreach ( $atts as $key => $val )
+            $url .= ' ' . $key . '="' . $val . '"';
+        $url .= ' />';
+    }
+    return $url;
+}
+
+function returnDatabaseConnection()
+{
+  $servername = "localhost";
+  $username = "admin";
+  $password = "M0n@rch$";
+  $dbname = "slackoverflow";
+  $conn = new mysqli($servername, $username, $password, $dbname);
+  return $conn;
+}
+
+function printTags($dbTags)
+{
+  $exploded_string = explode(" ",$dbTags);
+  $output = "";
+  foreach($exploded_string as $tag)
+  {
+    $output .= '<a class="tagLink" href="tagSearch.php?tag='.$tag.'"><span class="label label-primary">'.$tag.'</span></a>';
+  }
+
+  return $output;
+}
+
 //Pagination, Question End point in array
 $numberOfAnswersDisplayedPerPage = 5; 
 if(count($_GET) > 1)//Greater than 1 because there is already a parameter for question id
@@ -38,8 +73,7 @@ $user_is_guest = $userRow['is_guest'];
 
 // GET QUESTION ID FROM PREVIOUS PAGE
 $q_id = $_GET["q_id"];
-echo "       ".$q_id;
-$sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_id, user_name, is_solved FROM questions join users on asker_id=user_id
+$sql = "SELECT question_title, tags, question, question_id, user_email, use_gravatar, asker_id, answer_id, user_id, user_name, is_solved FROM questions join users on asker_id=user_id
 			WHERE question_id=$q_id";
     
     //Store collection of rows in variable called result
@@ -129,15 +163,31 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
     <div class="container">
        	             
         <h1 id="secondLevelLinks">
-          <a href="home.php"><span class="glyphicon glyphicon-home"></span> Home</a> &nbsp;
+          <a href="home.php"><span class="glyphicon glyphicon-home"></span> Home</a> &nbsp; 
           <a href="ask.php"><span class="glyphicon glyphicon-question-sign"></span> Ask</a>
           <a href="profile.php"><span class="glyphicon glyphicon-user"></span> Profile</a>
           <a href="browse.php"><span class="glyphicon glyphicon-eye-open"></span> Browse</a>
+          <a href="help.php"><span class="glyphicon glyphicon-book"></span> Help</a>
+          <?php if($_SESSION['isAdmin']) echo '<a href="admin.php"><span class="glyphicon glyphicon-cog"></span> AdminCP</a>'; ?>
           </h1>
                 
        	<hr />
 
 <body>
+
+<?php
+
+            $sqlQ = "SELECT is_frozen FROM questions WHERE question_id=$q_id";
+              
+                  $result2 = $conn->query($sqlQ);
+                  $row2 = $result2->fetch_assoc();
+                  $is_frozen = $row2["is_frozen"];
+
+                  if($is_frozen){
+                    echo '<h3><span class="label label-info">An Admin has frozen this question.</span></h3>';
+                  }
+
+            ?>
 	
 	<!-- Table handles question voting up down, similar to answer voting -->
 <!-- $numUpvotes = $numUpvotes."-".$ans_id."-".$q_id;
@@ -145,11 +195,11 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
   <table> <!-- check to see if user has voted for question similar to how it's done for answers -->
   <tr><th><h1 id="questionAnswerPage"><?php echo $row['question_title']; ?></h1><th><tr>
   <tr>
-        <td><h3><?php echo $row['question']; ?></h3></td>
+        <td><h4><?php echo $row['question'].'<br>'.printTags($row["tags"]) ?></h4></td>
         <td><table> <!-- Beginning of table that handles upvote of questions etc-->
-           
+                      
             <?php
-            echo "<tr>";
+            
                              
                   //Determine if user has voted for question previously
                   
@@ -166,18 +216,21 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
                     //echo "<br><br>user has already voted for this question!";
                   }
                   
-                  $sqlQ = "SELECT num_upvotes, num_downvotes FROM questions WHERE question_id=$q_id";
+                  $sqlQ = "SELECT num_upvotes, num_downvotes, is_frozen FROM questions WHERE question_id=$q_id";
               
                   $result2 = $conn->query($sqlQ);
                   $row2 = $result2->fetch_assoc();
                   $numQuestionUpvotes = $row2["num_upvotes"];
                   $numQuestionDownvotes = $row2["num_downvotes"];
+                  $is_frozen = $row2["is_frozen"];
+
+                  echo "<tr>";
                                
                   $numQuestionUpvotes = $numQuestionUpvotes."-".$q_id;
                   $numQuestionDownvotes = $numQuestionDownvotes."-".$q_id;
                   $QScore = $numQuestionUpvotes - $numQuestionDownvotes;
               
-                  if(!$userHasVotedForQuestion && !$user_is_guest)
+                  if(!$userHasVotedForQuestion && !$user_is_guest && !$is_frozen)
                   {
                     echo "<form name=\"questionUpVotingForm\" method=\"post\" action=\"question_upvote.php\">";
                     echo "<button type=\"submit\" name=\"Qupvote\" value=\"$numQuestionUpvotes\"> 
@@ -196,7 +249,7 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
         echo "</tr>
               <tr>";
                 
-                if(!$userHasVotedForQuestion && !$user_is_guest)
+                if(!$userHasVotedForQuestion && !$user_is_guest && !$is_frozen)
                   {
                 echo "<form name=\"questionDownVotingForm\" method=\"post\" action=\"question_downvote.php\">";
               
@@ -219,13 +272,15 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
   <?php 
 
           $askerID = $row["asker_id"];
+          $askerDisplayGravatar = $row["use_gravatar"];
+          $askerEmail = $row["user_email"];
           $_SESSION["user_id_profile"] = $askerID;
           $_SESSION["user_id_name"] = $row["user_name"];
           $path = 'profile.php?ext_user='.$_SESSION["user_id_profile"].'&ext_user_name='.$_SESSION["user_id_name"];  // change accordingly
 
   ?>
   <th><th>
-	<th valign="middle"><?php echo "<a href=".$path.">".$row['user_name']."</a>"; ?></th>
+	<th valign="middle"><?php echo "<a href=".$path.">".$row["user_name"]." (".($numQuestionUpvotes-$numQuestionDownvotes).")</a>"; ?></th>
   <th>
   <?php 
           
@@ -234,13 +289,15 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
             $sql = "SELECT `data` FROM `images` WHERE avatar_user_id=$askerID";
             $resultA = $conn->query($sql);              
             $rowA = $resultA->fetch_assoc();
-
-            if(mysqli_num_rows($resultA) > 0)
+            
+          if ($askerDisplayGravatar == 0)
           {
             echo "<img style=\"width:64px;height:64px\" src=\"data:image/jpeg;base64,"   .base64_encode( $rowA['data'] ).   "\"/>";
+
           }
-          else{
-            echo "<span style=\"font-size:3em;\" class=\"glyphicon glyphicon-user\"></span>";
+          else
+          {
+            echo get_gravatar($askerEmail);
           }
             
            
@@ -254,7 +311,7 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
 	
 		
 	<?php
-	$sql = "SELECT answer_id, answer, responder_id, is_best, num_upvotes, num_downvotes, user_name 
+	$sql = "SELECT answer_id, answer, user_email, responder_id, use_gravatar, is_best, num_upvotes, num_downvotes, user_name 
 			FROM answers 
       JOIN users 
       WHERE question_id=$q_id 
@@ -268,7 +325,8 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
 
      
       $askerID = $questionInfo["asker_id"];
-      
+      $askerDisplayGravatar = $questionInfo["use_gravatar"];
+
       $loggedInID = $_SESSION['user_id'];
       $is_solved = $questionInfo["is_solved"];
 
@@ -321,6 +379,7 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
               $responseArray[] = $row;
               $testRow = $responseArray[1];
               //echo $testRow["answer"];
+              
             }
             
             $qStart = $_SESSION["startPoint"];
@@ -333,7 +392,9 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
           //Answer id, responder id etc
           $ans_id = $row["answer_id"];
           $responderID = $row["responder_id"];
-          
+          $responderDisplayGravatar = $row["use_gravatar"];
+          $responderEmail = $row["user_email"];
+                    
           $_SESSION["answer_id"] = $ans_id;
           
           $numUpvotes = $row["num_upvotes"];
@@ -377,7 +438,7 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
         			</tr>";}
         	
             //allow asker to select best answer if not selected already
-            if($isAsker == TRUE and $is_solved == FALSE AND $is_best == FALSE) {echo		 
+            if($isAsker == TRUE and $is_solved == FALSE AND $is_best == FALSE AND !$is_frozen) {echo		 
         			"<tr> 
         				<button type=\"submit\" name=\"answer_id\" value=\"$ans_id\"><span class=\"glyphicon glyphicon-check\"></span></button>
         			</tr>";}
@@ -393,7 +454,7 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
           
             
              //numUpvotes contains the num of upvotes as well as the answer id, break apart once to php file
-              if(!$userHasVoted && !$user_is_guest)//If user hasn't voted then add their vote in prior to form submit
+              if(!$userHasVoted && !$user_is_guest && !$is_frozen)//If user hasn't voted then add their vote in prior to form submit
                 {
                   $numUpvotes = $numUpvotes."-".$ans_id."-".$q_id;
                   $score = $upvotes - $downvotes;
@@ -418,7 +479,7 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
           
           
             
-              if(!$userHasVoted && !$user_is_guest)
+              if(!$userHasVoted && !$user_is_guest && !$is_frozen)
                 {
                   $numDownvotes = $numDownvotes."-".$ans_id."-".$q_id;
                   echo "<tr> <button type=\"submit\" name=\"downvote\" value=\"$numDownvotes\"><span class=\"glyphicon glyphicon-chevron-down\"></span></button> </tr>";
@@ -439,21 +500,23 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
             
             // User avatar and user name below
             //echo $responderID;
-            $sql = "SELECT `data` FROM `images` WHERE avatar_user_id=$responderID";
+            //$sql = "SELECT `data` FROM `images` WHERE avatar_user_id=$responderID";
+            $sql = "SELECT data, num_upvotes, num_downvotes FROM images JOIN questions ON avatar_user_id=asker_id WHERE avatar_user_id=$responderID";
             //echo $sql;
             $result9 = $conn->query($sql);              
             $row9 = $result9->fetch_assoc();
-            
-              
-            
+            $num_up = $row9['num_upvotes'];
+            $num_up = $row9['num_downvotes'];
+
             echo"<tr>";
-            echo "<td><div align=\"right\"><a href=".$path.">".$row["user_name"]."</a></div></td>";
-            if($UserHasPhoto)
+            echo "<td><div align=\"right\"><a href=".$path.">".$row["user_name"]."(".($row9['num_upvotes']-$row9['num_downvotes']).")</a></div></td>";
+            if($UserHasPhoto and $responderDisplayGravatar!=1)
             {
-            echo "<td><div align =\"right\">".'<img style="width:64px;height:64px" src="data:image/jpeg;base64,'.base64_encode( $row9['data'] ).'"/>'."</div></td>";
+              echo "<td><div align =\"right\">".'<img style="width:64px;height:64px" src="data:image/jpeg;base64,'.base64_encode( $row9['data'] ).'"/>'."</div></td>";
             }
             else{
-              echo "<td><div align =\"right\"><span style=\"font-size:3em;\" class=\"glyphicon glyphicon-user\"></span></div></td>";
+              echo "<td><div align =\"right\">".get_gravatar($responderEmail)."</div></td>";
+              
             }
 
             echo "</tr>";
@@ -529,7 +592,7 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
 
     <?php
 
-    if($_SESSION['user_name'] != "guest")
+    if($_SESSION['user_name'] != "guest" && !$is_frozen)
               {
                 echo "
                 <p class=\"submit\">
@@ -537,7 +600,7 @@ $sql = "SELECT question_title, question, question_id, asker_id, answer_id, user_
                 ";
               }
               else{
-                echo "<label>Guests can't answer a question. You must sign in.</label>";
+                echo "<label>Guests cannot answer questions. Frozen questions cannot be answered.</label>";
               }
     ?>
 
